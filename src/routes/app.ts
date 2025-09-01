@@ -10,11 +10,12 @@ import swaggerSpecs from '../config/swagger/swaggerJsDoc';
 const app: Application = express();
 //configurações dos middlewares.
 app.use(express.json());
+app.use(helmet());
 app.use(cors({
   origin: 'http://localhost',
   methods: ['GET']
 }));
-app.use(helmet());
+
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
@@ -50,7 +51,6 @@ app.get('/',(req: Request, res: Response) => {
  *  /achar:
  *   get:
  *    summary: Rota não encontrada
- *    description: Resposta caso não exista rota no qual foi requisitada.
  *    tags: [Rotas Padrão]
  *    responses:
  *     404:
