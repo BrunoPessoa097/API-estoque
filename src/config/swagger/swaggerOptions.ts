@@ -11,8 +11,17 @@ const swaggerOptions: object = {
       title: 'API Estoque',
       version: '1.0.0',
       description:`_API_ de desenvolvimento 
-        \n **Desenvolvido:** Bruno Pessoa
-        \n **Licensa:** MIT`
+        \n ### Sobre o projeto
+        \n * **Versão:** 1.0.0
+        \n * **Licença:** MIT
+        \n
+        \n #### Criado por
+        \n * **Nome**: Bruno Pessoa
+        \n * **Área**: Desenvolver NodeJs|Typescript|Javascript
+        \n * **Formado**: UNIGRANDE - Centro Universitário da Grande Fortaleza.
+        \n * **Curso**: Sistemas para _Internet_.
+        \n * **Git Hub**: [github.com/BrunoPessoa097](https://github.com/BrunoPessoa097/api-agenda.git)
+        \n * **LinkedIn**: [www.linkedin.com/in/bruno-pesoa-097](https://www.linkedin.com/in/bruno-pessoa-097/)`
     },
      /* servers: [
       {
