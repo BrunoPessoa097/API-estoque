@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+// Import local.
 import app from './routes/app';
 
 dotenv.config();
