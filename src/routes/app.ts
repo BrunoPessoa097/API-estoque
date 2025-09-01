@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
+import helmet from 'helmet';
 
 // Import local
 import swaggerSpecs from '../config/swagger/swaggerJsDoc';
@@ -12,7 +13,8 @@ app.use(express.json());
 app.use(cors({
   origin: 'http://localhost',
   methods: ['GET']
-}))
+}));
+app.use(helmet());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
