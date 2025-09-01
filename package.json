@@ -8,7 +8,7 @@
     "build": "tsc",
     "start": "npm run build && npm node dist/server.js"
   },
-  "keywords": [],
+  "keywords": ["Typescript","NodeJs","ExpressJs","API"],
   "author": "Bruno Pessoa",
   "license": "MIT",
   "devDependencies": {
