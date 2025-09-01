@@ -71,9 +71,9 @@ Uma API para gerenciamento de um estoque.
 * **Resposta:**
   ```json
      {
-      message: 'Rota principal de API estoque',
-      autor: 'Bruno Pessoa',
-      licensa: 'MIT'
+      "message": 'Rota principal de API estoque',
+      "autor": 'Bruno Pessoa',
+      "licensa": 'MIT'
      }
   ```
   
@@ -87,7 +87,7 @@ Uma API para gerenciamento de um estoque.
 * **Resposta:**
   ```json
     {
-      message: 'Rota não encontrada'
+      "message": 'Rota não encontrada'
     }
   ```
 
