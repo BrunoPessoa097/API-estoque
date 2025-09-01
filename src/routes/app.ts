@@ -38,6 +38,21 @@ app.get('/',(req: Request, res: Response) => {
   });
 });
 
-
+/**
+ * @swagger
+ *  /achar:
+ *   get:
+ *    summary: Rota não encontrada
+ *    description: Resposta caso não exista rota no qual foi requisitada.
+ *    tags: [Rotas Padrão]
+ *    responses:
+ *     404:
+ *      description: Rota não encontrada
+ */
+app.use((req: Request, res: Response) => {
+  res.status(404).json({
+    message: 'Rota não encontrada'
+  });
+});
 
 export default app;
