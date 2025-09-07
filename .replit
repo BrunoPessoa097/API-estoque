@@ -1,0 +1,22 @@
+modules = ["nodejs-20"]
+[nix]
+channel = "stable-25_05"
+
+[workflows]
+runButton = "dev"
+
+[[workflows.workflow]]
+name = "dev"
+mode = "sequential"
+author = 17738544
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "npm run dev"
+
+[[ports]]
+localPort = 4000
+externalPort = 80
+
+[agent]
+expertMode = true
