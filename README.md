@@ -37,10 +37,11 @@ Uma API para gerenciamento de um estoque.
 - `dotenv` - (versão: ^17.2.1) - Carrega variáveis de ambientes.
 - `express` - (versão: ^5.1.0) - _Framework web_ JavaScript.
 - `helmet` - (versão: ^8.1.0) - _middleware_ para segurança.
-- `nodemon` - (versão: ^3.1.10) - Utilitário para agilizar processo de desenvolvimento.
+- `ts-node-dev` - (versão: ^2.0.0) - Utilitário para agilizar processo de desenvolvimento.
 - `swagger-jsdoc` (versão: ^6.2.8) - JsDoc voltado para interação com o _Swagger_.
 - `swagger-ui-express` - (versão: ^5.0.1) - Biblioteca para parte visual com interações com o _Express_.
 - `ts-node` - (versão: ^10.9.2) - Interpretador Typescript.
+- `joi` - (versão: ^18.0.1) - Biblioteca para validação de entradas.
 
 ## Como Iniciar o Projeto 
 1. Clone o projeto.
