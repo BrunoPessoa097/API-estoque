@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import categoriaValidar from '../middlewares/categoriaMiddleware';
+// Imports locais.
+import { categoriaValidar, categoriaPadronizar} from '../middlewares/categoriaMiddleware';
 
 const categoriaRouter: Router = Router();
 
 categoriaRouter.route('/categoria')
-  .post(categoriaValidar);
+  .post(categoriaValidar, categoriaPadronizar);
 
 export default categoriaRouter;
