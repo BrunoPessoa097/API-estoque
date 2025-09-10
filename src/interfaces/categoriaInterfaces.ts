@@ -2,8 +2,8 @@ interface Categoria {
   nome: string,
   descricao: string,
   data?:{
-    createAt?: date,
-    updateAt?: date
+    createAt?: Date,
+    updateAt?: Date
   }
 }
 

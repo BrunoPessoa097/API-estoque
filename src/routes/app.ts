@@ -3,14 +3,15 @@ import swaggerUi from 'swagger-ui-express';
 
 // Import local
 import swaggerSpecs from '../config/swagger/swaggerJsDoc';
-
+import categoriaRouter from './categoriaRouter';
 // iniciando o express 
 const app: Application = express();
 //configurações dos middlewares.
 app.use(express.json());
 
+// inicia de rotas.
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
-
+app.use(categoriaRouter);
 /**
  * @swagger
  * tags: Rotas Padrão
