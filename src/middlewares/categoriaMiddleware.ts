@@ -4,26 +4,32 @@ import { ObjectSchema } from 'joi';
 import Categoria from '../interfaces/categoriaInterfaces';
 import categoriaJoi from '../schemas/joi/categoriaJoi';
 
+// Categoria validar categoria com Joi.
 export const categoriaValidar = (req: Request<{}, {}, Categoria>, res: Response, next: NextFunction) => {
   try {
+    // Desustruturação do req.
     const { nome, descricao }: Categoria = req.body;
-    
-    req.body = {
-      nome: nome.trim(),
-      descricao: descricao.trim()
-    }
-    
+
+    // Remoção de espaços vazios.
+    req.body = {nome: nome.trim(), descricao: descricao.trim()}
+
+    // Validando as entradas com o Categoria Joi.
     const { error, value } = categoriaJoi.validate(req.body,{abortEarly: false});
 
+    // Caso de erro.
     if(error) {
       res.status(400).json({
         message: 'Formato ou arquivo inválido',
-        error: error.details.map((err)=>err.message)
+        error: error.details.map((err)=>err.message) // Saída dos erros.
       });
     }
-    req.body = value;
-    next();
+    else{
+      // Recebendo os valores válidos.
+      req.body = value;
+      next();
+    }
   }catch(error){
+    // Erro do servidor.
     res.status(500).json({
       message: 'Server Error',
       error
