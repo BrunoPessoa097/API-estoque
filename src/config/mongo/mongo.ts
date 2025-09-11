@@ -1,21 +1,29 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
+// Configurando o dotenv.
 dotenv.config();
-
+/**
+ * @description Conexão com o banco de dados
+ * @author Bruno Pessoa
+ */
 const mongoConn = async() => {
+  // Recendo a URL do banco.
   const url: string = `${process.env.MONGO_BD_URI}`;
 
+  // Verificando a existência do endereço.
   if(!url){
     process.exit(1);
   }
 
+  // Fazendo a conexão com o banco de dados
   await mongoose.connect(url)
     .then(() => {
       console.log('Banco conctado!');
     }).catch((erro) => {
       console.log('Problemas ao se conectar ao banco');
-      console.log(erro);
+      console.error(erro.errorResponse);
+      process.exit(1);
     });
 }
 
