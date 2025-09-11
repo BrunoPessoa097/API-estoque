@@ -31,6 +31,8 @@ Uma API para gerenciamento de um estoque.
 - [Express.Js](https://expressjs.com/) - _Framework web_ Javascript.
 - [Typescript](https://www.typescriptlang.org/) - Liguagem de programação para adicionar tipagem ao Javascript.
 - [Swagger](https://swagger.io/) - Ferramenta para documentar _API_.
+- [MongoDB](https://www.mongodb.com/) - Banco de dados NoSql.
+- [MongooseJs](https://mongoosejs.com/) - Falicitador de interação com o banco de dados mongodb.
 
 ## Dependências
 - `cors` - (versão: ^2.8.5) - Mecanismo de segurança para acessar requisição de origem.
@@ -42,6 +44,7 @@ Uma API para gerenciamento de um estoque.
 - `swagger-ui-express` - (versão: ^5.0.1) - Biblioteca para parte visual com interações com o _Express_.
 - `ts-node` - (versão: ^10.9.2) - Interpretador Typescript.
 - `joi` - (versão: ^18.0.1) - Biblioteca para validação de entradas.
+- `mongoose` - (versão: ^8.18.1) - Falicitador para interação com o MongoDB.
 
 ## Como Iniciar o Projeto 
 1. Clone o projeto.
@@ -101,7 +104,7 @@ Uma API para gerenciamento de um estoque.
 * **Formado**: UNIGRANDE - Centro Universitário da Grande Fortaleza.
 * **Curso**: Sistemas para _Internet_.
 * **Git Hub**: [github.com/BrunoPessoa097](https://github.com/BrunoPessoa097/api-agenda.git)
-* **LinkedIn**: [www.linkedin.com/in/bruno-pesoa-097](https://www.linkedin.com/in/bruno-pessoa-097/)
+* **LinkedIn**: [www.linkedin.com/in/bruno-pessoa-097](https://www.linkedin.com/in/bruno-pessoa-097/)
 
 ## _License_
 Esse projeto esta sobre a licença `MIT` ©Bruno Pessoa - 2025.

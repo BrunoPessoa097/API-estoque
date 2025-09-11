@@ -9,7 +9,7 @@ dotenv.config();
  */
 const mongoConn = async() => {
   // Recendo a URL do banco.
-  const url: string = `${process.env.MONGO_BD_URI}`;
+  const url: string = `${process.env.MONGO_BD_URI}/Estoque`;
 
   // Verificando a existência do endereço.
   if(!url){
@@ -19,7 +19,7 @@ const mongoConn = async() => {
   // Fazendo a conexão com o banco de dados
   await mongoose.connect(url)
     .then(() => {
-      console.log('Banco conctado!');
+      console.log('Banco conectado!');
     }).catch((erro) => {
       console.log('Problemas ao se conectar ao banco');
       console.error(erro.errorResponse);
