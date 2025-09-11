@@ -63,9 +63,10 @@ export const categoriaPadronizar = async(req: Request<{},{}, Categoria>, res: Re
       descricao: await palavraMauiscula(descricao)
     }
 
-    // next();
+    next();
     
   }catch(error){
+    // Error de servidor.
     res.status(500).json({
       message: 'Servidor error',
       error
