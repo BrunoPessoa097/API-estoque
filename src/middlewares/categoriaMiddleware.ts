@@ -3,8 +3,16 @@ import { ObjectSchema } from 'joi';
 // Import local.
 import Categoria from '../interfaces/categoriaInterfaces';
 import categoriaJoi from '../schemas/joi/categoriaJoi';
+import palavraMauiscula from './configMiddlewares';
 
-// Categoria validar categoria com Joi.
+/**
+ * @description Validar as entradas de categoria com Joi.
+ * @param req
+ * @param res
+ * @param next
+ * @returns Em caso de categoria estiver validos e aprovado, senão retorna erro.
+ * @author Bruno Pessoa
+ */
 export const categoriaValidar = (req: Request<{}, {}, Categoria>, res: Response, next: NextFunction) => {
   try {
     // Desustruturação do req.
@@ -37,8 +45,30 @@ export const categoriaValidar = (req: Request<{}, {}, Categoria>, res: Response,
   }
 };
 
-export const categoriaPadronizar = (req: Request<{},{}, Categoria>, res: Response) => {
-  res.status(200).json({
-    message: "Padronizar"
-  })
+/**
+ * @description Padroniza as entradas.
+ * @param req
+ * @param res
+ * @param next
+ * @author Bruno Pessoa
+ */
+export const categoriaPadronizar = async(req: Request<{},{}, Categoria>, res: Response, next: NextFunction) => {
+  try{
+    // Desustrutura o req.
+    const { nome, descricao }: Categoria = req.body;
+
+    // Padronização das entradas de categoria.
+    req.body = {
+      nome: await palavraMauiscula(nome),
+      descricao: await palavraMauiscula(descricao)
+    }
+
+    // next();
+    
+  }catch(error){
+    res.status(500).json({
+      message: 'Servidor error',
+      error
+    })
+  }
 }
