@@ -9,7 +9,7 @@ dotenv.config();
  */
 const mongoConn = async() => {
   // Recendo a URL do banco.
-  const url: string = `${process.env.MONGO_BD_URI}/Estoque`;
+  const url: string = `${process.env.MONGO_BD_URI}/${process.env.MONGO_DB_DATABASE}`;
 
   // Verificando a existência do endereço.
   if(!url){
