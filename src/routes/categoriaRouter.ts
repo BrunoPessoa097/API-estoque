@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // Imports locais.
 import { categoriaValidar, categoriaPadronizar} from '../middlewares/categoriaMiddleware';
-import categoriaAdd from '../controllers/categoriaControllers'
+import {categoriaAdd, categoriaAll} from '../controllers/categoriaControllers'
 
 const categoriaRouter: Router = Router();
 
@@ -36,8 +36,17 @@ const categoriaRouter: Router = Router();
 *        description: Categoria já existe
 *      500:
 *        description: Erro no servidor
+*  get:
+*   summary: Listar todas as categorias.
+*   tags: [Categoria]
+*   responses:
+*    200:
+*     description: Todas as categorias.
+*    500:
+*     description: Error no servidor.
 */
 categoriaRouter.route('/categoria')
-  .post(categoriaValidar, categoriaPadronizar,categoriaAdd);
+  .post(categoriaValidar, categoriaPadronizar,categoriaAdd)
+  .get(categoriaAll);
 
 export default categoriaRouter;

@@ -6,7 +6,7 @@ import categoriaMongo from '../schemas/mongoose/categoriaSchema';
  * @description Adicionar ao banco de dados.
  * @author Bruno Pessoa
  */
-const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Response) => {
+export const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Response) => {
   try{
     // Criando um objeto com as entradas dos usuários.
     const categoriaNova: CategoriaDocument = new categoriaMongo({
@@ -45,5 +45,26 @@ const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Response) => {
     });
   }
 }
+/**
+ * @description Lista todas as categorias.
+ * @author Bruno Pessoa
+ */
+export const categoriaAll = async(req: Request, res: Response<{message:string, dados: CategoriaDocument[]} | {message?: string, error:any}>) => {
+  try{
+    // Lista todas as categorias.
+    const categoria: CategoriaDocument[] = await categoriaMongo.find();
 
-export default categoriaAdd;
+    // Listando todas as categorias.
+    res.status(200).json({
+      message: "Todas as categorias",
+      dados: categoria
+    })
+  }
+  // Erro do servidor.
+  catch(error){
+    res.status(500).json({
+      message: 'Error no servidor',
+      error
+    })
+  }
+}
