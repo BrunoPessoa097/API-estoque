@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // Imports locais.
 import { categoriaValidar, categoriaPadronizar} from '../middlewares/categoriaMiddleware';
-import {categoriaAdd, categoriaAll} from '../controllers/categoriaControllers'
+import {categoriaAdd, categoriaAll, categoriaUnico} from '../controllers/categoriaControllers'
 
 const categoriaRouter: Router = Router();
 
@@ -48,5 +48,29 @@ const categoriaRouter: Router = Router();
 categoriaRouter.route('/categoria')
   .post(categoriaValidar, categoriaPadronizar,categoriaAdd)
   .get(categoriaAll);
+
+/**
+ * @swagger
+ * /categoria/{id}:
+ *  get:
+ *   summary: Buscar univa categoria
+ *   tags: [Categoria]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: ID à ser buscado
+ *   responses:
+ *    200:
+ *     description: Categoria
+ *    404:
+ *     description: Categoria não encontrada
+ *    500:
+ *     description: Servidor Error
+ */
+categoriaRouter.route('/categoria/:id')
+  .get(categoriaUnico);
 
 export default categoriaRouter;
