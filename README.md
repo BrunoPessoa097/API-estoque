@@ -25,6 +25,7 @@ Uma API para gerenciamento de um estoque.
 ## Códigos _HTTP_ da _API_
 - `200` - Sucesso.
 - `201` - Sucesso e inserido.
+- `204` - Atualizado ou deletado.
 - `404` - Não encontrado.
 - `409` - Existente e/ou conflito.
 - `500` - Server error
