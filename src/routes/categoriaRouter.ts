@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // Imports locais.
 import { categoriaValidar, categoriaPadronizar} from '../middlewares/categoriaMiddleware';
-import {categoriaAdd, categoriaAll, categoriaUnico} from '../controllers/categoriaControllers'
+import {categoriaAdd, categoriaAll, categoriaUnico, categoriaUpdate} from '../controllers/categoriaControllers'
 
 const categoriaRouter: Router = Router();
 
@@ -46,7 +46,7 @@ const categoriaRouter: Router = Router();
 *     description: Error no servidor.
 */
 categoriaRouter.route('/categoria')
-  .post(categoriaValidar, categoriaPadronizar,categoriaAdd)
+  .post(categoriaValidar, categoriaPadronizar, categoriaAdd)
   .get(categoriaAll);
 
 /**
@@ -69,8 +69,37 @@ categoriaRouter.route('/categoria')
  *     description: Categoria não encontrada
  *    500:
  *     description: Servidor Error
+ *  put:
+ *   summary: Atualizar Categoria
+ *   tags: [Categoria]
+ *   parameters:
+ *    - name: id
+ *      in: path
+ *      required: true
+ *      schema:
+ *       type: string
+ *      description: ID à ser selecionado.
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       properties:
+ *        nome:
+ *         type: string
+ *        descricao:
+ *         type: string
+ *   responses:
+ *    203:
+ *     description: Atualizado.
+ *    404:
+ *     description: Erro
+ *    505:
+ *     description: Servidor error
  */
 categoriaRouter.route('/categoria/:id')
-  .get(categoriaUnico);
+  .get(categoriaUnico)
+  .put(categoriaValidar, categoriaPadronizar, categoriaUpdate);
 
 export default categoriaRouter;

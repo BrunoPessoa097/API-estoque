@@ -100,3 +100,48 @@ export const categoriaUnico = async(req: Request<{id: string}>, res: Response<{d
     });
   }
 }
+
+/**
+ * @description Atualizar os valores de categoria.
+ * @author Bruno Pessoa
+ */
+export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{message?:string}|{message?:string,error:any}>) => {
+  try{
+    // Recebendo o ID para atualizar.
+    const id: string = req.params.id;
+
+    // Recebendo os valores para atualizar.
+    const categoriaUpdt: CategoriaDocument= {
+      ...req.body
+    }
+    
+    // Verificando a existência.
+    const exist: CategoriaDocument | null = await categoriaMongo.findById(id);
+
+    if(exist){
+      // Atualizando os valores.
+      await categoriaMongo.findByIdAndUpdate(id, categoriaUpdt)
+        .then(()=>{
+          res.status(203).json({
+            message: 'Atualizado'
+          }); 
+        }).catch((error)=>{
+          res.status(404).json({
+            error
+          });
+        })
+    }
+    // Caso a informação nao exista.
+    else{
+      res.status(404).json({
+        message: "nao existe"
+      })
+    }
+  }
+  // Erro do servidor.
+  catch(error){
+    res.status(500).json({
+      message: 'Server Error'
+    });
+  }
+}
