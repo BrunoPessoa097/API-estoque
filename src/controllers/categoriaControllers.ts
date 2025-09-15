@@ -25,7 +25,7 @@ export const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Respons
           data: categoriaNova
         });
       }).catch((error)=>{
-        res.status(500).json({
+        res.status(404).json({
           error
         })
       });
@@ -87,7 +87,7 @@ export const categoriaUnico = async(req: Request<{id: string}>, res: Response<{d
         });
       }).catch((error)=>{
         // Caso categoria não exista.
-        res.status(400).json({
+        res.status(404).json({
           message: 'Nao existe o ID desejado.'
         });
       })
