@@ -1,6 +1,6 @@
 {
   "name": "API estoque",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Uma API para gerenciamento de um estoque",
   "main": "index.js",
   "scripts": {
