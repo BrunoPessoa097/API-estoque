@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // Imports locais.
 import { categoriaValidar, categoriaPadronizar} from '../middlewares/categoriaMiddleware';
-import {categoriaAdd, categoriaAll, categoriaUnico, categoriaUpdate} from '../controllers/categoriaControllers'
+import {categoriaAdd, categoriaAll, categoriaUnico, categoriaUpdate, categoriaDelete} from '../controllers/categoriaControllers'
 
 const categoriaRouter: Router = Router();
 
@@ -91,15 +91,34 @@ categoriaRouter.route('/categoria')
  *        descricao:
  *         type: string
  *   responses:
- *    203:
+ *    204:
  *     description: Atualizado.
  *    404:
  *     description: Erro
- *    505:
+ *    500:
  *     description: Servidor error
+ * 
+ *  delete:
+ *   summary: Deletar categoria.
+ *   tags: [Categoria]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: Informe um ID de categoria válido.
+ *   responses:
+ *    204:
+ *     description: Deletado
+ *    404:
+ *     description: Não encontrado.
+ *    500:
+ *     description: Server Error
  */
 categoriaRouter.route('/categoria/:id')
   .get(categoriaUnico)
-  .put(categoriaValidar, categoriaPadronizar, categoriaUpdate);
+  .put(categoriaValidar, categoriaPadronizar, categoriaUpdate)
+  .delete(categoriaDelete);
 
 export default categoriaRouter;

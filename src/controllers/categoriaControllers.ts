@@ -122,8 +122,8 @@ export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{m
       // Atualizando os valores.
       await categoriaMongo.findByIdAndUpdate(id, categoriaUpdt)
         .then(()=>{
-          res.status(203).json({
-            message: 'Atualizado'
+          res.status(204).json({
+            message: "Update"
           }); 
         }).catch((error)=>{
           res.status(404).json({
@@ -131,7 +131,7 @@ export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{m
           });
         })
     }
-    // Caso a informação nao exista.
+    // Caso a informação não exista.
     else{
       res.status(404).json({
         message: "nao existe"
@@ -142,6 +142,46 @@ export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{m
   catch(error){
     res.status(500).json({
       message: 'Server Error'
+    });
+  }
+}
+
+/**
+ * @description Excluir categoria.
+ * @author Bruno Pessoa
+ */
+export const categoriaDelete = async(req: Request<{id: string}>, res: Response<{}|{message?:string, error: any}>) => {
+  try{
+    // Recebendo o id
+    const id: string = req.params.id;
+
+    // Verificando se a informação existe.
+    const exist: CategoriaDocument | null = await categoriaMongo.findById(id);
+
+    if(exist){
+      // Excluindo do banco de dados.
+      await categoriaMongo.findByIdAndDelete(id)
+        .then(()=>{
+          res.status(204).json({
+            message: "deletado"
+          });
+        }).catch((error)=>{
+          res.status(404).json({
+            message: 'Erro ao excluir'
+          });
+        })
+    }
+    // Caso nao existe a informação.
+    else{
+      res.status(404).json({
+        message: 'Id inexistente ou inválido'
+      })
+    }
+  }
+  // Erro no servidor.
+  catch(error){
+    res.status(500).json({
+      error
     });
   }
 }
