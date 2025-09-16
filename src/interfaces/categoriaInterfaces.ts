@@ -1,11 +1,11 @@
 import { Document } from 'mongoose';
 
 export default interface Categoria {
-  nome: string,
+  nome: string;
   descricao: string
 }
 
 export interface CategoriaDocument extends Categoria, Document{
-  createdAt?: Date,
+  createdAt?: Date;
   updatedAt?: Date
 }
