@@ -1,10 +1,10 @@
 import { Router } from 'express';
 // Import local
-import marcaVerificar from '../middlewares/marcaMiddleware';
+import {marcaVerificar, marcaPadronizar} from '../middlewares/marcaMiddleware';
 
 const marcaRouter: Router = Router();
 
 marcaRouter.route('/marca')
-  .post(marcaVerificar);
+  .post(marcaVerificar, marcaPadronizar);
 
 export default marcaRouter;
