@@ -3,11 +3,13 @@ import { ObjectSchema } from 'joi';
 // Imports locais.
 import marcaInput  from '../interfaces/marcaInterface';
 import marcaJoi from '../schemas/joi/marcaJoi';
+import palavraMaiuscula from './_configMiddlewares'
 
 /**
  * @description Verificando se às entradas de marca atende aos requisitos.
+ * @author Bruno Pessoa
  */
-const marcaVerificar = (req: Request<{}, {}, marcaInput>, res: Response, nex: NextFunction) => {
+export const marcaVerificar = (req: Request<{}, {}, marcaInput>, res: Response<{message?:string, error?: any}>, next: NextFunction) => {
   try{ 
     // Desustruturando entradas
     const {nome, nomeSocial, cnpj}: marcaInput = req.body;
@@ -31,11 +33,8 @@ const marcaVerificar = (req: Request<{}, {}, marcaInput>, res: Response, nex: Ne
     }
     // Senão haver nenhum erro
     else{
-      res.status(200).json({
-        dados: value
-      });
+      next()
     }
-    
   }
   // Erro do servidor.
   catch(error){
@@ -45,5 +44,27 @@ const marcaVerificar = (req: Request<{}, {}, marcaInput>, res: Response, nex: Ne
     });
   }
 }
+/**
+ * @description Padronizar entrada da marca
+ */
+export const marcaPadronizar = (req: Request<{},{},marcaInput>, res: Response<{message?:string,error?:any}>) => {
+  try{
+    // Desustruturar o req.
+    const { nome, nomeSocial, cnpj }: marcaInput = req.body;
 
-export default marcaVerificar;
+    // Adicionando as palavras adicionadas
+    req.body = {
+      nome: palavraMaiuscula(nome),
+      nomeSocial: palavraMaiuscula(nomeSocial),
+      cnpj
+    }
+
+    res.status(200).json({message:"padronização"})
+  }
+  catch(error){
+    res.status(500).json({
+      message: 'Server Erro',
+      error
+    });
+  }
+}
