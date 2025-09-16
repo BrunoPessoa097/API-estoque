@@ -5,6 +5,7 @@ import helmet from 'helmet';
 // Import local
 import swaggerSpecs from '../config/swagger/swaggerJsDoc';
 import categoriaRouter from './categoriaRouter';
+import marcaRouter from './marcaRouter';
 // iniciando o express 
 const app: Application = express();
 //configurações dos middlewares.
@@ -18,6 +19,8 @@ app.use(cors({
 // inicia de rotas.
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.use(categoriaRouter);
+app.use(marcaRouter);
+
 /**
  * @swagger
  * tags: Rotas Padrão
