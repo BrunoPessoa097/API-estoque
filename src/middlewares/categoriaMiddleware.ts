@@ -3,7 +3,7 @@ import { ObjectSchema } from 'joi';
 // Import local.
 import Categoria from '../interfaces/categoriaInterfaces';
 import categoriaJoi from '../schemas/joi/categoriaJoi';
-import palavraMauiscula from './configMiddlewares';
+import palavraMauiscula from './_configMiddlewares';
 
 /**
  * @description Validar as entradas de categoria com Joi.
