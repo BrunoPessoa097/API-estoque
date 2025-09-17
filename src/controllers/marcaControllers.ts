@@ -103,21 +103,26 @@ export const marcaUpdate = async(req: Request<{id: string}>, res: Response) => {
       ...req.body
     };
 
-    const verificar = await marcaMongo.find({nome: req.body.nome});
+    // Verificando se existe nome ja registrado.
+    const verificar: marcaDocument | null = await marcaMongo.findOne({nome: req.body.nome});
 
-    if(!verificar){
-      const dados: marcaDocument | null = await marcaMongo.findByIdAndUpdate(id,marcaAtual);
-
-      res.status(dados?200:404).json({
-        dados: dados? marcaAtual: "Informacao nao existe"
-      });
-    }
-    else {
+    // em caso que exista.
+    if(verificar){
       res.status(409).json({
         message: 'Nao pode existir empresas com mesmo nome'
       });
     }
+    else {
+      // Atualizando.
+      const dados: marcaDocument | null = await marcaMongo.findByIdAndUpdate(id,marcaAtual);
+
+      // Saida de atualização.
+      res.status(dados?200:404).json({
+        dados: dados? marcaAtual: "Informacao nao existe"
+      });
+    }
   }
+  // Erro no servidor.
   catch(error){
     res.status(500).json({
       message: 'Server Error',

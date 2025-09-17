@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // Import local
 import {marcaVerificar, marcaPadronizar} from '../middlewares/marcaMiddleware';
-import {marcaAdd, marcaAll, marcaId} from '../controllers/marcaControllers';
+import {marcaAdd, marcaAll, marcaId, marcaUpdate} from '../controllers/marcaControllers';
 
 const marcaRouter: Router = Router();
 
@@ -69,8 +69,42 @@ marcaRouter.route('/marca')
  *     description: Marca
  *    500:
  *     description: Servidor Error
+ *  
+ *  put:
+ *   summary: Atualizar marca
+ *   tags: [Marca]
+ *   parameters:
+ *    - name: id
+ *      in: path
+ *      required: true
+ *      schema:
+ *       type: string
+ *      description: ID à ser selecionado.
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       properties:
+ *        nome:
+ *         type: string
+ *        nomeSocial:
+ *         type: string
+ *        cnpj:
+ *         type: string
+ *   responses:
+ *     200:
+ *       description: Sucesso ao atualizar
+ *     404:
+ *       description: Erro ao atualizar
+ *     409:
+ *       description: Conflito.
+ *     500:
+ *       description: Erro no servidor.
  */
 marcaRouter.route('/marca/:id')
-  .get(marcaId);
+  .get(marcaId)
+  .put(marcaVerificar, marcaPadronizar, marcaUpdate);
 
 export default marcaRouter;
