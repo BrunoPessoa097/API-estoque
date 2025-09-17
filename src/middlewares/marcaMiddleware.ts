@@ -33,6 +33,7 @@ export const marcaVerificar = (req: Request<{}, {}, marcaInput>, res: Response<{
     }
     // Senão haver nenhum erro
     else{
+      req.body = value;
       next()
     }
   }
@@ -47,7 +48,7 @@ export const marcaVerificar = (req: Request<{}, {}, marcaInput>, res: Response<{
 /**
  * @description Padronizar entrada da marca
  */
-export const marcaPadronizar = (req: Request<{},{},marcaInput>, res: Response<{message?:string,error?:any}>) => {
+export const marcaPadronizar = (req: Request<{},{},marcaInput>, res: Response<{message?:string,error?:any}>, next: NextFunction) => {
   try{
     // Desustruturar o req.
     const { nome, nomeSocial, cnpj }: marcaInput = req.body;
@@ -59,7 +60,7 @@ export const marcaPadronizar = (req: Request<{},{},marcaInput>, res: Response<{m
       cnpj
     }
 
-    res.status(200).json({message:"padronização"})
+    next();
   }
   catch(error){
     res.status(500).json({
