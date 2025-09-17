@@ -7,7 +7,7 @@ import marcaInput,{ marcaDocument } from '../interfaces/marcaInterface';
  * @description Adicionar marca.
  * @author Bruno Pessoa
  */
-export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{message?:string}|{message?:string,error?:any}>) => {
+export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{dados?:string}|{message?:string,error?:any}>) => {
   try{
     // Criando objeto com às informações enviadas para marca
     
@@ -21,14 +21,12 @@ export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{me
 
     if(!existNome && !existCnpj){
       // Salvando dados.
-      await marcaNova.save().then(()=>{
-        res.status(201).json({message: 'Marca Adicionada'});
-      }).catch((error)=>{
-        res.status(404).json({
-          message: 'Error ao cadastrar à marca',
-          error
-        });
-      });
+      const dados:marcaDocument =  await marcaNova.save();
+
+      res.status(dados?201: 404).json({
+        dados: dados? "Marca adicionada": "Error ao adicionar"
+      })
+        
     }
     // Informações existente.
     else{
@@ -50,13 +48,15 @@ export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{me
  * @description Listar marcas
  * @author Bruno Pessoa
  */
-export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[] | null}|{message?:string, error?:any}>) =>{
+export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[] | null| string}|{message?:string, error?:any}>) =>{
   try{
     // Buscando todos os dados.
     const dados: marcaDocument[] | null = await marcaMongo.find();
 
     // Saida dos dados.
-    res.status(200).json({dados});
+    res.status(dados? 200: 404).json({
+      dados: dados? dados: "Sem informação"
+    });
   }
   // Erro no servidor
   catch(error){
@@ -71,7 +71,7 @@ export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[
  * @description Buscar marca
  * @author Bruno Pessoa
  */
-export const marcaId = async(req: Request<{id:string}>, res: Response<{dados: marcaDocument | null}|{message?:string,error?:any}>) => {
+export const marcaId = async(req: Request<{id:string}>, res: Response<{dados: marcaDocument | null | string}|{message?:string,error?:any}>) => {
   try{
     // Recebendo Id
     const id : string = req.params.id;
@@ -79,7 +79,9 @@ export const marcaId = async(req: Request<{id:string}>, res: Response<{dados: ma
     // Buscando id
     const dados: marcaDocument | null = await marcaMongo.findById(id);
 
-    res.status(200).json({dados});
+    res.status(200).json({
+      dados: dados? dados: "Informação não encontrada"
+    });
   }
   // Erro do servidor
   catch(error) {
@@ -135,7 +137,7 @@ export const marcaUpdate = async(req: Request<{id: string}>, res: Response) => {
  * @description Excluir marca.
  * @author Bruno Pessoa
  */
-export const marcaDelete = async(req: Request<{id: string}>, res: Response) => {
+export const marcaDelete = async(req: Request<{id: string}>, res: Response<{dado?:string} | {message?: string, error?:any}>) => {
   try {
     const id: string = req.params.id;
 
