@@ -75,17 +75,9 @@ export const marcaId = async(req: Request<{id:string}>, res: Response<{dados: ma
   try{
     const id : string = req.params.id;
 
-    await marcaMongo.findById(id)
-      .then((dados)=>{
-        res.status(200).json({
-          dados
-        });
-      }).catch((error)=>{
-        res.status(404).json({
-          message: "Id não existe",
-          error
-        });
-      });
+    const dados: marcaDocument | null = await marcaMongo.findById(id);
+
+    res.status(200).json({dados});
   }
   // Erro do servidor
   catch(error) {
