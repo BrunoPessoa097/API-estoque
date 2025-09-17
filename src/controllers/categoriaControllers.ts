@@ -6,7 +6,7 @@ import categoriaMongo from '../schemas/mongoose/categoriaSchema';
  * @description Adicionar ao banco de dados.
  * @author Bruno Pessoa
  */
-export const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Response) => {
+export const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Response<{dados: string}|{message?:string, error?:any}>) => {
   try{
     // Criando um objeto com as entradas dos usuários.
     const categoriaNova: CategoriaDocument = new categoriaMongo({
@@ -19,16 +19,11 @@ export const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Respons
     // Caso não exista.
     if(!busca){
       // Cadastra a nova categoria.
-      await categoriaNova.save().then((categoriaNova)=>{
-        res.status(201).json({
-          message: "Cadastrado",
-          data: categoriaNova
-        });
-      }).catch((error)=>{
-        res.status(404).json({
-          error
-        })
-      });
+      const dados: CategoriaDocument | null = await categoriaNova.save();
+
+      res.status(dados? 200: 404).json({
+        dados: dados? "Marca Adicionanda": "Error ao adicionar"
+      })
     }
     // Retorna categoria existente.
     else{
@@ -49,15 +44,14 @@ export const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Respons
  * @description Lista todas as categorias.
  * @author Bruno Pessoa
  */
-export const categoriaAll = async(req: Request, res: Response<{message:string, dados: CategoriaDocument[] | null} | {message?: string, error:any}>) => {
+export const categoriaAll = async(req: Request, res: Response<{dados: CategoriaDocument[] | null | string} | {message?: string, error:any}>) => {
   try{
     // Lista todas as categorias.
-    const categoria: CategoriaDocument[] = await categoriaMongo.find();
+    const dados: CategoriaDocument[] | null = await categoriaMongo.find();
 
     // Listando todas as categorias.
-    res.status(200).json({
-      message: "Todas as categorias",
-      dados: categoria
+    res.status(dados?200:404).json({ 
+      dados: dados? dados: "Sem Informação"
     });
   }
   // Erro do servidor.
@@ -69,28 +63,21 @@ export const categoriaAll = async(req: Request, res: Response<{message:string, d
   }
 }
 
-/**
+/** 
  * @description Buscar uma única categoria.
- * @author Bruno Pessoa
+ * @author Bruno Pessoa 
  */
-export const categoriaUnico = async(req: Request<{id: string}>, res: Response<{dados: CategoriaDocument| null}|{message?: string, error?:any}>) => {
+export const categoriaUnico = async(req: Request<{id: string}>, res: Response<{dados: CategoriaDocument| null | string}|{message?: string, error?:any}>) => {
   try {
     // Receber o id.
     const id:string = req.params.id; 
 
     // Buscando categoria prlo id.
-    await categoriaMongo.findById(id)
-      .then((dados)=>{
-        // Retornando a categoria.
-        res.status(200).json({
-          dados
-        });
-      }).catch((error)=>{
-        // Caso categoria não exista.
-        res.status(404).json({
-          message: 'Nao existe o ID desejado.'
-        });
-      })
+    const dados: CategoriaDocument | null = await categoriaMongo.findById(id);
+
+    res.status(dados? 200: 404).json({
+      dados: dados? dados: "Informação não encontrada"
+    })
   }
   catch(error){
     // Erro servidor.
@@ -105,7 +92,7 @@ export const categoriaUnico = async(req: Request<{id: string}>, res: Response<{d
  * @description Atualizar os valores de categoria.
  * @author Bruno Pessoa
  */
-export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{message?:string}|{message?:string,error:any}>) => {
+export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{dados?:string}|{message?:string,error?:any}>) => {
   try{
     // Recebendo o ID para atualizar.
     const id: string = req.params.id;
@@ -120,28 +107,24 @@ export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{m
 
     if(exist){
       // Atualizando os valores.
-      await categoriaMongo.findByIdAndUpdate(id, categoriaUpdt)
-        .then(()=>{
-          res.status(204).json({
-            message: "Update"
-          }); 
-        }).catch((error)=>{
-          res.status(404).json({
-            error
-          });
-        })
+      const dados: CategoriaDocument| null = await categoriaMongo.findByIdAndUpdate(id, categoriaUpdt);
+
+      res.status(dados? 200: 404).json({
+        dados: dados? "Dados atualizados": "Error ao atualizar"
+      })
     }
     // Caso a informação não exista.
     else{
       res.status(404).json({
         message: "nao existe"
-      })
+      });
     }
   }
   // Erro do servidor.
   catch(error){
     res.status(500).json({
-      message: 'Server Error'
+      message: 'Server Error',
+      error
     });
   }
 }
@@ -150,7 +133,7 @@ export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{m
  * @description Excluir categoria.
  * @author Bruno Pessoa
  */
-export const categoriaDelete = async(req: Request<{id: string}>, res: Response<{}|{message?:string, error: any}>) => {
+export const categoriaDelete = async(req: Request<{id: string}>, res: Response<{dados?:CategoriaDocument | string | null }|{message?:string, error?: any}>) => {
   try{
     // Recebendo o id
     const id: string = req.params.id;
@@ -160,16 +143,11 @@ export const categoriaDelete = async(req: Request<{id: string}>, res: Response<{
 
     if(exist){
       // Excluindo do banco de dados.
-      await categoriaMongo.findByIdAndDelete(id)
-        .then(()=>{
-          res.status(204).json({
-            message: "deletado"
-          });
-        }).catch((error)=>{
-          res.status(404).json({
-            message: 'Erro ao excluir'
-          });
-        })
+      const dados: CategoriaDocument | null = await categoriaMongo.findByIdAndDelete(id);
+
+      res.status(dados? 203:404).json({
+        dados: dados? "Removido": "Error ao remover"
+      })
     }
     // Caso nao existe a informação.
     else{
