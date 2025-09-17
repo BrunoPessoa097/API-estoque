@@ -130,3 +130,26 @@ export const marcaUpdate = async(req: Request<{id: string}>, res: Response) => {
     });
   }
 }
+
+/**
+ * @description Excluir marca.
+ * @author Bruno Pessoa
+ */
+export const marcaDelete = async(req: Request<{id: string}>, res: Response) => {
+  try {
+    const id: string = req.params.id;
+
+    const exclui: marcaDocument | null = await marcaMongo.findByIdAndDelete(id);
+
+    res.status(exclui?203: 404).json({
+      dado: exclui? "Excluido": "Nao existe o ID para ser excluido"
+    })
+  }
+  // Error no servirdor.
+  catch(error){
+    res.status(500).json({
+      message: 'Server Error',
+      error
+    })
+  }
+}

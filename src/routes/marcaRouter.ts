@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // Import local
 import {marcaVerificar, marcaPadronizar} from '../middlewares/marcaMiddleware';
-import {marcaAdd, marcaAll, marcaId, marcaUpdate} from '../controllers/marcaControllers';
+import {marcaAdd, marcaAll, marcaId, marcaUpdate, marcaDelete} from '../controllers/marcaControllers';
 
 const marcaRouter: Router = Router();
 
@@ -102,9 +102,28 @@ marcaRouter.route('/marca')
  *       description: Conflito.
  *     500:
  *       description: Erro no servidor.
+ *
+ *  delete:
+ *   summary: Deletar categoria.
+ *   tags: [Marca]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: Informe um ID da Marca válido.
+ *   responses:
+ *    204:
+ *     description: Deletado
+ *    404:
+ *     description: Não encontrado.
+ *    500:
+ *     description: Server Error
  */
 marcaRouter.route('/marca/:id')
   .get(marcaId)
-  .put(marcaVerificar, marcaPadronizar, marcaUpdate);
+  .put(marcaVerificar, marcaPadronizar, marcaUpdate)
+  .delete(marcaDelete);
 
 export default marcaRouter;
