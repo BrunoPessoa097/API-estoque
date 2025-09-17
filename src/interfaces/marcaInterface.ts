@@ -5,7 +5,7 @@ export default interface marcaInput {
   nomeSocial: string;
   cnpj: string
 }
-
+// Interface marca documento.
 export interface marcaDocument extends marcaInput, Document {
   createdAt?: Date;
   updatedAt?: Date
