@@ -73,8 +73,10 @@ export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[
  */
 export const marcaId = async(req: Request<{id:string}>, res: Response<{dados: marcaDocument | null}|{message?:string,error?:any}>) => {
   try{
+    // Recebendo Id
     const id : string = req.params.id;
 
+    // Buscando id
     const dados: marcaDocument | null = await marcaMongo.findById(id);
 
     res.status(200).json({dados});
@@ -83,6 +85,42 @@ export const marcaId = async(req: Request<{id:string}>, res: Response<{dados: ma
   catch(error) {
     res.status(500).json({
       message: 'Servidor Error',
+      error
+    });
+  }
+}
+
+/**
+ * @description Atualizar Marca
+ * @author Bruno Pessoa
+ */
+export const marcaUpdate = async(req: Request<{id: string}>, res: Response) => {
+  try{
+    // Recebendo Id.
+    const id: string = req.params.id;
+    // Adicionando informações para ser atualizada.
+    const marcaAtual: marcaInput = {
+      ...req.body
+    };
+
+    const verificar = await marcaMongo.find({nome: req.body.nome});
+
+    if(!verificar){
+      const dados: marcaDocument | null = await marcaMongo.findByIdAndUpdate(id,marcaAtual);
+
+      res.status(dados?200:404).json({
+        dados: dados? marcaAtual: "Informacao nao existe"
+      });
+    }
+    else {
+      res.status(409).json({
+        message: 'Nao pode existir empresas com mesmo nome'
+      });
+    }
+  }
+  catch(error){
+    res.status(500).json({
+      message: 'Server Error',
       error
     });
   }
