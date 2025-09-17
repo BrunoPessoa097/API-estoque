@@ -98,6 +98,42 @@ Uma API para gerenciamento de um estoque.
       "message": "Rota não encontrada"
     }
   ```
+### _Endpoint_ `/categoria`
+* **Descrição**: Adicionar categoria
+* **Método**: POST
+* **Exemplo da requisição**
+  ```shell
+     POST /categoria
+  ```
+* **Saida da requisição**:
+  ```json
+     # Sucesso (201)
+     {
+       "message": "Adicionado categoria"
+     }
+     # Error (404)
+     {
+       "message": "Erro ao adicionar"
+     }
+  ```
+### _Endpoint_ `/marca`
+* **Descrição**: Adicionar marca
+* **Método**: POST
+* **Exemplo da requisição**
+  ```shell
+     POST /marca
+  ```
+* **Saida da requisição**:
+  ```json
+     # Sucesso (201)
+     {
+       "message": "Adicionado marca"
+     }
+     # Error (404)
+     {
+       "message": "Erro ao adicionar"
+     }
+  ```
 
 ### _Endpoint_ `api-docs`
 * **Descrição:** Documentação de todas as rotas contidas na _API_.
