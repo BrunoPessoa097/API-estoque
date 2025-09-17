@@ -52,8 +52,10 @@ export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{me
  */
 export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[] | null}|{message?:string, error?:any}>) =>{
   try{
+    // Buscando todos os dados.
     const dados: marcaDocument[] | null = await marcaMongo.find();
 
+    // Saida dos dados.
     res.status(200).json({dados});
   }
   // Erro no servidor
@@ -61,6 +63,35 @@ export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[
     res.status(500).json({
       message: 'Servidor Erro',
       error
-    })
+    });
+  }
+}
+
+/**
+ * @description Buscar marca
+ * @author Bruno Pessoa
+ */
+export const marcaId = async(req: Request<{id:string}>, res: Response<{dados: marcaDocument | null}|{message?:string,error?:any}>) => {
+  try{
+    const id : string = req.params.id;
+
+    await marcaMongo.findById(id)
+      .then((dados)=>{
+        res.status(200).json({
+          dados
+        });
+      }).catch((error)=>{
+        res.status(404).json({
+          message: "Id não existe",
+          error
+        });
+      });
+  }
+  // Erro do servidor
+  catch(error) {
+    res.status(500).json({
+      message: 'Servidor Error',
+      error
+    });
   }
 }
