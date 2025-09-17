@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // Import local
 import {marcaVerificar, marcaPadronizar} from '../middlewares/marcaMiddleware';
-import marcaAdd from '../controllers/marcaControllers';
+import {marcaAdd, marcaAll} from '../controllers/marcaControllers';
 
 const marcaRouter: Router = Router();
 
@@ -38,8 +38,17 @@ const marcaRouter: Router = Router();
  *      description: Nome e/ou CNPJ existentes
  *     500:
  *      description: Erro no servidor
+ *  get:
+ *   summary: Listar todas as marcas
+ *   tags: [Marca]
+ *   responses:
+ *    200:
+ *     description: Listar todas as mascas.
+ *    500:
+ *     description: Server Error
  */
 marcaRouter.route('/marca')
-  .post(marcaVerificar, marcaPadronizar,marcaAdd);
+  .post(marcaVerificar, marcaPadronizar,marcaAdd)
+  .get(marcaAll);
 
 export default marcaRouter;
