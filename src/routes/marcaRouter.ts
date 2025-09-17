@@ -1,7 +1,7 @@
 import { Router } from 'express';
 // Import local
 import {marcaVerificar, marcaPadronizar} from '../middlewares/marcaMiddleware';
-import {marcaAdd, marcaAll} from '../controllers/marcaControllers';
+import {marcaAdd, marcaAll, marcaId} from '../controllers/marcaControllers';
 
 const marcaRouter: Router = Router();
 
@@ -50,5 +50,27 @@ const marcaRouter: Router = Router();
 marcaRouter.route('/marca')
   .post(marcaVerificar, marcaPadronizar,marcaAdd)
   .get(marcaAll);
+
+/**
+ * @swagger
+ * /marca/{id}:
+ *  get:
+ *   summary: Buscar univa categoria
+ *   tags: [Marca]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: ID à ser buscado
+ *   responses:
+ *    200:
+ *     description: Marca
+ *    500:
+ *     description: Servidor Error
+ */
+marcaRouter.route('/marca/:id')
+  .get(marcaId);
 
 export default marcaRouter;
