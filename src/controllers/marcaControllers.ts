@@ -7,7 +7,7 @@ import marcaInput,{ marcaDocument } from '../interfaces/marcaInterface';
  * @description Adicionar marca.
  * @author Bruno Pessoa
  */
-const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{message?:string}|{message?:string,error?:any}>) => {
+export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{message?:string}|{message?:string,error?:any}>) => {
   try{
     // Criando objeto com às informações enviadas para marca
     
@@ -46,4 +46,21 @@ const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{message?:
   }
 }
 
-export default marcaAdd;
+/**
+ * @description Listar marcas
+ * @author Bruno Pessoa
+ */
+export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[] | null}|{message?:string, error?:any}>) =>{
+  try{
+    const dados: marcaDocument[] | null = await marcaMongo.find();
+
+    res.status(200).json({dados});
+  }
+  // Erro no servidor
+  catch(error){
+    res.status(500).json({
+      message: 'Servidor Erro',
+      error
+    })
+  }
+}
