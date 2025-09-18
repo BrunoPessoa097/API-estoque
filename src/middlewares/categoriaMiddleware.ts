@@ -3,7 +3,7 @@ import { ObjectSchema } from 'joi';
 // Import local.
 import Categoria from '../interfaces/categoriaInterfaces';
 import categoriaJoi from '../schemas/joi/categoriaJoi';
-import palavraMauiscula from './_configMiddlewares';
+import palavraMaiuscula from './_configMiddlewares';
 
 /**
  * @description Validar as entradas de categoria com Joi.
@@ -59,8 +59,8 @@ export const categoriaPadronizar = async(req: Request<{},{}, Categoria>, res: Re
 
     // Padronização das entradas de categoria.
     req.body = {
-      nome: await palavraMauiscula(nome),
-      descricao: await palavraMauiscula(descricao)
+      nome: await palavraMaiuscula(nome),
+      descricao: await palavraMaiuscula(descricao)
     }
 
     next();

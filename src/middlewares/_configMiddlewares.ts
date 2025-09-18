@@ -4,8 +4,18 @@
  * @returns string
  * @author Bruno Pessoa
  */
-const palavraMauiscula = (palavra:string):string => {
+const palavraMaiuscula = (palavra:string):string => {
   return palavra.replace(palavra[0],palavra[0].toUpperCase());
 };
 
-export default palavraMauiscula;
+/**
+ * @description Função para deixar tudo maiúsculo.
+ * @param {string} - palavra - palavra para ser convertida
+ * @return string
+ * @author Bruno Pessoa
+ */
+export const palavraUpper = (palavra: string):string => {
+  return palavra.toUpperCase();
+};
+
+export default palavraMaiuscula;
