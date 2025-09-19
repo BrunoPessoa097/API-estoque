@@ -48,7 +48,7 @@ export const nivelVerificar = (req: Request<{},{}, nivelInput>, res: Response<{d
  * @description Padronizar as entradas de nivel
  * @author Bruno Pessoa
  */
-export const nivelPadronizar = (req: Request<{},{},nivelInput>, res:Response<{dados: nivelInput}|{message?: string, error?:any}>) => {
+export const nivelPadronizar = (req: Request<{},{},nivelInput>, res:Response<{dados: nivelInput}|{message?: string, error?:any}>, next: NextFunction) => {
   try{
     // Desistruturar.
     const {sigla, descricao} = req.body;
@@ -60,10 +60,7 @@ export const nivelPadronizar = (req: Request<{},{},nivelInput>, res:Response<{da
     }
 
     // saida padronizada
-    res.status(200).json({
-      dados: req.body
-    });
-    
+    next();
   }
   // error do servidor.
   catch(error){
