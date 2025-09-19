@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import {nivelVerificar, nivelPadronizar} from '../middlewares/nivelMiddleares';
-import nivelAdd from '../controllers/nivelControllers';
+import {nivelAdd, nivelList}from '../controllers/nivelControllers';
 
 const nivelRouter: Router = Router();
 /**
@@ -36,8 +36,20 @@ const nivelRouter: Router = Router();
  *      description: Informação ja existe
  *     500:
  *      description: Servidor error
+ * 
+ *  get:
+ *   summary: Listar todos os 
+ *   tags: [Nivel]
+ *   responses:
+ *    200:
+ *     description: Listar todos os nivels
+ *    404:
+ *     description: Não existem informações 
+ *    500:
+ *     description: Server Error
  */
 nivelRouter.route('/nivel')
-  .post(nivelVerificar, nivelPadronizar, nivelAdd);
+  .post(nivelVerificar, nivelPadronizar, nivelAdd)
+  .get(nivelList);
 
 export default nivelRouter;
