@@ -67,3 +67,28 @@ export const nivelList = async(req: Request, res: Response<{dados: nivelDocument
     });
   }
 }
+
+/**
+ * @description buscar nivel por Id
+ * @author Bruno Pessoa
+ */
+export const nivelId = async(req: Request<{id: string}>, res: Response<{dados?:nivelDocument|null|string}|{message?:string, error?:any}>) => {
+  try{
+    // recenbendo id
+    const id: string = req.params.id;
+
+    // buscando dados requisitados
+    const dados: nivelDocument | null = await nivelMongo.findById(id);
+
+    // retorno dos dados.
+    res.status(dados? 200:404).json({
+      dados: dados? dados: 'Informação não existe'
+    });
+  }
+  catch(error){
+    res.status(500).json({
+      message: 'Server Error',
+      error
+    })
+  }
+}

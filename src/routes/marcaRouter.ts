@@ -55,7 +55,7 @@ marcaRouter.route('/marca')
  * @swagger
  * /marca/{id}:
  *  get:
- *   summary: Buscar univa categoria
+ *   summary: Buscar única categoria
  *   tags: [Marca]
  *   parameters:
  *     - name: id

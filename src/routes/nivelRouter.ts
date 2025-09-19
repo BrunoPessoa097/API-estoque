@@ -1,6 +1,7 @@
 import {Router} from 'express';
+// import local
 import {nivelVerificar, nivelPadronizar} from '../middlewares/nivelMiddleares';
-import {nivelAdd, nivelList}from '../controllers/nivelControllers';
+import {nivelAdd, nivelList, nivelId}from '../controllers/nivelControllers';
 
 const nivelRouter: Router = Router();
 /**
@@ -52,4 +53,27 @@ nivelRouter.route('/nivel')
   .post(nivelVerificar, nivelPadronizar, nivelAdd)
   .get(nivelList);
 
+/**
+ * @swagger
+ * /nivel/{id}:
+ *  get:
+ *   summary: Buscar único nivel
+ *   tags: [Nivel]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: ID à ser buscado
+ *   responses:
+ *    200:
+ *     description: nivel
+ *    404:
+ *     description: Informação não encontrada
+ *    500:
+ *     description: Servidor Error
+ */
+nivelRouter.route('/nivel/:id')
+  .get(nivelId);
 export default nivelRouter;
