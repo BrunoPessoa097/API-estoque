@@ -1,9 +1,21 @@
-## Todas às mudanças seram regristradosaqui.
+## Todas às mudanças seram regristrados aqui.
+
+### [0.3.0] - 2025-09-19
+### Adicionado
+- CRUD de **Nível** completo.
+- Validações para **Nível**.
+- Padronização das entradas de **Nível**.
+- Adicionando rotas **Nivel** ao _Swagger_
+- Atualização do número da versão do projeto.
+
+### Corrigido
+- Melhoras nas frases do res para usuário
+  
 ---
 ### [0.2.0] - 2025-09-17
 #### Adicionado
 - CRUD de **Marca** completo.
-- validação para a **Marca**.
+- Validação para a **Marca**.
 - Padronização das entradas da **Marca**.
 - Adicionando rotas da **Marca** ao _Swagger_.
 
