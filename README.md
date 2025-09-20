@@ -107,11 +107,11 @@ Uma API para gerenciamento de um estoque.
   ```
 * **Saida da requisição**:
   ```json
-     # Sucesso (201)
+     # Sucesso-201
      {
        "message": "Adicionado categoria"
      }
-     # Error (404)
+     #Error-404
      {
        "message": "Erro ao adicionar"
      }
@@ -125,11 +125,29 @@ Uma API para gerenciamento de um estoque.
   ```
 * **Saida da requisição**:
   ```json
-     # Sucesso (201)
+     #Sucesso-201
      {
        "message": "Adicionado marca"
      }
-     # Error (404)
+     #Error-404
+     {
+       "message": "Erro ao adicionar"
+     }
+  ```
+### _Endpoint_ `/nivel`
+* **Descrição**: Adicionar marca
+* **Método**: POST
+* **Exemplo da requisição**
+  ```shell
+     POST /marca
+  ```
+* **Saida da requisição**:
+  ```json
+     #Sucesso-201
+     {
+       "message": "Adicionado marca"
+     }
+     #Error-404
      {
        "message": "Erro ao adicionar"
      }
