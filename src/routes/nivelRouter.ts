@@ -1,7 +1,7 @@
 import {Router} from 'express';
 // import local
 import {nivelVerificar, nivelPadronizar} from '../middlewares/nivelMiddleares';
-import {nivelAdd, nivelList, nivelId}from '../controllers/nivelControllers';
+import {nivelAdd, nivelList, nivelId, nivelUpdate}from '../controllers/nivelControllers';
 
 const nivelRouter: Router = Router();
 /**
@@ -73,7 +73,38 @@ nivelRouter.route('/nivel')
  *     description: Informação não encontrada
  *    500:
  *     description: Servidor Error
+ *  put:
+ *   summary: Atualizar nivel
+ *   tags: [Nivel]
+ *   parameters:
+ *    - name: id
+ *      in: path
+ *      required: true
+ *      schema:
+ *       type: string
+ *      description: ID à ser selecionado.
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       properties:
+ *        sigla:
+ *         type: string
+ *        descricao:
+ *         type: string
+ *   responses:
+ *    203:
+ *     description: Atualizado
+ *    404:
+ *     desceiption: Erro ao atualizar
+ *    409:
+ *     description: Sigla ja existe
+ *    500:
+ *     description: Servidor error
  */
 nivelRouter.route('/nivel/:id')
-  .get(nivelId);
+  .get(nivelId)
+  .put(nivelVerificar, nivelPadronizar, nivelUpdate);
 export default nivelRouter;

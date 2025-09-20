@@ -85,9 +85,53 @@ export const nivelId = async(req: Request<{id: string}>, res: Response<{dados?:n
       dados: dados? dados: 'Informação não existe'
     });
   }
+  // erro do servidor
   catch(error){
     res.status(500).json({
       message: 'Server Error',
+      error
+    });
+  }
+}
+
+/**
+ * @description Atualizar item
+ * @author Bruno Pessoa
+ */
+export const nivelUpdate = async(req: Request<{id:string}>, res: Response) => {
+  try{
+    // recebendo o id.
+    const id: string = req.params.id;
+    // desestruturação.
+    const { sigla, descricao }: nivelInput = req.body;
+
+    // verificando se à sigla ja existe.
+    const exist: nivelDocument | null = await nivelMongo.findOne({sigla});
+
+    // se nao existe
+    if(!exist) {
+      // recebendo os valores a ser atualizado.
+      const novaInfo: nivelInput = { sigla, descricao };
+      // atualizando às informações.
+      const dados: nivelDocument | null = await nivelMongo.findByIdAndUpdate(id,novaInfo);
+
+      // saída do usuário.
+      res.status(dados? 203:404).json({
+        message: dados? "Atualizado": "Error ao atualizar"
+      });
+      
+    }
+    // caso exista ja a sigla
+    else{
+      res.status(409).json({
+        message: 'Não podd atualizar pois a sigla já existe'
+      });
+    }
+  }
+  // Server error
+  catch(error) {
+    res.status(500).json({
+      message: 'Server error',
       error
     })
   }
