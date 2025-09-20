@@ -98,7 +98,7 @@ export const nivelId = async(req: Request<{id: string}>, res: Response<{dados?:n
  * @description Atualizar item
  * @author Bruno Pessoa
  */
-export const nivelUpdate = async(req: Request<{id:string}>, res: Response) => {
+export const nivelUpdate = async(req: Request<{id:string}>, res: Response<{dados?:nivelDocument | string | null} | {message?:string, error?:any}>) => {
   try{
     // recebendo o id.
     const id: string = req.params.id;
@@ -133,6 +133,31 @@ export const nivelUpdate = async(req: Request<{id:string}>, res: Response) => {
     res.status(500).json({
       message: 'Server error',
       error
-    })
+    });
+  }
+}
+/**
+ * @descriotion Deletar nivel
+ * @author Bruno Pessoa
+ */
+export const nivelDelete = async(req: Request<{id: string}>, res: Response<{message: nivelDocument | string | null} | {message?: string, error?:any}>) => {
+  try{
+    // recebendo id
+    const id: string = req.params.id;
+
+    // excluindo o nivel.
+    const dados: nivelDocument | null = await nivelMongo.findByIdAndDelete(id);
+
+    // resposta da exclusão.
+    res.status(dados? 203: 404).json({
+      message: dados? "Excluido": "Erro ao excluir"
+    });
+  }
+  // server error
+  catch(error) {
+    res.status(500).json({
+      message: 'Server error',
+      error
+    });
   }
 }

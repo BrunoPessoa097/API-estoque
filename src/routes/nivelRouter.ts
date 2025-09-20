@@ -1,7 +1,7 @@
 import {Router} from 'express';
 // import local
 import {nivelVerificar, nivelPadronizar} from '../middlewares/nivelMiddleares';
-import {nivelAdd, nivelList, nivelId, nivelUpdate}from '../controllers/nivelControllers';
+import {nivelAdd, nivelList, nivelId, nivelUpdate, nivelDelete}from '../controllers/nivelControllers';
 
 const nivelRouter: Router = Router();
 /**
@@ -103,8 +103,27 @@ nivelRouter.route('/nivel')
  *     description: Sigla ja existe
  *    500:
  *     description: Servidor error
+ *
+ *  delete:
+ *   summary: Deletar nível 
+ *   tags: [Nivel]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: Informe um ID válido.
+ *   responses:
+ *    203:
+ *     description: Deletado
+ *    404:
+ *     description: Não encontrado.
+ *    500:
+ *     description: Server Error
  */
 nivelRouter.route('/nivel/:id')
   .get(nivelId)
-  .put(nivelVerificar, nivelPadronizar, nivelUpdate);
+  .put(nivelVerificar, nivelPadronizar, nivelUpdate)
+  .delete(nivelDelete);
 export default nivelRouter;
