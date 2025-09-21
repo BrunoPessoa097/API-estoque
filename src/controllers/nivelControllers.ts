@@ -72,9 +72,9 @@ export const nivelList = async(req: Request, res: Response<{dados: nivelDocument
  * @description buscar nivel por Id
  * @author Bruno Pessoa
  */
-export const nivelId = async(req: Request<{id: string}>, res: Response<{dados?:nivelDocument|null|string}|{message?:string, error?:any}>) => {
+export const nivelId = async(req: Request, res: Response<{dados?:nivelDocument|null|string}|{message?:string, error?:any}>) => {
   try{
-    // recenbendo id
+    // recenbendo id 
     const id: string = req.params.id;
 
     // buscando dados requisitados
@@ -98,7 +98,7 @@ export const nivelId = async(req: Request<{id: string}>, res: Response<{dados?:n
  * @description Atualizar item
  * @author Bruno Pessoa
  */
-export const nivelUpdate = async(req: Request<{id:string}>, res: Response<{dados?:nivelDocument | string | null} | {message?:string, error?:any}>) => {
+export const nivelUpdate = async(req: Request, res: Response<{dados?:nivelDocument | string | null} | {message?:string, error?:any}>) => {
   try{
     // recebendo o id.
     const id: string = req.params.id;
@@ -136,11 +136,11 @@ export const nivelUpdate = async(req: Request<{id:string}>, res: Response<{dados
     });
   }
 }
-/**
+/** 
  * @descriotion Deletar nivel
  * @author Bruno Pessoa
  */
-export const nivelDelete = async(req: Request<{id: string}>, res: Response<{message: nivelDocument | string | null} | {message?: string, error?:any}>) => {
+export const nivelDelete = async(req: Request, res: Response<{message: nivelDocument | string | null} | {message?: string, error?:any}>) => {
   try{
     // recebendo id
     const id: string = req.params.id;

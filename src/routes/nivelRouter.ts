@@ -1,7 +1,6 @@
-import {Router} from 'express';
+import { Router } from 'express';
 // import local
-import {nivelVerificar, nivelPadronizar} from '../middlewares/nivelMiddleares';
-import {nivelAdd, nivelList, nivelId, nivelUpdate, nivelDelete}from '../controllers/nivelControllers';
+import { nivelPipAdd, nivelPipList, nivelPipId, nivelPipUpdate, nivelPipDelete} from '../pipelines/nivelPipelines';
 
 const nivelRouter: Router = Router();
 /**
@@ -50,8 +49,8 @@ const nivelRouter: Router = Router();
  *     description: Server Error
  */
 nivelRouter.route('/nivel')
-  .post(nivelVerificar, nivelPadronizar, nivelAdd)
-  .get(nivelList);
+  .post(nivelPipAdd)
+  .get(nivelPipList);
 
 /**
  * @swagger
@@ -123,7 +122,7 @@ nivelRouter.route('/nivel')
  *     description: Server Error
  */
 nivelRouter.route('/nivel/:id')
-  .get(nivelId)
-  .put(nivelVerificar, nivelPadronizar, nivelUpdate)
-  .delete(nivelDelete);
+  .get(nivelPipId)
+  .put(nivelPipUpdate)
+  .delete(nivelPipDelete);
 export default nivelRouter;
