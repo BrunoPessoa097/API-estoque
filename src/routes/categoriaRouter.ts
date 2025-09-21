@@ -1,7 +1,6 @@
 import { Router } from 'express';
 // Imports locais.
-import { categoriaValidar, categoriaPadronizar} from '../middlewares/categoriaMiddleware';
-import {categoriaAdd, categoriaAll, categoriaUnico, categoriaUpdate, categoriaDelete} from '../controllers/categoriaControllers'
+import { catPipAdd, catPipList, catPipId, catPipUpdate, catPipDelete} from '../pipelines/categoriaPepilines';
 
 const categoriaRouter: Router = Router();
 
@@ -46,8 +45,8 @@ const categoriaRouter: Router = Router();
 *     description: Error no servidor.
 */
 categoriaRouter.route('/categoria')
-  .post(categoriaValidar, categoriaPadronizar, categoriaAdd)
-  .get(categoriaAll);
+  .post(catPipAdd)
+  .get(catPipList);
 
 /**
  * @swagger
@@ -117,8 +116,8 @@ categoriaRouter.route('/categoria')
  *     description: Server Error
  */
 categoriaRouter.route('/categoria/:id')
-  .get(categoriaUnico)
-  .put(categoriaValidar, categoriaPadronizar, categoriaUpdate)
-  .delete(categoriaDelete);
+  .get(catPipId)
+  .put(catPipUpdate)
+  .delete(catPipDelete);
 
 export default categoriaRouter;

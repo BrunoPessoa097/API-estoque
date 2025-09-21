@@ -67,7 +67,7 @@ export const categoriaAll = async(req: Request, res: Response<{dados: CategoriaD
  * @description Buscar uma única categoria.
  * @author Bruno Pessoa 
  */
-export const categoriaUnico = async(req: Request<{id: string}>, res: Response<{dados: CategoriaDocument| null | string}|{message?: string, error?:any}>) => {
+export const categoriaUnico = async(req: Request, res: Response<{dados: CategoriaDocument| null | string}|{message?: string, error?:any}>) => {
   try {
     // Receber o id.
     const id:string = req.params.id; 
@@ -92,7 +92,7 @@ export const categoriaUnico = async(req: Request<{id: string}>, res: Response<{d
  * @description Atualizar os valores de categoria.
  * @author Bruno Pessoa
  */
-export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{dados?:string}|{message?:string,error?:any}>) => {
+export const categoriaUpdate = async(req: Request,res: Response<{dados?:string}|{message?:string,error?:any}>) => {
   try{
     // Recebendo o ID para atualizar.
     const id: string = req.params.id;
@@ -133,7 +133,7 @@ export const categoriaUpdate = async(req: Request<{id: string}>,res: Response<{d
  * @description Excluir categoria.
  * @author Bruno Pessoa
  */
-export const categoriaDelete = async(req: Request<{id: string}>, res: Response<{dados?:CategoriaDocument | string | null }|{message?:string, error?: any}>) => {
+export const categoriaDelete = async(req: Request, res: Response<{dados?:CategoriaDocument | string | null }|{message?:string, error?: any}>) => {
   try{
     // Recebendo o id
     const id: string = req.params.id;
