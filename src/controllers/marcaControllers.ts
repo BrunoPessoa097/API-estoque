@@ -71,7 +71,7 @@ export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[
  * @description Buscar marca
  * @author Bruno Pessoa
  */
-export const marcaId = async(req: Request<{id:string}>, res: Response<{dados: marcaDocument | null | string}|{message?:string,error?:any}>) => {
+export const marcaId = async(req: Request, res: Response<{dados: marcaDocument | null | string}|{message?:string,error?:any}>) => {
   try{
     // Recebendo Id
     const id : string = req.params.id;
@@ -96,7 +96,7 @@ export const marcaId = async(req: Request<{id:string}>, res: Response<{dados: ma
  * @description Atualizar Marca
  * @author Bruno Pessoa
  */
-export const marcaUpdate = async(req: Request<{id: string}>, res: Response) => {
+export const marcaUpdate = async(req: Request, res: Response) => {
   try{
     // Recebendo Id.
     const id: string = req.params.id;
@@ -137,7 +137,7 @@ export const marcaUpdate = async(req: Request<{id: string}>, res: Response) => {
  * @description Excluir marca.
  * @author Bruno Pessoa
  */
-export const marcaDelete = async(req: Request<{id: string}>, res: Response<{dado?:string} | {message?: string, error?:any}>) => {
+export const marcaDelete = async(req: Request, res: Response<{dado?:string} | {message?: string, error?:any}>) => {
   try {
     const id: string = req.params.id;
 
@@ -152,6 +152,6 @@ export const marcaDelete = async(req: Request<{id: string}>, res: Response<{dado
     res.status(500).json({
       message: 'Server Error',
       error
-    })
+    });
   }
 }

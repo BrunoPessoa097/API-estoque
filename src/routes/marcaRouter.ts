@@ -1,7 +1,6 @@
 import { Router } from 'express';
 // Import local
-import {marcaVerificar, marcaPadronizar} from '../middlewares/marcaMiddleware';
-import {marcaAdd, marcaAll, marcaId, marcaUpdate, marcaDelete} from '../controllers/marcaControllers';
+import {marcaPipAdd, marcaPipList, marcaPipId, marcaPipUpdate, marcaPipDelete } from '../pipelines/marcaPipelines';
 
 const marcaRouter: Router = Router();
 
@@ -48,8 +47,8 @@ const marcaRouter: Router = Router();
  *     description: Server Error
  */
 marcaRouter.route('/marca')
-  .post(marcaVerificar, marcaPadronizar,marcaAdd)
-  .get(marcaAll);
+  .post(marcaPipAdd)
+  .get(marcaPipList);
 
 /**
  * @swagger
@@ -122,8 +121,8 @@ marcaRouter.route('/marca')
  *     description: Server Error
  */
 marcaRouter.route('/marca/:id')
-  .get(marcaId)
-  .put(marcaVerificar, marcaPadronizar, marcaUpdate)
-  .delete(marcaDelete);
+  .get(marcaPipId)
+  .put(marcaPipUpdate)
+  .delete(marcaPipDelete);
 
 export default marcaRouter;
