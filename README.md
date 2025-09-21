@@ -10,12 +10,12 @@ Uma API para gerenciamento de um estoque.
 6. [Como Iniciar o Projeto](#como-iniciar-o-projeto)
 7. [_Endpoints_](#endpoints)
 8. [Criado por](#criado-por)
-9. [_License_](#license)
+9. [Licença](#licenca)
 
 ## Informações Sobre o Projeto 
 - **Versão:** 0.3.0
 - **Status:** Em desenvolvimento
-- **Licensa:** MIT
+- **Licensa:** Proprietário 
 
 ## Funcionabilidade
 - `GET /` - Rota principal.
@@ -107,11 +107,11 @@ Uma API para gerenciamento de um estoque.
   ```
 * **Saida da requisição**:
   ```json
-     # Sucesso-201
+     # Sucesso
      {
        "message": "Adicionado categoria"
      }
-     #Error-404
+     #Error
      {
        "message": "Erro ao adicionar"
      }
@@ -125,11 +125,11 @@ Uma API para gerenciamento de um estoque.
   ```
 * **Saida da requisição**:
   ```json
-     #Sucesso-201
+     #Sucesso
      {
        "message": "Adicionado marca"
      }
-     #Error-404
+     #Error
      {
        "message": "Erro ao adicionar"
      }
@@ -143,11 +143,11 @@ Uma API para gerenciamento de um estoque.
   ```
 * **Saida da requisição**:
   ```json
-     #Sucesso-201
+     #Sucesso
      {
        "message": "Adicionado marca"
      }
-     #Error-404
+     #Error
      {
        "message": "Erro ao adicionar"
      }
@@ -164,5 +164,12 @@ Uma API para gerenciamento de um estoque.
 * **Git Hub**: [github.com/BrunoPessoa097](https://github.com/BrunoPessoa097/api-agenda.git)
 * **LinkedIn**: [www.linkedin.com/in/bruno-pessoa-097](https://www.linkedin.com/in/bruno-pessoa-097/)
 
-## _License_
-Esse projeto esta sobre a licença `MIT` ©Bruno Pessoa - 2025.
+## Licença
+
+Este projeto é **proprietário**.  
+O código está disponível **apenas para fins de visualização e demonstração em portfólio**.  
+
+- **Não é permitido** copiar, modificar, redistribuir ou utilizar em projetos pessoais, acadêmicos ou comerciais.  
+- Para obter permissão de uso, entre em contato: [bruno-pessoa009@outlook.com](mailto:bruno-pessoa009@outlook.com).  
+
+Texto completo da licença em: [LICENSE](./LICENSE)
