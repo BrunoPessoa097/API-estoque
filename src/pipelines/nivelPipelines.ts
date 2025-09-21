@@ -1,4 +1,4 @@
-import {compose }from './compose';
+import {compose }from './_compose';
 import {nivelVerificar, nivelPadronizar } from '../middlewares/nivelMiddlewares';
 import {nivelList, nivelAdd, nivelUpdate,nivelId,nivelDelete} from '../controllers/nivelControllers';
 

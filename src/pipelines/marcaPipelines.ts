@@ -1,4 +1,4 @@
-import { compose } from './compose';
+import { compose } from './_compose';
 import { marcaVerificar, marcaPadronizar} from '../middlewares/marcaMiddleware';
 import { marcaAdd, marcaAll, marcaId, marcaUpdate, marcaDelete} from '../controllers/marcaControllers';
 
