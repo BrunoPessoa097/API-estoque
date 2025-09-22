@@ -7,6 +7,8 @@ import swaggerSpecs from '../config/swagger/swaggerJsDoc';
 import categoriaRouter from './categoriaRouter';
 import marcaRouter from './marcaRouter';
 import nivelRouter from './nivelRouter';
+import produtoRouter from './produtoRouter';
+
 // iniciando o express 
 const app: Application = express();
 //configurações dos middlewares.
@@ -22,6 +24,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 app.use(categoriaRouter);
 app.use(marcaRouter);
 app.use(nivelRouter);
+app.use(produtoRouter);
 
 /**
  * @swagger
