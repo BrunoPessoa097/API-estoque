@@ -19,8 +19,8 @@ export const produtoVerificar = (req: Request<{}, {}, produtoInput>, res: Respon
       nome: nome.trim(),
       quantidade,
       preco,
-      id_marca: id_marca.trim(),
-      id_categoria: id_categoria.trim()
+      id_marca,
+      id_categoria
     }
 
     // verificando as entradas com joi
@@ -51,7 +51,7 @@ export const produtoVerificar = (req: Request<{}, {}, produtoInput>, res: Respon
 /**
  * @description Padronizar entrada de produtos
  */
-export const produtoPadronizar = (req: Request<{}, {}, produtoInput>, res: Response) => {
+export const produtoPadronizar = (req: Request<{}, {}, produtoInput>, res: Response<{message?: string, error?: any}>, next: NextFunction) => {
   try{
     // desestruturando as entreadas dos clientes 
     const { nome, quantidade, preco, id_marca, id_categoria }: produtoInput = req.body;
@@ -65,9 +65,7 @@ export const produtoPadronizar = (req: Request<{}, {}, produtoInput>, res: Respo
       id_categoria
     }
     // resposta
-    res.status(200).json({
-      dados: req.body
-    });
+    next();
   }
   // servidor erro
   catch(error){
