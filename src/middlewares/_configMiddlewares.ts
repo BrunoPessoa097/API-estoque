@@ -17,5 +17,14 @@ const palavraMaiuscula = (palavra:string):string => {
 export const palavraUpper = (palavra: string):string => {
   return palavra.toUpperCase();
 };
+/**
+ * @descriprion Converter para duas casas decimal
+ * @param {number} - numero - número para ter casa decimal
+ * @return float
+ * @author Bruno Pessoa
+ */
+export const numDecimal = (numero:number):number => {
+  return Number(numero.toFixed(2));
+}
 
 export default palavraMaiuscula;
