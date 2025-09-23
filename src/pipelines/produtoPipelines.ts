@@ -1,8 +1,9 @@
 import { compose }from './_compose';
-import produtoVerificar from '../middlewares/produtoMiddlewares';
+import { produtoVerificar, produtoPadronizar} from '../middlewares/produtoMiddlewares';
 
 const prodPipAdd = compose(
-  produtoVerificar
+  produtoVerificar,
+  produtoPadronizar
 );
 
 export default prodPipAdd;

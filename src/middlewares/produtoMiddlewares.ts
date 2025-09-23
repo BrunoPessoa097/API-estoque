@@ -1,14 +1,15 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { ObjectSchema } from 'joi';
 // imports locais 
 import produtoInput from '../interfaces/produtoInterface';
 import produtoJoi from '../schemas/joi/produtoJoi';
+import palavraMaiuscula, { numDecimal } from './_configMiddlewares';
 
 /**
  * @description verificar se as entradas de produtos foram preenchidos corretamente
  * @author Bruno Pessoa
  */
-const produtoVerificar = (req: Request<{}, {}, produtoInput>, res: Response) => {
+export const produtoVerificar = (req: Request<{}, {}, produtoInput>, res: Response<{message?: string, error?:any}>, next: NextFunction) => {
   try{
     // destruturação das informações.
     const { nome, quantidade, preco, id_marca, id_categoria }: produtoInput = req.body;
@@ -28,9 +29,7 @@ const produtoVerificar = (req: Request<{}, {}, produtoInput>, res: Response) => 
     // senão tiver error
     if(!error){
       req.body = value;
-      res.status(200).json({
-        message: req.body
-      });
+      next();
     }
     // em caso de erro
     else{
@@ -49,4 +48,32 @@ const produtoVerificar = (req: Request<{}, {}, produtoInput>, res: Response) => 
   }
 }
 
-export default produtoVerificar;
+/**
+ * @description Padronizar entrada de produtos
+ */
+export const produtoPadronizar = (req: Request<{}, {}, produtoInput>, res: Response) => {
+  try{
+    // desestruturando as entreadas dos clientes 
+    const { nome, quantidade, preco, id_marca, id_categoria }: produtoInput = req.body;
+
+    // padronização 
+    req.body = {
+      nome: palavraMaiuscula(nome),
+      quantidade,
+      preco: numDecimal(preco),
+      id_marca,
+      id_categoria
+    }
+    // resposta
+    res.status(200).json({
+      dados: req.body
+    });
+  }
+  // servidor erro
+  catch(error){
+    res.status(500).json({
+      message: 'Sever error',
+      error
+    });
+  }
+}
