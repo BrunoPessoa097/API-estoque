@@ -28,7 +28,7 @@ const produtoAdd = async(req: Request, res: Response) => {
       const dados: produtoDocument | null = await produtoNovo.save();
 
       // saida para usuário.
-      res.status(dados? 200: 404).json({
+      res.status(dados? 201: 404).json({
         message: dados? 'Adicionado': 'Erro ao adicionar'
       });
     }
