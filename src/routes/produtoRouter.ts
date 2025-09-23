@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import prodPipAdd from '../pipelines/produtoPipelines';
+import { prodPipAdd, prodPipList } from '../pipelines/produtoPipelines';
 
 const produtoRouter: Router = Router();
 
@@ -42,9 +42,20 @@ const produtoRouter: Router = Router();
  *       description: Produto ja existe
  *      500:
  *       description: Server Error
+ *  get:
+ *   summary: Listar todos os produtos
+ *   tags: [Produtos]
+ *   responses:
+ *    200:
+ *     description: Listar todos os produtos
  * 
+ *    404:
+ *     description: Não existem informações 
+ *    500:
+ *     description: Server Error
 */
 produtoRouter.route('/produtos')
-  .post(prodPipAdd);
+  .post(prodPipAdd)
+  .get(prodPipList);
 
 export default produtoRouter;

@@ -1,11 +1,15 @@
 import { compose }from './_compose';
 import { produtoVerificar, produtoPadronizar} from '../middlewares/produtoMiddlewares';
-import produtoAdd from '../controllers/produtoControllers';
+import { produtoAdd, produtoList } from '../controllers/produtoControllers';
 
-const prodPipAdd = compose(
+// adicionanr produto.
+export const prodPipAdd = compose(
   produtoVerificar,
   produtoPadronizar,
   produtoAdd
 );
 
-export default prodPipAdd;
+// listar produto
+export const prodPipList = compose(
+  produtoList
+);

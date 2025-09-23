@@ -38,7 +38,7 @@ const nivelRouter: Router = Router();
  *      description: Servidor error
  * 
  *  get:
- *   summary: Listar todos os 
+ *   summary: Listar todos os níveis 
  *   tags: [Nivel]
  *   responses:
  *    200:

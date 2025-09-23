@@ -7,7 +7,7 @@ import produtoMongo from '../schemas/mongoose/produtoSchema';
 import marcaMongo from '../schemas/mongoose/marcaSchema';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
 
-const produtoAdd = async(req: Request, res: Response) => {
+export const produtoAdd = async(req: Request, res: Response) => {
   try{
     // desestruturando.
     const {nome, id_marca, id_categoria } = req.body;
@@ -47,5 +47,35 @@ const produtoAdd = async(req: Request, res: Response) => {
     });
   }
 }
+/**
+ * @description Listar as categorias
+ * @author Bruno Pessoa
+ */
+export const produtoList = async(req: Request, res: Response) => {
+  try{
+    // buscando no banco
+    const lista: object[] | null= await produtoMongo.find().populate('id_marca','nome').populate('id_categoria','nome').lean();
 
-export default produtoAdd;
+    // padronizando as informações.
+    const dados: object[] | null = lista.map((p: any)=>({
+      _id: p._id,
+      nome: p.nome,
+      quantidade: p.quantidade,
+      preco: p.preco,
+      marca: p.id_marca?.nome || null,
+      categoria: p.id_categoria?.nome || null
+    }));
+    
+    //retorno da resposta.
+    res.status(lista? 200: 404).json({
+      dados: lista? dados: 'Nao existe dados a serem mostrados'
+    });
+  }
+  // Server Error
+  catch(error){
+    res.status(500).json({
+      message: 'Server Error',
+      error
+    });
+  }
+}
