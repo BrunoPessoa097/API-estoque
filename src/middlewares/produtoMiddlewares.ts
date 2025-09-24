@@ -75,3 +75,38 @@ export const produtoPadronizar = (req: Request<{}, {}, produtoInput>, res: Respo
     });
   }
 }
+
+export const produtoPrecoValidar = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // validando o tipo de preco
+    const { error, value} = produtoJoi.validate(req.body, {abortEarly: false});
+
+    // caso de erro
+    if(error){
+      // resposta do erro
+      res.status(404).json({
+        message: error.details.map((e)=>e.message)
+      });
+    }
+    // caso nao haja erro
+    else{
+      // recebendo o valor validado
+      req.body = value;
+      
+      // padronização do preço 
+      req.body = {
+        preco: numDecimal(req.body.preco)
+      }
+
+      // próximo
+      next();
+    }
+  }
+  // server error
+  catch(error){
+    res.status(500).json({
+      message: 'Server error',
+      error
+    });
+  }
+}

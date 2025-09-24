@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { prodPipAdd, prodPipList, prodPipId } from '../pipelines/produtoPipelines';
+import { prodPipAdd, prodPipList, prodPipId, prodPipUpPre } from '../pipelines/produtoPipelines';
 
 const produtoRouter: Router = Router();
 
@@ -80,6 +80,7 @@ produtoRouter.route('/produtos')
  *     description: Server error
  */
 produtoRouter.route('/produtos/:id')
-  .get(prodPipId);
+  .get(prodPipId)
+  .patch(prodPipUpPre);
 
 export default produtoRouter;

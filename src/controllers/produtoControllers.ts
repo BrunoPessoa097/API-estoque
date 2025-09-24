@@ -113,3 +113,18 @@ export const produtoId = async(req: Request, res: Response<{dado?: any  | null, 
     })
   }
 }
+
+/**
+ * @description Atualizar preço
+ * @author Bruno Pessoa
+ */
+export const produtoUpdatePreco = async(req: Request, res: Response) => {
+  try{
+    res.status(200).json({message:'ok'});
+  }catch(erro){
+    res.status(500).json({
+      message: 'Server Erro',
+      erro
+    })
+  }
+}
