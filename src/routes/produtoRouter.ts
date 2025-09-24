@@ -78,6 +78,33 @@ produtoRouter.route('/produtos')
  *     description: Produto não existe
  *    500:
  *     description: Server error
+ *
+ *  patch:
+ *   summary: Atualizar preço de produto 
+ *   tags: [Produtos]
+ *   parameters:
+ *    - name: id
+ *      in: path
+ *      required: true
+ *      schema:
+ *       type: string
+ *      description: ID à ser selecionado
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       properties:
+ *        preco:
+ *         type: number
+ *   responses:
+ *    201:
+ *     description: Atualizado preço
+ *    404:
+ *     description: Erro ao atualizar preço
+ *    500:
+ *     description: Server error
  */
 produtoRouter.route('/produtos/:id')
   .get(prodPipId)

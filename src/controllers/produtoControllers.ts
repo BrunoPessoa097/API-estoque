@@ -96,6 +96,7 @@ export const produtoId = async(req: Request, res: Response<{dado?: any  | null, 
       id: dados?._id,
       nome: dados?.nome || null,
       quantidade: dados?.quantidade || null,
+      preco: dados?.preco || null,
       marca: (dados?.id_marca as any)?.nome || null,
       categoria: (dados?.id_categoria as any)?.nome || null
     }
@@ -110,7 +111,7 @@ export const produtoId = async(req: Request, res: Response<{dado?: any  | null, 
     res.status(500).json({
       message: 'Server Error',
       error
-    })
+    });
   }
 }
 
@@ -120,11 +121,22 @@ export const produtoId = async(req: Request, res: Response<{dado?: any  | null, 
  */
 export const produtoUpdatePreco = async(req: Request, res: Response) => {
   try{
-    res.status(200).json({message:'ok'});
+    // recebendo o id e o preco novo
+    const id: string = req.params.id;
+    const { preco } = req.body;
+
+    // atualizando o valor de preco
+    const dados: produtoDocument | null = await produtoMongo.findByIdAndUpdate(id,{preco});
+
+    // saida da atualização ou erro
+    res.status(dados? 201: 404).json({
+      message: dados? 'Atualizado preco': 'Erro ao atualizar'
+    });
+    
   }catch(erro){
     res.status(500).json({
       message: 'Server Erro',
       erro
-    })
+    });
   }
 }
