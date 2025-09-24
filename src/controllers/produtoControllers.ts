@@ -79,3 +79,37 @@ export const produtoList = async(req: Request, res: Response) => {
     });
   }
 }
+
+/**
+ * @description Buscar único 
+ * @author Bruno Pessoa
+ */
+export const produtoId = async(req: Request, res: Response<{dado?: any  | null, message?: string, error?:any}>) => {
+  try{
+    // recendo o Id do produto 
+    const id: string = req.params.id;
+
+    const dados: produtoDocument | null = await produtoMongo.findById(id).populate('id_marca','nome').populate('id_categoria','nome');
+
+    // padronizando a saida
+    const dado: object = {
+      id: dados?._id,
+      nome: dados?.nome || null,
+      quantidade: dados?.quantidade || null,
+      marca: (dados?.id_marca as any)?.nome || null,
+      categoria: (dados?.id_categoria as any)?.nome || null
+    }
+
+    // resposta saida
+    res.status(dados? 200: 404).json({
+      dado: dados? dado: 'Informação nao encontrada'
+    });
+  }
+  // erro do servidor
+  catch(error){
+    res.status(500).json({
+      message: 'Server Error',
+      error
+    })
+  }
+}

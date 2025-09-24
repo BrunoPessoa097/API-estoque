@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { prodPipAdd, prodPipList } from '../pipelines/produtoPipelines';
+import { prodPipAdd, prodPipList, prodPipId } from '../pipelines/produtoPipelines';
 
 const produtoRouter: Router = Router();
 
@@ -57,5 +57,29 @@ const produtoRouter: Router = Router();
 produtoRouter.route('/produtos')
   .post(prodPipAdd)
   .get(prodPipList);
+
+/**
+ * @swagger
+ * /produtos/{id}:
+ *  get:
+ *   summary: Buscar único produto 
+ *   tags: [Produtos]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: ID à ser buscado
+ *   responses:
+ *    200:
+ *     description: Listar o produto
+ *    404:
+ *     description: Produto não existe
+ *    500:
+ *     description: Server error
+ */
+produtoRouter.route('/produtos/:id')
+  .get(prodPipId);
 
 export default produtoRouter;
