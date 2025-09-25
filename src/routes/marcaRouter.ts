@@ -113,7 +113,7 @@ marcaRouter.route('/marca')
  *        type: string
  *       description: Informe um ID da Marca válido.
  *   responses:
- *    204:
+ *    203:
  *     description: Deletado
  *    404:
  *     description: Não encontrado.

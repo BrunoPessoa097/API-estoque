@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 // Import locais.
 import marcaMongo from '../schemas/mongoose/marcaSchema';
+import produtoMongo from '../schemas/mongoose/produtoSchema';
+import produtoInput, { produtoDocument } from '../interfaces/produtoInterface';
 import marcaInput,{ marcaDocument } from '../interfaces/marcaInterface';
 
 /**
@@ -139,13 +141,25 @@ export const marcaUpdate = async(req: Request, res: Response) => {
  */
 export const marcaDelete = async(req: Request, res: Response<{dado?:string} | {message?: string, error?:any}>) => {
   try {
+    // recebendo id para ser excluido
     const id: string = req.params.id;
 
-    const exclui: marcaDocument | null = await marcaMongo.findByIdAndDelete(id);
+    // verificando se existe produto vinculado a marca
+    const exitProdu: any = await produtoMongo.exists({id_marca: id})
 
-    res.status(exclui?203: 404).json({
-      dado: exclui? "Excluido": "Nao existe o ID para ser excluido"
-    })
+    // se existe produto vinculado a marca, não e permitido a exclusão 
+    if(exitProdu?._id){
+      res.status(404).json({
+        message: 'Marca não pode ser excluida pois existe produtos relacionados'
+      });
+    }
+    // senão existe produto vinculado à marca
+    else{
+      const exclui: marcaDocument | null = await marcaMongo.findByIdAndDelete(id);
+      res.status(exclui?203: 404).json({
+        dado: exclui? "Excluido": "Nao existe o ID para ser excluido"
+      })
+    }
   }
   // Error no servirdor.
   catch(error){
