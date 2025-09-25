@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { prodPipAdd, prodPipList, prodPipId, prodPipUpPre, prodPipUpdate } from '../pipelines/produtoPipelines';
+import { prodPipAdd, prodPipList, prodPipId, prodPipUpdate } from '../pipelines/produtoPipelines';
 
 const produtoRouter: Router = Router();
 

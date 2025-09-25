@@ -116,32 +116,6 @@ export const produtoId = async(req: Request, res: Response<{dado?: any  | null, 
 }
 
 /**
- * @description Atualizar preço
- * @author Bruno Pessoa
- */
-export const produtoUpdatePreco = async(req: Request, res: Response) => {
-  try{
-    // recebendo o id e o preco novo
-    const id: string = req.params.id;
-    const { preco } = req.body;
-
-    // atualizando o valor de preco
-    const dados: produtoDocument | null = await produtoMongo.findByIdAndUpdate(id,{preco});
-
-    // saida da atualização ou erro
-    res.status(dados? 201: 404).json({
-      message: dados? 'Atualizado preco': 'Erro ao atualizar'
-    });
-    
-  }catch(erro){
-    res.status(500).json({
-      message: 'Server Erro',
-      erro
-    });
-  }
-}
-
-/**
  * @description Atualizar a quantidade
  * @author Bruno Pessoa
  */
