@@ -118,7 +118,6 @@ produtoRouter.route('/produtos')
  */
 produtoRouter.route('/produtos/:id')
   .get(prodPipId)
-  //.patch(prodPipUpPre)
   .patch(prodPipUpdate);
 
 export default produtoRouter;
