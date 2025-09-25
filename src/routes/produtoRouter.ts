@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { prodPipAdd, prodPipList, prodPipId, prodPipUpdate } from '../pipelines/produtoPipelines';
+import { prodPipAdd, prodPipList, prodPipId, prodPipUpdate, prodPipDelete } from '../pipelines/produtoPipelines';
 
 const produtoRouter: Router = Router();
 
@@ -115,9 +115,28 @@ produtoRouter.route('/produtos')
  *     description: Nome já exist
  *    500:
  *     description: Server error
+ * 
+ *  delete:
+ *   summary: Deletar produto
+ *   tags: [Produtos]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: Informe um ID válido.
+ *   responses:
+ *    203:
+ *     description: Deletado
+ *    404:
+ *     description: Não encontrado.
+ *    500:
+ *     description: Server Error
  */
 produtoRouter.route('/produtos/:id')
   .get(prodPipId)
-  .patch(prodPipUpdate);
+  .patch(prodPipUpdate)
+  .delete(prodPipDelete);
 
 export default produtoRouter;

@@ -7,6 +7,10 @@ import produtoMongo from '../schemas/mongoose/produtoSchema';
 import marcaMongo from '../schemas/mongoose/marcaSchema';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
 
+/**
+ * @description Adicionanr produto
+ * @author Bruno Pessoa
+ */
 export const produtoAdd = async(req: Request, res: Response) => {
   try{
     // desestruturando.
@@ -175,6 +179,32 @@ export const produtoUpdate = async(req: Request, res: Response<{message?: string
   catch(error: any){
     res.status(500).json({
       message: 'Server Erro',
+      error
+    });
+  }
+}
+
+/**
+ * @description Excluir produto
+ * @author Bruno Pessoa
+ */
+export const produtoDelete = async(req: Request, res: Response) => {
+  try{
+    // id do produto a ser excluído 
+    const id: string = req.params.id;
+
+    // exluido o produto
+    const dados: produtoDocument | null = await produtoMongo.findByIdAndDelete(id);
+
+    // saída do usuário 
+    res.status(dados? 203: 440).json({
+      message: dados? 'Excluido' : 'Error ao deletar'
+    });
+  }
+  // server error
+  catch(error){
+    res.status(500).json({
+      message: 'Server error',
       error
     });
   }
