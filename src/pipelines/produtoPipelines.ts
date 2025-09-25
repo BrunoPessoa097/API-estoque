@@ -19,12 +19,6 @@ export const prodPipId = compose(
   produtoId
 );
 
-// atualizar preco.
-export const prodPipUpPre = compose(
-  produtoPrecoValidar,
-  produtoUpdatePreco
-);
-
 // atualizar os campos de produto
 export const prodPipUpdate = compose(
   produtoVerificar,
