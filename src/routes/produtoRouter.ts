@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { prodPipAdd, prodPipList, prodPipId, prodPipUpPre } from '../pipelines/produtoPipelines';
+import { prodPipAdd, prodPipList, prodPipId, prodPipUpPre, prodPipUpdate } from '../pipelines/produtoPipelines';
 
 const produtoRouter: Router = Router();
 
@@ -80,7 +80,7 @@ produtoRouter.route('/produtos')
  *     description: Server error
  *
  *  patch:
- *   summary: Atualizar preço de produto 
+ *   summary: Atualizar um ou mais campos de produto 
  *   tags: [Produtos]
  *   parameters:
  *    - name: id
@@ -96,18 +96,29 @@ produtoRouter.route('/produtos')
  *      schema:
  *       type: object
  *       properties:
+ *        nome:
+ *         type: string
+ *        quantidade:
+ *         type: number
  *        preco:
  *         type: number
+ *        id_marca:
+ *         type: string
+ *        id_categoria:
+ *         type: string
  *   responses:
  *    201:
- *     description: Atualizado preço
+ *     description: Atualizado
  *    404:
- *     description: Erro ao atualizar preço
+ *     description: Erro ao atualizar
+ *    409:
+ *     description: Nome já exist
  *    500:
  *     description: Server error
  */
 produtoRouter.route('/produtos/:id')
   .get(prodPipId)
-  .patch(prodPipUpPre);
+  //.patch(prodPipUpPre)
+  .patch(prodPipUpdate);
 
 export default produtoRouter;
