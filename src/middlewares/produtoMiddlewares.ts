@@ -16,11 +16,11 @@ export const produtoVerificar = (req: Request<{}, {}, produtoInput>, res: Respon
 
     // removendo espaços em branco.
     req.body = {
-      nome: nome.trim(),
-      quantidade,
-      preco,
-      id_marca,
-      id_categoria
+      ...(nome && {nome: nome.trim()}),
+      ...(quantidade && {quantidade}),
+      ...(preco && {preco}),
+      ...(id_marca && {id_marca}),
+      ...(id_categoria && {id_categoria})
     }
 
     // verificando as entradas com joi
@@ -58,11 +58,11 @@ export const produtoPadronizar = (req: Request<{}, {}, produtoInput>, res: Respo
 
     // padronização 
     req.body = {
-      nome: palavraMaiuscula(nome),
-      quantidade,
-      preco: numDecimal(preco),
-      id_marca,
-      id_categoria
+      ...(nome && {nome: palavraMaiuscula(nome)}),
+      ...(quantidade && {quantidade}),
+      ...(preco && {preco: numDecimal(preco)}),
+      ...(id_marca && {id_marca}),
+      ...(id_categoria && {id_categoria})
     }
     // resposta
     next();
