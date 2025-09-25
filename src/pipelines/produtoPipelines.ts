@@ -1,6 +1,6 @@
 import { compose }from './_compose';
 import { produtoVerificar, produtoPadronizar, produtoPrecoValidar } from '../middlewares/produtoMiddlewares';
-import { produtoAdd, produtoList, produtoId, produtoUpdatePreco} from '../controllers/produtoControllers';
+import { produtoAdd, produtoList, produtoId, produtoUpdatePreco, produtoUpdate } from '../controllers/produtoControllers';
 
 // adicionanr produto.
 export const prodPipAdd = compose(
@@ -23,4 +23,11 @@ export const prodPipId = compose(
 export const prodPipUpPre = compose(
   produtoPrecoValidar,
   produtoUpdatePreco
+);
+
+// atualizar os campos de produto
+export const prodPipUpdate = compose(
+  produtoVerificar,
+  produtoPadronizar,
+  produtoUpdate
 );
