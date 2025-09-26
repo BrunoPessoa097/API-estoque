@@ -8,23 +8,26 @@ dotenv.config();
  * @author Bruno Pessoa
  */
 const mongoConn = async() => {
-  // Recendo a URL do banco.
-  const url: string = `${process.env.MONGO_BD_URI}/${process.env.MONGO_DB_DATABASE}`;
+  try{
+    // Recendo a URL do banco.
+    const url: string = `${process.env.MONGO_BD_URI}/${process.env.MONGO_DB_DATABASE}`;
 
-  // Verificando a existência do endereço.
-  if(!url){
+    // Verificando a existência do endereço.
+    if(!url){
+      process.exit(1);
+    }
+
+    // conectando com o banco
+    await mongoose.connect(url);
+    console.log('Banco conectado');
+  }
+  // caso de erro de conectar
+  catch(error){
+    console.log('Falha ao conectar ao banco');
+    console.log(error);
     process.exit(1);
   }
-
-  // Fazendo a conexão com o banco de dados
-  await mongoose.connect(url)
-    .then(() => {
-      console.log('Banco conectado!');
-    }).catch((erro) => {
-      console.log('Problemas ao se conectar ao banco');
-      console.error(erro.errorResponse);
-      process.exit(1);
-    });
 }
 
+// export
 export default mongoConn;
