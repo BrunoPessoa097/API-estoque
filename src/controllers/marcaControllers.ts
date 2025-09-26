@@ -102,27 +102,30 @@ export const marcaUpdate = async(req: Request, res: Response) => {
   try{
     // Recebendo Id.
     const id: string = req.params.id;
-    // Adicionando informações para ser atualizada.
-    const marcaAtual: marcaInput = {
-      ...req.body
-    };
+    const nome: string = req.body.nome;
 
-    // Verificando se existe nome ja registrado.
-    const verificar: marcaDocument | null = await marcaMongo.findOne({nome: req.body.nome});
+    //const exist: any = marcaMongo.exists({nome});
+    const exist: boolean = (await marcaMongo.exists({ nome })) !== null;
 
-    // em caso que exista.
-    if(verificar){
+    // se nome ja existe não atualizar
+    if(exist){
       res.status(409).json({
-        message: 'Nao pode existir empresas com mesmo nome'
+        message: 'Nome do produto ja existe'
       });
     }
-    else {
-      // Atualizando.
+    //atualize  
+    else{
+      // Adicionando informações para ser atualizada.
+      const marcaAtual: Partial<marcaInput> = {
+        ...req.body
+      };
+  
+      // dados atualizados
       const dados: marcaDocument | null = await marcaMongo.findByIdAndUpdate(id,marcaAtual);
-
-      // Saida de atualização.
-      res.status(dados?200:404).json({
-        dados: dados? marcaAtual: "Informacao nao existe"
+  
+      // saida para o usuário
+      res.status(dados? 203: 404).json({
+        message: dados? 'Atualizado': 'Erro ao atualizar'
       });
     }
   }

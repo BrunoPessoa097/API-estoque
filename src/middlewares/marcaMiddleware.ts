@@ -9,16 +9,16 @@ import palavraMaiuscula from './_configMiddlewares'
  * @description Verificando se às entradas de marca atende aos requisitos.
  * @author Bruno Pessoa
  */
-export const marcaVerificar = (req: Request<{}, {}, marcaInput>, res: Response<{message?:string, error?: any}>, next: NextFunction) => {
+export const marcaVerificar = (req: Request, res: Response<{message?:string, error?: any}>, next: NextFunction) => {
   try{ 
     // Desustruturando entradas
-    const {nome, nomeSocial, cnpj}: marcaInput = req.body;
+    const {nome, nomeSocial, cnpj}:any = req.body;
 
     // Removendo os espacos em branco das entradas.
     req.body = {
-      nome: nome.trim(),
-      nomeSocial: nomeSocial.trim(),
-      cnpj: cnpj.trim()
+      ...(nome && {nome: nome.trim()}),
+      ...(nomeSocial && {nomeSocial: nomeSocial.trim()}),
+      ...(cnpj && {cnpj: cnpj.trim()})
     }
 
     // Validando se as entradas atenden os requisitos senão mostra os erros.
@@ -48,16 +48,19 @@ export const marcaVerificar = (req: Request<{}, {}, marcaInput>, res: Response<{
 /**
  * @description Padronizar entrada da marca
  */
-export const marcaPadronizar = (req: Request<{},{},marcaInput>, res: Response<{message?:string,error?:any}>, next: NextFunction) => {
+export const marcaPadronizar = (req: Request, res: Response<{message?:string,error?:any}>, next: NextFunction) => {
   try{
     // Desustruturar o req.
     const { nome, nomeSocial, cnpj }: marcaInput = req.body;
 
     // Adicionando as palavras adicionadas
     req.body = {
-      nome: palavraMaiuscula(nome),
-      nomeSocial: palavraMaiuscula(nomeSocial),
-      cnpj
+      ...(nome && {nome: palavraMaiuscula(nome)}),
+      ...(nomeSocial && {nomeSocial: palavraMaiuscula(nomeSocial)}),
+      ...(cnpj && {cnpj})
+      // nome: palavraMaiuscula(nome),
+      // nomeSocial: palavraMaiuscula(nomeSocial),
+      // cnpj
     }
 
     next();

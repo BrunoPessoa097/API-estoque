@@ -69,7 +69,7 @@ marcaRouter.route('/marca')
  *    500:
  *     description: Servidor Error
  *  
- *  put:
+ *  patch:
  *   summary: Atualizar marca
  *   tags: [Marca]
  *   parameters:
@@ -122,7 +122,7 @@ marcaRouter.route('/marca')
  */
 marcaRouter.route('/marca/:id')
   .get(marcaPipId)
-  .put(marcaPipUpdate)
+  .patch(marcaPipUpdate)
   .delete(marcaPipDelete);
 
 export default marcaRouter;
