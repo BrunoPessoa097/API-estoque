@@ -12,7 +12,7 @@ const swaggerOptions: object = {
       version: '0.3.0',
       description:`_API_ de desenvolvimento 
         \n ### Sobre o projeto
-        \n * **Versão:** 1.0.0
+        \n * **Versão:** 0.3.0
         \n * **Licença:** MIT
         \n
         \n #### Criado por
