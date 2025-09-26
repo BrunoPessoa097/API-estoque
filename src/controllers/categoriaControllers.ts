@@ -1,7 +1,10 @@
 import {Request, Response } from 'express';
 // Imports locais.
 import Categoria, { CategoriaDocument } from '../interfaces/categoriaInterfaces';
+import produtoDocument from '../interfaces/produtoInterface';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
+import produtoMongo from '../schemas/mongoose/produtoSchema';
+
 /**
  * @description Adicionar ao banco de dados.
  * @author Bruno Pessoa
@@ -138,22 +141,24 @@ export const categoriaDelete = async(req: Request, res: Response<{dados?:Categor
     // Recebendo o id
     const id: string = req.params.id;
 
-    // Verificando se a informação existe.
-    const exist: CategoriaDocument | null = await categoriaMongo.findById(id);
+    // verificando se existe categoria vinculado ao produto
+    const existP: any = await produtoMongo.exists({id_categoria: id});
 
-    if(exist){
-      // Excluindo do banco de dados.
+    // se existe não pode excluir
+    if(existP?._id){
+      res.status(404).json({
+        message: "Não pode excluir Categoria que está vinculada ao produto"
+      });
+    }
+    // excluir senão tiver categoria vinculada ao produto
+    else{
+      // excluindo
       const dados: CategoriaDocument | null = await categoriaMongo.findByIdAndDelete(id);
 
-      res.status(dados? 203:404).json({
-        dados: dados? "Removido": "Error ao remover"
-      })
-    }
-    // Caso nao existe a informação.
-    else{
-      res.status(404).json({
-        message: 'Id inexistente ou inválido'
-      })
+      // saida do usuario
+      res.status(dados? 203: 404).json({
+        message: dados? 'Excluído com sucesso': 'Erro ao excluir'
+      });
     }
   }
   // Erro no servidor.
