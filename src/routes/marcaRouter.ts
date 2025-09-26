@@ -71,6 +71,7 @@ marcaRouter.route('/marca')
  *  
  *  patch:
  *   summary: Atualizar marca
+ *   description: Atualizar um ou mais campos de marca
  *   tags: [Marca]
  *   parameters:
  *    - name: id
