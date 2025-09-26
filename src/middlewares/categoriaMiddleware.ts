@@ -13,13 +13,16 @@ import palavraMaiuscula from './_configMiddlewares';
  * @returns Em caso de categoria estiver validos e aprovado, senão retorna erro.
  * @author Bruno Pessoa
  */
-export const categoriaValidar = (req: Request<{}, {}, Categoria>, res: Response, next: NextFunction) => {
+export const categoriaValidar = (req: Request, res: Response, next: NextFunction) => {
   try {
     // Desustruturação do req.
-    const { nome, descricao }: Categoria = req.body;
+    const { nome, descricao }: Partial<Categoria> = req.body;
 
     // Remoção de espaços vazios.
-    req.body = {nome: nome.trim(), descricao: descricao.trim()}
+    req.body = {
+      ...(nome && {nome: nome.trim()}),
+      ...(descricao && {descricao: descricao.trim()})
+    }
 
     // Validando as entradas com o Categoria Joi.
     const { error, value } = categoriaJoi.validate(req.body,{abortEarly: false});
@@ -52,15 +55,15 @@ export const categoriaValidar = (req: Request<{}, {}, Categoria>, res: Response,
  * @param next
  * @author Bruno Pessoa
  */
-export const categoriaPadronizar = async(req: Request<{},{}, Categoria>, res: Response, next: NextFunction) => {
+export const categoriaPadronizar = async(req: Request, res: Response, next: NextFunction) => {
   try{
     // Desustrutura o req.
-    const { nome, descricao }: Categoria = req.body;
+    const { nome, descricao }: Partial<Categoria> = req.body;
 
     // Padronização das entradas de categoria.
     req.body = {
-      nome: await palavraMaiuscula(nome),
-      descricao: await palavraMaiuscula(descricao)
+      ...(nome && {nome: palavraMaiuscula(nome)}),
+      ...(descricao && {descricao: palavraMaiuscula(descricao)})
     }
 
     next();

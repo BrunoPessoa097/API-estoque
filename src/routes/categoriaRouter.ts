@@ -68,8 +68,9 @@ categoriaRouter.route('/categoria')
  *     description: Categoria não encontrada
  *    500:
  *     description: Servidor Error
- *  put:
+ *  patch:
  *   summary: Atualizar Categoria
+ *   description: Atualizar um ou mais campos de categoria
  *   tags: [Categoria]
  *   parameters:
  *    - name: id
@@ -94,6 +95,8 @@ categoriaRouter.route('/categoria')
  *     description: Atualizado.
  *    404:
  *     description: Erro
+ *    409:
+ *     description: Informação existente
  *    500:
  *     description: Servidor error
  * 
@@ -117,7 +120,7 @@ categoriaRouter.route('/categoria')
  */
 categoriaRouter.route('/categoria/:id')
   .get(catPipId)
-  .put(catPipUpdate)
+  .patch(catPipUpdate)
   .delete(catPipDelete);
 
 export default categoriaRouter;

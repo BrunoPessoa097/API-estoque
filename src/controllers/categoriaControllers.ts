@@ -99,29 +99,45 @@ export const categoriaUpdate = async(req: Request,res: Response<{dados?:string}|
   try{
     // Recebendo o ID para atualizar.
     const id: string = req.params.id;
-
-    // Recebendo os valores para atualizar.
-    const categoriaUpdt: CategoriaDocument= {
-      ...req.body
-    }
-    
-    // Verificando a existência.
-    const exist: CategoriaDocument | null = await categoriaMongo.findById(id);
+    const nome: string = req.body.nome;
+    const exist: boolean = !!(await categoriaMongo.exists({nome}));
 
     if(exist){
-      // Atualizando os valores.
+      res.status(409).json({
+        message: 'Nome já existe na categoria'
+      })
+    }else{
+      // Recebendo os valores para atualizar.
+      const categoriaUpdt: CategoriaDocument= {
+        ...req.body
+      }
+
       const dados: CategoriaDocument| null = await categoriaMongo.findByIdAndUpdate(id, categoriaUpdt);
 
       res.status(dados? 200: 404).json({
         dados: dados? "Dados atualizados": "Error ao atualizar"
       })
+      
     }
-    // Caso a informação não exista.
-    else{
-      res.status(404).json({
-        message: "nao existe"
-      });
-    }
+
+   
+
+    //console.log(categoriaUpdt);
+    // // Verificando a existência.
+    // const exist: CategoriaDocument | null = await categoriaMongo.findById(id);
+
+    // if(exist){
+    //   // Atualizando os valores.
+    //   const dados: CategoriaDocument| null = await categoriaMongo.findByIdAndUpdate(id, categoriaUpdt);
+
+    
+    // }
+    // // Caso a informação não exista.
+    // else{
+    //   res.status(404).json({
+    //     message: "nao existe"
+    //   });
+    // }
   }
   // Erro do servidor.
   catch(error){
