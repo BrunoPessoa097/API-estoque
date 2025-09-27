@@ -13,7 +13,7 @@ const produtoRouter: Router = Router();
  * @swagger
  * /produtos:
  *  post:
- *    summary:  Rota para adicionar nivel
+ *    summary:  Rota para adicionar produto
  *    description: Criar Produto
  *    tags: [Produtos]
  *    requestBody:
