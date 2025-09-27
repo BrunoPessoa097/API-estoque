@@ -19,6 +19,10 @@ Uma API para gerenciamento de um estoque.
 
 ## Funcionabilidade
 - `GET /` - Rota principal.
+- `GET /categoria`- Rota categoria.
+- `GET /marca`- Rota marca.
+- `GET /nivel`- Rota nivel.
+- `GET /produto`- Rota produto.
 - `api-docs` - Rota para documentação da _API_.
 - `404` - Rota não encontrada.
 
@@ -107,7 +111,7 @@ Uma API para gerenciamento de um estoque.
   ```
 * **Saida da requisição**:
   ```json
-     # Sucesso
+     #Sucesso
      {
        "message": "Adicionado categoria"
      }
@@ -146,6 +150,24 @@ Uma API para gerenciamento de um estoque.
      #Sucesso
      {
        "message": "Adicionado marca"
+     }
+     #Error
+     {
+       "message": "Erro ao adicionar"
+     }
+  ```
+### _Endpoint_ `/produto`
+* **Descrição**: Adicionar produto
+* **Método**: POST
+* **Exemplo da requisição**
+  ```shell
+     POST /produto
+  ```
+* **Saida da requisição**:
+  ```json
+     #Sucesso
+     {
+       "message": "Adicionado produto"
      }
      #Error
      {
