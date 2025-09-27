@@ -1,3 +1,4 @@
+// pessoa entrada do usuário
 interface pessoaInput {
   nome: string;
   endereco: string;
@@ -5,3 +6,6 @@ interface pessoaInput {
   nivel: string;
   senha: string;
 }
+
+// export
+export default pessoaInput
