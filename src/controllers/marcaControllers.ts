@@ -18,8 +18,8 @@ export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{da
     });
 
     // Buscando se informações existem.
-    const existNome = await marcaMongo.findOne({nome: req.body.nome});
-    const existCnpj = await marcaMongo.findOne({cnpj: req.body.cnpj});
+    const existNome = !!(await marcaMongo.exists({nome: req.body.nome}));
+    const existCnpj = !!(await marcaMongo.exists({cnpj: req.body.cnpj}));
 
     if(!existNome && !existCnpj){
       // Salvando dados.
@@ -105,12 +105,12 @@ export const marcaUpdate = async(req: Request, res: Response) => {
     const nome: string = req.body.nome;
 
     //const exist: any = marcaMongo.exists({nome});
-    const exist: boolean = (await marcaMongo.exists({ nome })) !== null;
+    const exist: boolean = !!(await marcaMongo.exists({ nome }));
 
     // se nome ja existe não atualizar
     if(exist){
       res.status(409).json({
-        message: 'Nome do produto ja existe'
+        message: 'Nome do produto já existe'
       });
     }
     //atualize  
@@ -148,10 +148,10 @@ export const marcaDelete = async(req: Request, res: Response<{dado?:string} | {m
     const id: string = req.params.id;
 
     // verificando se existe produto vinculado a marca
-    const exitProdu: any = await produtoMongo.exists({id_marca: id})
+    const exitProdu: any = !!(await produtoMongo.exists({id_marca: id}));
 
     // se existe produto vinculado a marca, não e permitido a exclusão 
-    if(exitProdu?._id){
+    if(exitProdu){
       res.status(404).json({
         message: 'Marca não pode ser excluida pois existe produtos relacionados'
       });
