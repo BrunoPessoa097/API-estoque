@@ -13,7 +13,7 @@ Uma API para gerenciamento de um estoque.
 9. [Licença](#licenca)
 
 ## Informações Sobre o Projeto 
-- **Versão:** 0.3.0
+- **Versão:** 0.4.0
 - **Status:** Em desenvolvimento
 - **Licensa:** Proprietário 
 
