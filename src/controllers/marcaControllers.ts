@@ -18,12 +18,12 @@ export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{da
     });
 
     // Buscando se informações existem.
-    const existNome = !!(await marcaMongo.exists({nome: req.body.nome}));
-    const existCnpj = !!(await marcaMongo.exists({cnpj: req.body.cnpj}));
+    const existNome: boolean = !!(await marcaMongo.exists({nome: req.body.nome}));
+    const existCnpj: boolean = !!(await marcaMongo.exists({cnpj: req.body.cnpj}));
 
     if(!existNome && !existCnpj){
       // Salvando dados.
-      const dados:marcaDocument =  await marcaNova.save();
+      const dados: marcaDocument =  await marcaNova.save();
 
       res.status(dados?201: 404).json({
         dados: dados? "Marca adicionada": "Error ao adicionar"
@@ -47,7 +47,7 @@ export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{da
 }
 
 /**
- * @description Listar marcas
+ * @description Listar marcas 
  * @author Bruno Pessoa
  */
 export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[] | null| string}|{message?:string, error?:any}>) =>{
@@ -76,7 +76,7 @@ export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[
 export const marcaId = async(req: Request, res: Response<{dados: marcaDocument | null | string}|{message?:string,error?:any}>) => {
   try{
     // Recebendo Id
-    const id : string = req.params.id;
+    const id: string = req.params.id;
 
     // Buscando id
     const dados: marcaDocument | null = await marcaMongo.findById(id);
@@ -148,7 +148,7 @@ export const marcaDelete = async(req: Request, res: Response<{dado?:string} | {m
     const id: string = req.params.id;
 
     // verificando se existe produto vinculado a marca
-    const exitProdu: any = !!(await produtoMongo.exists({id_marca: id}));
+    const exitProdu: boolean = !!(await produtoMongo.exists({id_marca: id}));
 
     // se existe produto vinculado a marca, não e permitido a exclusão 
     if(exitProdu){
