@@ -17,7 +17,7 @@ export const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Respons
     });
 
     // Verificando se existe à categoria.
-    const busca = await categoriaMongo.findOne({nome: req.body.nome});
+    const busca: boolean = !!(await categoriaMongo.exists({nome: req.body.nome}));
 
     // Caso não exista.
     if(!busca){
@@ -75,7 +75,7 @@ export const categoriaUnico = async(req: Request, res: Response<{dados: Categori
     // Receber o id.
     const id:string = req.params.id; 
 
-    // Buscando categoria prlo id.
+    // Buscando categoria pelo id.
     const dados: CategoriaDocument | null = await categoriaMongo.findById(id);
 
     res.status(dados? 200: 404).json({
@@ -118,26 +118,7 @@ export const categoriaUpdate = async(req: Request,res: Response<{dados?:string}|
         dados: dados? "Dados atualizados": "Error ao atualizar"
       })
       
-    }
-
-   
-
-    //console.log(categoriaUpdt);
-    // // Verificando a existência.
-    // const exist: CategoriaDocument | null = await categoriaMongo.findById(id);
-
-    // if(exist){
-    //   // Atualizando os valores.
-    //   const dados: CategoriaDocument| null = await categoriaMongo.findByIdAndUpdate(id, categoriaUpdt);
-
-    
-    // }
-    // // Caso a informação não exista.
-    // else{
-    //   res.status(404).json({
-    //     message: "nao existe"
-    //   });
-    // }
+    } 
   }
   // Erro do servidor.
   catch(error){
@@ -158,10 +139,10 @@ export const categoriaDelete = async(req: Request, res: Response<{dados?:Categor
     const id: string = req.params.id;
 
     // verificando se existe categoria vinculado ao produto
-    const existP: any = await produtoMongo.exists({id_categoria: id});
+    const existP: boolean = !!(await produtoMongo.exists({id_categoria: id}));
 
     // se existe não pode excluir
-    if(existP?._id){
+    if(existP){
       res.status(404).json({
         message: "Não pode excluir Categoria que está vinculada ao produto"
       });
