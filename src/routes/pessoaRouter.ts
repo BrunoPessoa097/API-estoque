@@ -1,12 +1,12 @@
-import { Router } from 'express';
+import { Router } from "express";
 // imports locais
-import pessoaPipAdd from '../pipelines/pessoaPipeline';
+import pessoaPipAdd from "../pipelines/pessoaPipeline";
 
 // construir rota
 const pessoaRouter: Router = Router();
 
-pessoaRouter.route('/pessoa')
-  .get(pessoaPipAdd);
+pessoaRouter.route("/pessoa")
+  .post(pessoaPipAdd);
 
-// export 
+// export
 export default pessoaRouter;
