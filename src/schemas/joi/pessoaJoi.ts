@@ -9,7 +9,7 @@ const pessoaJoi: ObjectSchema<pessoaInput> = Joi.object({
     "string.min": "O nome tem que ter no mínimo {#limit} caracteres",
     "string.max": "O nome tem que ter no máximo {#limit} caracteres"
   }),
-  endereco: Joi.string().min(5).max().messages({
+  endereco: Joi.string().min(5).max(50).messages({
     "string.empty": "endereço não pode estar vazio",
     "string.min": "O endereço tem que ter no mínimo {#limit} caracteres",
     "string.max": "O endereço tem que ter no máximo {#limit} caracteres"
