@@ -1,13 +1,15 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { ObjectSchema } from 'joi';
 // imports locais
 import pessoaInput from '../interfaces/pessoaInterface';
 import pessoaJoi from '../schemas/joi/pessoaJoi';
+import palavraMaiuscula from './_configMiddlewares';
 
 /**
- * @description Padronizar entradas de pessoas
+ * @description Validar entradas de pessoas
+ * @author Bruno Pessoa
  */
-const pessoaPadronizar = (req: Request, res: Response) => {
+export const pessoaValidar = (req: Request<{},{},pessoaInput>, res: Response, next: NextFunction) => {
   try{
     // desistruturando 
     const { nome, endereco, dt_nasc, nivel, senha }: pessoaInput = req.body;
@@ -33,6 +35,7 @@ const pessoaPadronizar = (req: Request, res: Response) => {
     // senão houver erros
     else{
       req.body = value;
+      next();
     }
   }
   // server error
@@ -44,4 +47,31 @@ const pessoaPadronizar = (req: Request, res: Response) => {
   }
 }
 
-export default pessoaPadronizar;
+/**
+ * @description Padronizar as entradas de pessoa
+ * @author Bruno Pessoa
+ */
+export const pessoaPadronizar = (req: Request<{}, {}, pessoaInput>, res: Response) => {
+  try{
+    // desistruturando 
+    const { nome, endereco, dt_nasc, nivel, senha }: pessoaInput = req.body;
+
+    // recriando so com os pametros enviados
+    req.body = {
+      ...(nome && {nome: palavraMaiuscula(nome)}),
+      ...(endereco && {endereco: palavraMaiuscula(endereco)}),
+      ...(dt_nasc && {dt_nasc}),
+      ...(nivel && {nivel: palavraMaiuscula(nivel)}),
+      ...(senha && {senha: senha})
+    }
+
+    console.log(req.body);
+  }
+  // erro do servidor
+  catch(error){
+    res.status(500).json({
+      message: 'Server error',
+      error
+    });
+  }
+}

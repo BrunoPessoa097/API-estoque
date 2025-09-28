@@ -1,8 +1,9 @@
 import { compose } from './_compose';
-import pessoaPadronizar from '../middlewares/pessoaMiddleware';
+import { pessoaValidar, pessoaPadronizar } from '../middlewares/pessoaMiddleware';
 
 // adicionar pessoa
 const pessoaPipAdd = compose(
+  pessoaValidar,
   pessoaPadronizar
 );
 
