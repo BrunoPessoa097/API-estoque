@@ -1,14 +1,20 @@
 import { Request, Response } from 'express';
+// imports locais
+import pessoaServiceAdd from '../services/pessoaServices';
+import pessoaInput from '../interfaces/pessoaInterface';
 
-const pessoaAdd = (req: Request, res:Response) => {
+const pessoaAdd = async(req: Request<{}, {}, pessoaInput>, res:Response) => {
   try{
-    res.status(200).json({message: 'pessoa'})
+    const dados = await pessoaServiceAdd(req.body);
+
+    res.status(200).json({
+      dados
+    });
   }
   // erro do servidor
-  catch(error){
+  catch(error: any){
     res.status(500).json({
-      message: 'Servidor erro',
-      error
+      error: error.message
     })
   }
 }
