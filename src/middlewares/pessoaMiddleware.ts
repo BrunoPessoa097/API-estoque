@@ -51,7 +51,7 @@ export const pessoaValidar = (req: Request<{},{},pessoaInput>, res: Response, ne
  * @description Padronizar as entradas de pessoa
  * @author Bruno Pessoa
  */
-export const pessoaPadronizar = (req: Request<{}, {}, pessoaInput>, res: Response) => {
+export const pessoaPadronizar = (req: Request<{}, {}, pessoaInput>, res: Response, next: NextFunction) => {
   try{
     // desistruturando 
     const { nome, endereco, dt_nasc, nivel, senha }: pessoaInput = req.body;
@@ -65,7 +65,7 @@ export const pessoaPadronizar = (req: Request<{}, {}, pessoaInput>, res: Respons
       ...(senha && {senha: senha})
     }
 
-    console.log(req.body);
+    next();    
   }
   // erro do servidor
   catch(error){
