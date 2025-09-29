@@ -1,9 +1,10 @@
 import { compose } from './_compose';
-import { marcaVerificar, marcaPadronizar} from '../middlewares/marcaMiddleware';
+import { marcaAproRepro, marcaVerificar, marcaPadronizar} from '../middlewares/marcaMiddleware';
 import { marcaAdd, marcaAll, marcaId, marcaUpdate, marcaDelete} from '../controllers/marcaControllers';
 
 // marca adicionar
 export const marcaPipAdd = compose(
+  marcaAproRepro,
   marcaVerificar,
   marcaPadronizar,
   marcaAdd
