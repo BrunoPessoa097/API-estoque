@@ -3,7 +3,7 @@ import { ObjectSchema } from 'joi';
 // Imports locais.
 import marcaInput  from '../interfaces/marcaInterface';
 import marcaJoi from '../schemas/joi/marcaJoi';
-import palavraMaiuscula from './_configMiddlewares'
+import palavraMaiuscula from './_configMiddlewares';
 
 /**
  * @description Verificando se às entradas de marca atende aos requisitos.

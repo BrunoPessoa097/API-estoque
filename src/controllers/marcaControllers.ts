@@ -5,8 +5,11 @@ import produtoMongo from '../schemas/mongoose/produtoSchema';
 import produtoInput, { produtoDocument } from '../interfaces/produtoInterface';
 import marcaInput,{ marcaDocument } from '../interfaces/marcaInterface';
 
+import { listMarca, idMarca, updateMarca, deleteMarca } from '../services/marcaServices';
+
 /**
  * @description Adicionar marca.
+ * @function marcaAdd
  * @author Bruno Pessoa
  */
 export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{dados?:string}|{message?:string,error?:any}>) => {
@@ -47,128 +50,105 @@ export const marcaAdd = async(req: Request<{},{}, marcaInput>, res: Response<{da
 }
 
 /**
- * @description Listar marcas 
+ * @description Listar marcas
+ * @function marcaAll
  * @author Bruno Pessoa
  */
-export const marcaAll = async(req: Request, res: Response<{dados: marcaDocument[] | null| string}|{message?:string, error?:any}>) =>{
+export const marcaAll = async(req: Request, res: Response) =>{
   try{
-    // Buscando todos os dados.
-    const dados: marcaDocument[] | null = await marcaMongo.find();
+    // listar todas as marcas
+    const dados = await listMarca();
 
-    // Saida dos dados.
-    res.status(dados? 200: 404).json({
-      dados: dados? dados: "Sem informação"
+    // retorno dos dados
+    res.status(200).json({
+      dados
     });
   }
-  // Erro no servidor
-  catch(error){
-    res.status(500).json({
-      message: 'Servidor Erro',
-      error
+  // saida dos erros
+  catch(error: any){
+    res.status(404).json({
+      error: error.message 
     });
   }
 }
 
 /**
  * @description Buscar marca
+ * @function marcaId
  * @author Bruno Pessoa
  */
-export const marcaId = async(req: Request, res: Response<{dados: marcaDocument | null | string}|{message?:string,error?:any}>) => {
+export const marcaId = async(req: Request, res: Response) => {
   try{
-    // Recebendo Id
+    // // Recebendo Id
     const id: string = req.params.id;
 
-    // Buscando id
-    const dados: marcaDocument | null = await marcaMongo.findById(id);
+    // recebendo a informação da marca
+    const dado = await idMarca(id);
 
+    // saida das informações
     res.status(200).json({
-      dados: dados? dados: "Informação não encontrada"
+      dado
     });
   }
-  // Erro do servidor
-  catch(error) {
-    res.status(500).json({
-      message: 'Servidor Error',
-      error
+  // erros
+  catch(error:any) {
+    res.status(404).json({
+      error: error.message
     });
   }
 }
 
 /**
  * @description Atualizar Marca
+ * @function marcaUpdate
  * @author Bruno Pessoa
  */
 export const marcaUpdate = async(req: Request, res: Response) => {
   try{
     // Recebendo Id.
     const id: string = req.params.id;
-    const nome: string = req.body.nome;
 
-    //const exist: any = marcaMongo.exists({nome});
-    const exist: boolean = !!(await marcaMongo.exists({ nome }));
+    // construindo o objeto com as informações pedidas
+    const dados: Partial<marcaDocument> = {
+      ...req.body
+    }
 
-    // se nome ja existe não atualizar
-    if(exist){
-      res.status(409).json({
-        message: 'Nome do produto já existe'
-      });
-    }
-    //atualize  
-    else{
-      // Adicionando informações para ser atualizada.
-      const marcaAtual: Partial<marcaInput> = {
-        ...req.body
-      };
-  
-      // dados atualizados
-      const dados: marcaDocument | null = await marcaMongo.findByIdAndUpdate(id,marcaAtual);
-  
-      // saida para o usuário
-      res.status(dados? 203: 404).json({
-        message: dados? 'Atualizado': 'Erro ao atualizar'
-      });
-    }
+    // resultado da saida
+    const up = await updateMarca(id,dados);
+
+    res.status(up? 200: 404).json({
+      message: up? 'Atualizado' : 'Problemas ao atualizar'
+    });
   }
-  // Erro no servidor.
-  catch(error){
+  // Erros.
+  catch(error: any){
     res.status(500).json({
-      message: 'Server Error',
-      error
+      error: error.message
     });
   }
 }
 
 /**
  * @description Excluir marca.
+ * @function marcaDelete
  * @author Bruno Pessoa
  */
-export const marcaDelete = async(req: Request, res: Response<{dado?:string} | {message?: string, error?:any}>) => {
+export const marcaDelete = async(req: Request, res: Response) => {
   try {
     // recebendo id para ser excluido
     const id: string = req.params.id;
 
-    // verificando se existe produto vinculado a marca
-    const exitProdu: boolean = !!(await produtoMongo.exists({id_marca: id}));
-
-    // se existe produto vinculado a marca, não e permitido a exclusão 
-    if(exitProdu){
-      res.status(404).json({
-        message: 'Marca não pode ser excluida pois existe produtos relacionados'
-      });
-    }
-    // senão existe produto vinculado à marca
-    else{
-      const exclui: marcaDocument | null = await marcaMongo.findByIdAndDelete(id);
-      res.status(exclui?203: 404).json({
-        dado: exclui? "Excluido": "Nao existe o ID para ser excluido"
-      })
-    }
+    // deletando a marca
+    const marcaDel = await deleteMarca(id);
+  
+    res.status(203).json({
+      marcaDel:'Excluido'
+    });
   }
-  // Error no servirdor.
-  catch(error){
-    res.status(500).json({
-      message: 'Server Error',
-      error
+  // Erros.
+  catch(error: any){
+    res.status(404).json({
+      error: error.message
     });
   }
 }
