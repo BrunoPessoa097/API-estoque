@@ -13,15 +13,20 @@ import { existNomeCnpj } from '../services/marcaServices';
  */
 export const marcaAproRepro = async(req: Request, res: Response, next: NextFunction) => {
   try{
+    // nome e cnpj para ser validados
     let { nome, cnpj }: Partial<marcaInput> = req.body;
-    
+
+    // se nome existem deixar em maiusculo.
     if(nome) nome = palavraMaiuscula(nome);
-    
+
+    // validando se existe nome e cnpj
     const aprov = !!(await existNomeCnpj(nome,cnpj));
 
+    // senão existir nome, cnpj ou outro paramentro que não necessita de busca
     if(!aprov){
-      next()
+      next();
     }
+    
   }
   catch(error: any){
     res.status(409).json({
