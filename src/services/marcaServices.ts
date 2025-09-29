@@ -1,8 +1,29 @@
-import marcaDocument from '../interfaces/marcaInterface';
+import marcaInput, { marcaDocument } from '../interfaces/marcaInterface';
 import marcaMongo from '../schemas/mongoose/marcaSchema';
 import produtoMongo from '../schemas/mongoose/produtoSchema';
 
-/**
+/** 
+ * @description Adicionar marca
+ * @async
+ * @function addProd
+ * @returns {Promise<marcaDocument>} Retorna uma Promise que retorna marca.
+ * @throws {Error} Lança um erro se não houver informações cadastradas.
+ * @author Bruno Pessoa
+ */
+export const addProd = async(dados: marcaInput): Promise<marcaDocument> => {
+  // criando um objeto de banco tipado
+  const dado: marcaDocument = new marcaMongo({
+    ...dados
+  });
+
+  // salvando no banco
+  const saida: marcaDocument = await dado.save();
+
+  // retorno do registro
+  return saida;
+}
+
+/** 
  * @description Lista todas as marcas cadastradas no banco de dados.
  * @async
  * @function listMarca
