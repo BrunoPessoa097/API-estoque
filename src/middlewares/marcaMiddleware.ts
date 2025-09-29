@@ -4,12 +4,38 @@ import { ObjectSchema } from 'joi';
 import marcaInput  from '../interfaces/marcaInterface';
 import marcaJoi from '../schemas/joi/marcaJoi';
 import palavraMaiuscula from './_configMiddlewares';
+import { existNomeCnpj } from '../services/marcaServices';
+
+/**
+ * @description Verificando se nome e e/ou cnpj já existem.
+ * @function marcaAproRepro
+ * @author Bruno Pessoa
+ */
+export const marcaAproRepro = async(req: Request, res: Response, next: NextFunction) => {
+  try{
+    let { nome, cnpj }: Partial<marcaInput> = req.body;
+    
+    if(nome) nome = palavraMaiuscula(nome);
+    
+    const aprov = !!(await existNomeCnpj(nome,cnpj));
+
+    if(!aprov){
+      next()
+    }
+  }
+  catch(error: any){
+    res.status(409).json({
+      error: error.message
+    });
+  }
+}
 
 /**
  * @description Verificando se às entradas de marca atende aos requisitos.
+ * @function marcaVerificar
  * @author Bruno Pessoa
  */
-export const marcaVerificar = (req: Request, res: Response<{message?:string, error?: any}>, next: NextFunction) => {
+export const marcaVerificar = (req: Request, res: Response, next: NextFunction) => {
   try{ 
     // Desustruturando entradas
     const {nome, nomeSocial, cnpj}:any = req.body;
@@ -48,7 +74,7 @@ export const marcaVerificar = (req: Request, res: Response<{message?:string, err
 /**
  * @description Padronizar entrada da marca
  */
-export const marcaPadronizar = (req: Request, res: Response<{message?:string,error?:any}>, next: NextFunction) => {
+export const marcaPadronizar = (req: Request, res: Response, next: NextFunction) => {
   try{
     // Desustruturar o req.
     const { nome, nomeSocial, cnpj }: marcaInput = req.body;
