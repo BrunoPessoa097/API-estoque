@@ -95,7 +95,7 @@ export const deleteMarca = async(id: string): Promise<marcaDocument> => {
  * @author Bruno Pessoa
  */
 export const  existNome = async(nome: string): Promise<boolean> => {
-  return !!(await marcaMongo.exists({nome}))
+  return !!(await marcaMongo.exists({nome}));
 }
 
 /**
@@ -108,3 +108,42 @@ export const  existNome = async(nome: string): Promise<boolean> => {
 export const vinculoMarcaProd = async(id_marca: string): Promise<boolean> => {
   return !!(await produtoMongo.exists({id_marca}));
 }
+
+/** 
+ * @description Verificar se ja existe CNPJ
+ * @async
+ * @function existNome
+ * @returns {Promise<boolean> } Retorna uma Promise de verdadeiro ou falso.
+ * @author Bruno Pessoa
+ */
+export const existCnpj = async(cnpj: string): Promise<boolean> => {
+  return !!(await marcaMongo.exists({cnpj}));
+}
+
+/** 
+ * @description Verificar se ja existe Nome e CNPJ
+ * @async
+ * @function existNome
+ * @returns {Promise<boolean> } Retorna uma Promise de verdadeiro ou falso.
+ * @author Bruno Pessoa
+ */
+export const existNomeCnpj = async(nome?: string, cnpj?: string): Promise<boolean> => {
+  // verificando se existe nome
+  if(nome){
+    // buscando nome se ja existe
+    const verNome= await existNome(nome);
+    // se existe
+    if(verNome) { throw new Error('Nome já existem')}
+  }
+
+  // verificando se cnpj foi enviado
+  if(cnpj){
+    // validando cnpj
+    const verCnpj= await existCnpj(cnpj);
+    // caso cnpj existe
+    if(verCnpj) { throw new Error('CNPJ já existem')}
+  }
+
+  // se nome e cnpj não existe
+  return false;
+} 
