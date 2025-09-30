@@ -168,3 +168,19 @@ export const existNomeCnpj = async(nome?: string, cnpj?: string): Promise<boolea
   // se nome e cnpj não existe
   return false;
 } 
+
+/** 
+ * @description Verificar se existe marca
+ * @async
+ * @function marcaExist
+ * @returns {Promise<boolean> } Retorna uma Promise de verdadeiro ou falso.
+ * @author Bruno Pessoa
+ */
+export const marcaExist = async(id: string): Promise<boolean> => {
+  // verificando se marca exist.
+  const existM: boolean = !!(await marcaMongo.exists({_id: id}));
+
+  // não existe
+  if(!existM) { throw new Error('Marca não exite')}
+  return true;
+}
