@@ -24,7 +24,7 @@ export const categoriaExist = async(req: Request, res: Response, next: NextFunct
       await nomeCatExist(nome);
     }
     
-    next()
+    next();
   }
   // saida de erros
   catch(error: any){
