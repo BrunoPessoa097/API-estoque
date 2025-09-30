@@ -4,7 +4,7 @@ import Categoria, { CategoriaDocument } from '../interfaces/categoriaInterfaces'
 import produtoDocument from '../interfaces/produtoInterface';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
 import produtoMongo from '../schemas/mongoose/produtoSchema';
-import { addCat, listCat }  from '../services/categoriaServices';
+import { addCat, listCat, unicoCat }  from '../services/categoriaServices';
 
 /**
  * @description Adicionar ao banco de dados.
@@ -56,23 +56,23 @@ export const categoriaAll = async(req: Request, res: Response) => {
  * @description Buscar uma única categoria.
  * @author Bruno Pessoa 
  */
-export const categoriaUnico = async(req: Request, res: Response<{dados: CategoriaDocument| null | string}|{message?: string, error?:any}>) => {
+export const categoriaUnico = async(req: Request, res: Response) => {
   try {
     // Receber o id.
-    const id:string = req.params.id; 
+    const id: string = req.params.id; 
 
-    // Buscando categoria pelo id.
-    const dados: CategoriaDocument | null = await categoriaMongo.findById(id);
+    // recebendo a categoria
+    const dado: CategoriaDocument | null = await unicoCat(id);
 
-    res.status(dados? 200: 404).json({
-      dados: dados? dados: "Informação não encontrada"
-    })
+    // saida
+    res.status(200).json({
+      dado
+    });
   }
-  catch(error){
-    // Erro servidor.
-    res.status(500).json({
-      message: 'Server Error',
-      error
+  catch(error: any){
+    // Erro mensagem
+    res.status(404).json({
+      error: error.message
     });
   }
 }

@@ -53,3 +53,19 @@ export const listCat = async(): Promise<CategoriaDocument[]> => {
   if(dados.length < 1) { throw new Error('Não há informações')}
   return dados;
 }
+
+/** 
+ * @description Pegar unica categoria
+ * @async
+ * @function unicoCat
+ * @returns {Promise<CategoriaDocument> } Retorna uma Promise de uma categoria.
+ * @author Bruno Pessoa
+ */
+export const unicoCat = async(id: string): Promise<CategoriaDocument | null> => {
+  // buscando unica categoria
+  const dado: CategoriaDocument | null = await categoriaMongo.findById(id);
+  
+  // retorno
+  if(!dado) { throw new Error('Não existe o produto informado')}
+  return dado;
+}
