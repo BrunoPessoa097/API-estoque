@@ -6,7 +6,7 @@ import CategoriaDocument from '../interfaces/categoriaInterfaces';
 import produtoMongo from '../schemas/mongoose/produtoSchema';
 import marcaMongo from '../schemas/mongoose/marcaSchema';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
-import { addProdu, listProdu } from '../services/produtoServices';
+import { addProdu, listProdu, unicoProduto } from '../services/produtoServices';
 
 /**
  * @description Adicionanr produto
@@ -35,15 +35,16 @@ export const produtoAdd = async(req: Request<{}, {},produtoInput>, res: Response
   
 /**
  * @description Listar as categorias
+ * @function produtoList
  * @author Bruno Pessoa
  */
-export const produtoList = async(req: Request, res: Response<produtoDocument[]>) => {
+export const produtoList = async(req: Request, res: Response) => {
   try{
     // buscando no banco
     const dadosProd: produtoDocument[] = await listProdu();
 
-    // // padronizando as informações.
-    const dados: object[] | null = dadosProd.map((p: any)=>({
+    // padronizando as informações.
+    const dados: object[] | null  = dadosProd.map((p: any)=>({
       _id: p._id,
       nome: p.nome,
       quantidade: p.quantidade,
@@ -54,51 +55,53 @@ export const produtoList = async(req: Request, res: Response<produtoDocument[]>)
       atualizado_em: p.atualizado_em
     }));
     
-    // //retorno da resposta.
+    // retorno da resposta.
     res.status(200).json({
       dados
     });
   }
   // Server Error
-  catch(error){
+  catch(error: any){
     res.status(500).json({
-      message: 'Server Error',
       error
     });
   }
 }
 
-/**
- * @description Buscar único 
+/** 
+ * @description Buscar único
+ * @function produtoId
  * @author Bruno Pessoa
  */
-export const produtoId = async(req: Request, res: Response<{dado?: any  | null, message?: string, error?:any}>) => {
+export const produtoId = async(req: Request, res: Response) => {
   try{
     // recendo o Id do produto 
     const id: string = req.params.id;
 
-    const dados: produtoDocument | null = await produtoMongo.findById(id).populate('id_marca','nome').populate('id_categoria','nome');
+    // buscando produto
+    const dados: produtoDocument | null = await unicoProduto(id);
 
-    // padronizando a saida
-    const dado: object = {
-      id: dados?._id,
-      nome: dados?.nome || null,
-      quantidade: dados?.quantidade || null,
-      preco: dados?.preco || null,
-      marca: (dados?.id_marca as any)?.nome || null,
-      categoria: (dados?.id_categoria as any)?.nome || null
+    // padronizando
+    const dado: object | null = {
+      _id: dados?._id,
+      nome: dados?.nome,
+      quantidade: dados?.quantidade,
+      preco: dados?.preco,
+      marca: (dados?.id_marca as any)?.nome,
+      categoria: (dados?.id_categoria as any)?.nome,
+      criado_em: dados?.criado_em,
+      atualizado_em: dados?.atualizado_em
     }
 
     // resposta saida
     res.status(dados? 200: 404).json({
-      dado: dados? dado: 'Informação nao encontrada'
+      dado: dado? dado: 'não há informações'
     });
   }
   // erro do servidor
-  catch(error){
+  catch(error: any){
     res.status(500).json({
-      message: 'Server Error',
-      error
+      error: error.message
     });
   }
 }

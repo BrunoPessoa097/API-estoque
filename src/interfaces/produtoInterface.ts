@@ -11,8 +11,8 @@ interface produtoInput {
 
 // produto mongoose
 export interface produtoDocument extends produtoInput, Document {
-  createdAt?: Date;
-  updatedAt?: Date;
+  criado_em?: Date;
+  atualizado_em?: Date;
 }
 
 // export

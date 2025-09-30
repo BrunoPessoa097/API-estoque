@@ -50,3 +50,20 @@ export const listProdu = async(): Promise<produtoDocument[]> => {
   // retorno
   return dados;
 }
+
+/** 
+ * @description pegar produto
+ * @async
+ * @function unicoProduto
+ * @returns {Promise<produtoDocument | null> } Retorna uma Promise de produto ou nulo
+ * @author Bruno Pessoa
+ */
+export const unicoProduto = async(id: string): Promise<any |null> => {
+  // buscando produto
+  const dado: any | null = await produtoMongo.findById(id).populate('id_marca','nome').populate('id_categoria','nome');
+
+  //produto não existe
+  if(!dado) { throw new Error('Produto não encontrado')}
+  // saida se existe
+  return dado;
+}
