@@ -18,12 +18,22 @@ export const nomeCatExist = async(nome?: string): Promise<boolean> => {
   return false;
 }
 
+/** 
+ * @description Verificar se ja existe Nome
+ * @async
+ * @function addCat
+ * @returns {Promise<CategoriaDocument> } Retorna uma Promise de categoria.
+ * @author Bruno Pessoa
+ */
 export const addCat= async(dado: Categoria): Promise<CategoriaDocument> => {
+  // preparando para adicionar categoria
   const catAdd: CategoriaDocument = new categoriaMongo({
     ...dado
   });
 
+  // salvando categoria
   const saida = catAdd.save();
 
+  // retorno
   return saida;
 }
