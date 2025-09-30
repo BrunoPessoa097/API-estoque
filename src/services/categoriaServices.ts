@@ -70,9 +70,18 @@ export const unicoCat = async(id: string): Promise<CategoriaDocument | null> => 
   return dado;
 }
 
+/** 
+ * @description atualizar categoria
+ * @async
+ * @function updtCat
+ * @returns {Promise<CategoriaDocument> } Retorna uma Promise de uma categoria.
+ * @author Bruno Pessoa
+ */
 export const updtCat = async(id: string, dado: Partial<CategoriaDocument>): Promise<CategoriaDocument | null> => {
+  // atualizando as informações
   const dados: CategoriaDocument | null = await categoriaMongo.findByIdAndUpdate(id, dado);
 
+  // saida de erro e de sucesso.
   if(!dados) {throw new Error('Problemas ao atualizar')}
   return dados;
 }
