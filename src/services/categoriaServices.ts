@@ -25,7 +25,7 @@ export const nomeCatExist = async(nome?: string): Promise<boolean> => {
  * @returns {Promise<CategoriaDocument> } Retorna uma Promise de categoria.
  * @author Bruno Pessoa
  */
-export const addCat= async(dado: Categoria): Promise<CategoriaDocument> => {
+export const addCat = async(dado: Categoria): Promise<CategoriaDocument> => {
   // preparando para adicionar categoria
   const catAdd: CategoriaDocument = new categoriaMongo({
     ...dado
@@ -36,4 +36,20 @@ export const addCat= async(dado: Categoria): Promise<CategoriaDocument> => {
 
   // retorno
   return saida;
+}
+
+/** 
+ * @description Listar todas as categorias
+ * @async
+ * @function listCat
+ * @returns {Promise<CategoriaDocument> } Retorna uma Promise uma lista de categoria.
+ * @author Bruno Pessoa
+ */
+export const listCat = async(): Promise<CategoriaDocument[]> => {
+  // buscando todas as informações
+  const dados: CategoriaDocument[] = await categoriaMongo.find();
+
+  // caso não haja registro
+  if(dados.length < 1) { throw new Error('Não há informações')}
+  return dados;
 }

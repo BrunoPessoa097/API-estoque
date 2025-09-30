@@ -4,7 +4,7 @@ import Categoria, { CategoriaDocument } from '../interfaces/categoriaInterfaces'
 import produtoDocument from '../interfaces/produtoInterface';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
 import produtoMongo from '../schemas/mongoose/produtoSchema';
-import { addCat }  from '../services/categoriaServices';
+import { addCat, listCat }  from '../services/categoriaServices';
 
 /**
  * @description Adicionar ao banco de dados.
@@ -33,18 +33,18 @@ export const categoriaAdd = async (req: Request, res: Response) => {
  * @description Lista todas as categorias.
  * @author Bruno Pessoa
  */
-export const categoriaAll = async(req: Request, res: Response<{dados: CategoriaDocument[] | null | string} | {message?: string, error:any}>) => {
+export const categoriaAll = async(req: Request, res: Response) => {
   try{
     // Lista todas as categorias.
-    const dados: CategoriaDocument[] | null = await categoriaMongo.find();
+    const dados: CategoriaDocument[] = await listCat();
 
     // Listando todas as categorias.
-    res.status(dados?200:404).json({ 
-      dados: dados? dados: "Sem Informação"
+    res.status(200).json({ 
+      dados
     });
   }
   // Erro do servidor.
-  catch(error){
+  catch(error: any){
     res.status(500).json({
       message: 'Error no servidor',
       error
