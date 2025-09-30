@@ -22,6 +22,7 @@ export const catPipId = compose(
 
 // atualizar categoria 
 export const catPipUpdate = compose(
+  categoriaExist,
   categoriaValidar,
   categoriaPadronizar,
   categoriaUpdate

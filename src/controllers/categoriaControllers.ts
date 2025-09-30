@@ -4,7 +4,7 @@ import Categoria, { CategoriaDocument } from '../interfaces/categoriaInterfaces'
 import produtoDocument from '../interfaces/produtoInterface';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
 import produtoMongo from '../schemas/mongoose/produtoSchema';
-import { addCat, listCat, unicoCat }  from '../services/categoriaServices';
+import { addCat, listCat, unicoCat, updtCat }  from '../services/categoriaServices';
 
 /**
  * @description Adicionar ao banco de dados.
@@ -31,6 +31,7 @@ export const categoriaAdd = async (req: Request, res: Response) => {
 }
 /**
  * @description Lista todas as categorias.
+ * @function categoriaAll
  * @author Bruno Pessoa
  */
 export const categoriaAll = async(req: Request, res: Response) => {
@@ -46,7 +47,6 @@ export const categoriaAll = async(req: Request, res: Response) => {
   // Erro do servidor.
   catch(error: any){
     res.status(500).json({
-      message: 'Error no servidor',
       error
     });
   }
@@ -54,6 +54,7 @@ export const categoriaAll = async(req: Request, res: Response) => {
 
 /** 
  * @description Buscar uma única categoria.
+ * @function categoriaUnico
  * @author Bruno Pessoa 
  */
 export const categoriaUnico = async(req: Request, res: Response) => {
@@ -81,36 +82,27 @@ export const categoriaUnico = async(req: Request, res: Response) => {
  * @description Atualizar os valores de categoria.
  * @author Bruno Pessoa
  */
-export const categoriaUpdate = async(req: Request,res: Response<{dados?:string}|{message?:string,error?:any}>) => {
+export const categoriaUpdate = async(req: Request,res: Response) => {
   try{
     // Recebendo o ID para atualizar.
     const id: string = req.params.id;
-    const nome: string = req.body.nome;
-    const exist: boolean = !!(await categoriaMongo.exists({nome}));
 
-    if(exist){
-      res.status(409).json({
-        message: 'Nome já existe na categoria'
-      })
-    }else{
-      // Recebendo os valores para atualizar.
-      const categoriaUpdt: CategoriaDocument= {
-        ...req.body
-      }
+    // criando objeto para ser atualizado
+    const uptCat: Partial<Categoria> = {
+      ...req.body
+    }
 
-      const dados: CategoriaDocument| null = await categoriaMongo.findByIdAndUpdate(id, categoriaUpdt);
+    // atualizando as informações
+    const dado: CategoriaDocument | null = await updtCat(id, uptCat);
 
-      res.status(dados? 200: 404).json({
-        dados: dados? "Dados atualizados": "Error ao atualizar"
-      })
-      
-    } 
+    res.status(203).json({
+      inf: 'Atualizado'
+    });
   }
   // Erro do servidor.
-  catch(error){
+  catch(error: any){
     res.status(500).json({
-      message: 'Server Error',
-      error
+      error: error.message
     });
   }
 }

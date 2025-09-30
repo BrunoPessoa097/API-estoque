@@ -69,3 +69,10 @@ export const unicoCat = async(id: string): Promise<CategoriaDocument | null> => 
   if(!dado) { throw new Error('Não existe o produto informado')}
   return dado;
 }
+
+export const updtCat = async(id: string, dado: Partial<CategoriaDocument>): Promise<CategoriaDocument | null> => {
+  const dados: CategoriaDocument | null = await categoriaMongo.findByIdAndUpdate(id, dado);
+
+  if(!dados) {throw new Error('Problemas ao atualizar')}
+  return dados;
+}
