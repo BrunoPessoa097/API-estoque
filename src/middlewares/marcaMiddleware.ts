@@ -17,7 +17,7 @@ export const marcaAproRepro = async(req: Request, res: Response, next: NextFunct
     let { nome, cnpj }: Partial<marcaInput> = req.body;
 
     // se nome existem deixar em maiusculo.
-    if(nome) nome = palavraMaiuscula(nome);
+    if(nome) nome = palavraMaiuscula(nome.trim());
 
     // validando se existe nome e cnpj
     const aprov = !!(await existNomeCnpj(nome,cnpj));
