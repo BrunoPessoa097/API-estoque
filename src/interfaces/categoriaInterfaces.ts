@@ -6,6 +6,6 @@ export default interface Categoria {
 }
 
 export interface CategoriaDocument extends Categoria, Document{
-  createdAt?: Date;
-  updatedAt?: Date
+  criado_em?: Date;
+  atualizado_em?: Date;
 }

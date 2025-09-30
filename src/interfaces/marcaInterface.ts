@@ -7,6 +7,6 @@ export default interface marcaInput {
 }
 // Interface marca documento.
 export interface marcaDocument extends marcaInput, Document {
-  createdAt?: Date;
-  updatedAt?: Date
+  criado_em?: Date;
+  atualizado_em?: Date;
 }

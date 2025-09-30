@@ -8,8 +8,8 @@ interface nivelInput {
 
 // nivel document
 export interface nivelDocument extends nivelInput, Document {
-  createdAt?: Date;
-  updatedAt?: Date;
+  criado_em?: Date;
+  atualizado_em?: Date;
 }
 
 // export
