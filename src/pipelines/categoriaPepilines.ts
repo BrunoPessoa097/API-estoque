@@ -4,10 +4,10 @@ import { categoriaAdd, categoriaAll, categoriaUnico, categoriaUpdate, categoriaD
 
 // adicionar categoria 
 export const catPipAdd = compose(
-  categoriaExist
-  // categoriaValidar,
-  // categoriaPadronizar,
-  // categoriaAdd
+  categoriaExist,
+  categoriaValidar,
+  categoriaPadronizar,
+  categoriaAdd
 );
 
 // listar categoria 

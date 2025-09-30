@@ -4,39 +4,25 @@ import Categoria, { CategoriaDocument } from '../interfaces/categoriaInterfaces'
 import produtoDocument from '../interfaces/produtoInterface';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
 import produtoMongo from '../schemas/mongoose/produtoSchema';
+import { addCat }  from '../services/categoriaServices';
 
 /**
  * @description Adicionar ao banco de dados.
+ * @function categoriaAdd
  * @author Bruno Pessoa
  */
-export const categoriaAdd = async (req: Request<{}, {}, Categoria>, res: Response<{dados: string}|{message?:string, error?:any}>) => {
+export const categoriaAdd = async (req: Request, res: Response) => {
   try{
-    // Criando um objeto com as entradas dos usuários.
-    const categoriaNova: CategoriaDocument = new categoriaMongo({
-      ...req.body
+    // adicionando categoria
+    const dados: CategoriaDocument = await addCat(req.body);
+
+    // saida do usuario
+    res.status(dados? 201: 404).json({
+      message: dados? 'Adicionado': 'Erro ao adicionar'
     });
-
-    // Verificando se existe à categoria.
-    const busca: boolean = !!(await categoriaMongo.exists({nome: req.body.nome}));
-
-    // Caso não exista.
-    if(!busca){
-      // Cadastra a nova categoria.
-      const dados: CategoriaDocument | null = await categoriaNova.save();
-
-      res.status(dados? 200: 404).json({
-        dados: dados? "Marca Adicionanda": "Error ao adicionar"
-      })
-    }
-    // Retorna categoria existente.
-    else{
-      res.status(409).json({
-        message: 'A categoria já existe'
-      });
-    }
   }
   // Erro interno.
-  catch(error){
+  catch(error: any){
     res.status(500).json({
       message: 'Servidor Erro',
       error

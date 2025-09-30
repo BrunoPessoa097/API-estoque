@@ -8,7 +8,7 @@ import categoriaMongo from '../schemas/mongoose/categoriaSchema';
  * @returns {Promise<boolean> } Retorna uma Promise de verdadeiro ou falso.
  * @author Bruno Pessoa
  */
-const nomeCatExist = async(nome?: string): Promise<boolean> => {
+export const nomeCatExist = async(nome?: string): Promise<boolean> => {
   // buscando a existencia de nome.
   const exist = !!(await categoriaMongo.exists({nome}));
 
@@ -18,4 +18,12 @@ const nomeCatExist = async(nome?: string): Promise<boolean> => {
   return false;
 }
 
-export default nomeCatExist;
+export const addCat= async(dado: Categoria): Promise<CategoriaDocument> => {
+  const catAdd: CategoriaDocument = new categoriaMongo({
+    ...dado
+  });
+
+  const saida = catAdd.save();
+
+  return saida;
+}

@@ -4,7 +4,7 @@ import { ObjectSchema } from 'joi';
 import Categoria from '../interfaces/categoriaInterfaces';
 import categoriaJoi from '../schemas/joi/categoriaJoi';
 import palavraMaiuscula from './_configMiddlewares';
-import nomeCatExist from '../services/categoriaServices';
+import { nomeCatExist } from '../services/categoriaServices';
 
 /** 
  * @description Verificar se ja existe Nome
@@ -28,7 +28,7 @@ export const categoriaExist = async(req: Request, res: Response, next: NextFunct
   }
   // saida de erros
   catch(error: any){
-    res.status(500).json({
+    res.status(409).json({
       error: error.message
     })
   }
