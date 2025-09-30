@@ -122,3 +122,20 @@ export const delCat = async(id: string): Promise<CategoriaDocument | null> => {
   // retorno
   return dado;
 }
+
+/** 
+ * @description verificar se categoria existe
+ * @async
+ * @function existCat
+ * @returns {Promise<boolean>} Retorna uma Promise de verdadeiro ou false
+ * @author Bruno Pessoa
+ */
+export const existCat = async(id: string): Promise<boolean> => {
+  // verificando se existe
+  const existC: boolean = !!(await categoriaMongo.exists({_id: id}));
+
+  // se a categoria não existe
+  if(!existC) { throw new Error('Categoria não existe')}
+  // caso existe
+  return true;
+}
