@@ -4,7 +4,7 @@ import Categoria, { CategoriaDocument } from '../interfaces/categoriaInterfaces'
 import produtoDocument from '../interfaces/produtoInterface';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
 import produtoMongo from '../schemas/mongoose/produtoSchema';
-import { addCat, listCat, unicoCat, updtCat }  from '../services/categoriaServices';
+import { addCat, listCat, unicoCat, updtCat, delCat }  from '../services/categoriaServices';
 
 /**
  * @description Adicionar ao banco de dados.
@@ -95,11 +95,11 @@ export const categoriaUpdate = async(req: Request,res: Response) => {
     // atualizando as informações
     const dado: CategoriaDocument | null = await updtCat(id, uptCat);
 
-    res.status(203).json({
-      inf: 'Atualizado'
+    res.status(dado? 203: 404).json({
+      inf: dado? 'Atualizado' : 'Erro ao atualizar'
     });
   }
-  // Erro do servidor.
+  // Erro
   catch(error: any){
     res.status(500).json({
       error: error.message
@@ -111,35 +111,23 @@ export const categoriaUpdate = async(req: Request,res: Response) => {
  * @description Excluir categoria.
  * @author Bruno Pessoa
  */
-export const categoriaDelete = async(req: Request, res: Response<{dados?:CategoriaDocument | string | null }|{message?:string, error?: any}>) => {
+export const categoriaDelete = async(req: Request, res: Response) => {
   try{
     // Recebendo o id
     const id: string = req.params.id;
 
-    // verificando se existe categoria vinculado ao produto
-    const existP: boolean = !!(await produtoMongo.exists({id_categoria: id}));
+    // excluindo categoria
+    const dado: CategoriaDocument | null = await delCat(id);
 
-    // se existe não pode excluir
-    if(existP){
-      res.status(404).json({
-        message: "Não pode excluir Categoria que está vinculada ao produto"
-      });
-    }
-    // excluir senão tiver categoria vinculada ao produto
-    else{
-      // excluindo
-      const dados: CategoriaDocument | null = await categoriaMongo.findByIdAndDelete(id);
-
-      // saida do usuario
-      res.status(dados? 203: 404).json({
-        message: dados? 'Excluído com sucesso': 'Erro ao excluir'
-      });
-    }
+    // saida do resultado
+    res.status(dado? 203: 404).json({
+      inf: dado? 'Deletado com sucesso': 'Erro ao deletar'
+    });
   }
-  // Erro no servidor.
-  catch(error){
-    res.status(500).json({
-      error
+  // Error
+  catch(error: any){
+    res.status(409).json({
+      error: error.message
     });
   }
 }

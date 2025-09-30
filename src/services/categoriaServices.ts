@@ -1,5 +1,6 @@
 import Categoria, { CategoriaDocument } from '../interfaces/categoriaInterfaces';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
+import produtoMongo from '../schemas/mongoose/produtoSchema';
 
 /** 
  * @description Verificar se ja existe Nome
@@ -84,4 +85,40 @@ export const updtCat = async(id: string, dado: Partial<CategoriaDocument>): Prom
   // saida de erro e de sucesso.
   if(!dados) {throw new Error('Problemas ao atualizar')}
   return dados;
+}
+
+/** 
+ * @description verificar a existencia
+ * @async
+ * @function existCatProduto
+ * @returns {Promise<boolean>} Retorna uma Promise verdadeiro ou falso.
+ * @author Bruno Pessoa
+ */
+export const existCatProduto = async(id_categoria: string): Promise<boolean> => {
+  // buscando a existencia
+  const exist: boolean = !!(await produtoMongo.exists({id_categoria}));
+
+  // saida
+  return exist;
+}
+
+/** 
+ * @description deletar categoria
+ * @async
+ * @function delCat
+ * @returns {Promise<CategoriaDocument | null>} Retorna uma Promise de categoria ou nulo
+ * @author Bruno Pessoa
+ */
+export const delCat = async(id: string): Promise<CategoriaDocument | null> => {
+  // verificando a existencia de produto na categoria
+  const val: boolean = !!(await existCatProduto(id));
+
+  // caso categoria tenha vinculo com marca
+  if(val) { throw new Error('Não pode excluir categoria que tem vinculo de produto')}
+
+  // excluir a categoria
+  const dado: CategoriaDocument | null = await categoriaMongo.findByIdAndDelete(id);
+
+  // retorno
+  return dado;
 }
