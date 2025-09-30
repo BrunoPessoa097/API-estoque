@@ -1,9 +1,10 @@
 import { compose }from './_compose';
-import { produtoVerificar, produtoPadronizar, produtoPrecoValidar } from '../middlewares/produtoMiddlewares';
+import { produtoExistEntra, produtoVerificar, produtoPadronizar } from '../middlewares/produtoMiddlewares';
 import { produtoAdd, produtoList, produtoId, produtoUpdate, produtoDelete } from '../controllers/produtoControllers';
 
 // adicionanr produto.
 export const prodPipAdd = compose(
+  produtoExistEntra,
   produtoVerificar,
   produtoPadronizar,
   produtoAdd
