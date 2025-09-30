@@ -1,12 +1,13 @@
 import { compose } from './_compose';
-import { categoriaValidar, categoriaPadronizar } from '../middlewares/categoriaMiddleware';
+import { categoriaExist, categoriaValidar, categoriaPadronizar } from '../middlewares/categoriaMiddleware';
 import { categoriaAdd, categoriaAll, categoriaUnico, categoriaUpdate, categoriaDelete } from '../controllers/categoriaControllers';
 
 // adicionar categoria 
 export const catPipAdd = compose(
-  categoriaValidar,
-  categoriaPadronizar,
-  categoriaAdd
+  categoriaExist
+  // categoriaValidar,
+  // categoriaPadronizar,
+  // categoriaAdd
 );
 
 // listar categoria 

@@ -4,12 +4,39 @@ import { ObjectSchema } from 'joi';
 import Categoria from '../interfaces/categoriaInterfaces';
 import categoriaJoi from '../schemas/joi/categoriaJoi';
 import palavraMaiuscula from './_configMiddlewares';
+import nomeCatExist from '../services/categoriaServices';
+
+/** 
+ * @description Verificar se ja existe Nome
+ * @async
+ * @function categoriaExist
+ * @returns {Promise<boolean> } Retorna uma Promise de verdadeiro ou falso.
+ * @author Bruno Pessoa
+ */
+export const categoriaExist = async(req: Request, res: Response, next: NextFunction) => {
+  try{
+    // recebendo o nome
+    let { nome }: Partial<Categoria> = req.body;
+
+    // Se nome enviado verifica sua existência
+    if(nome) {
+      nome = palavraMaiuscula(nome.trim());
+      await nomeCatExist(nome);
+    }
+    
+    next()
+  }
+  // saida de erros
+  catch(error: any){
+    res.status(500).json({
+      error: error.message
+    })
+  }
+}
 
 /**
  * @description Validar as entradas de categoria com Joi.
- * @param req
- * @param res
- * @param next
+ * @function categoriaValidar
  * @returns Em caso de categoria estiver validos e aprovado, senão retorna erro.
  * @author Bruno Pessoa
  */
@@ -39,7 +66,7 @@ export const categoriaValidar = (req: Request, res: Response, next: NextFunction
       req.body = value;
       next();
     }
-  }catch(error){
+  }catch(error: any){
     // Erro do servidor.
     res.status(500).json({
       message: 'Server Error',
@@ -50,10 +77,8 @@ export const categoriaValidar = (req: Request, res: Response, next: NextFunction
 
 /**
  * @description Padroniza as entradas.
- * @param req
- * @param res
- * @param next
- * @author Bruno Pessoa
+ * @function categoriaPadronizar
+ * @author Bruno Pessoa 
  */
 export const categoriaPadronizar = async(req: Request, res: Response, next: NextFunction) => {
   try{
@@ -68,7 +93,7 @@ export const categoriaPadronizar = async(req: Request, res: Response, next: Next
 
     next();
     
-  }catch(error){
+  }catch(error: any){
     // Error de servidor.
     res.status(500).json({
       message: 'Servidor error',
