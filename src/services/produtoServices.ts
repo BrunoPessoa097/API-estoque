@@ -37,7 +37,16 @@ export const addProdu = async(dados: produtoInput): Promise<produtoDocument> => 
   return salvo
 }
 
+/** 
+ * @description listar produto
+ * @async
+ * @function listProdu
+ * @returns {Promise<produtoDocument> } Retorna uma Promise de produtos
+ * @author Bruno Pessoa
+ */
 export const listProdu = async(): Promise<produtoDocument[]> => {
+  // buscando produtos
   const dados: produtoDocument[] = await produtoMongo.find().populate('id_marca','nome').populate('id_categoria','nome');
+  // retorno
   return dados;
 }
