@@ -6,7 +6,7 @@ import CategoriaDocument from '../interfaces/categoriaInterfaces';
 import produtoMongo from '../schemas/mongoose/produtoSchema';
 import marcaMongo from '../schemas/mongoose/marcaSchema';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
-import { addProdu } from '../services/produtoServices';
+import { addProdu, listProdu } from '../services/produtoServices';
 
 /**
  * @description Adicionanr produto
@@ -37,24 +37,26 @@ export const produtoAdd = async(req: Request<{}, {},produtoInput>, res: Response
  * @description Listar as categorias
  * @author Bruno Pessoa
  */
-export const produtoList = async(req: Request, res: Response) => {
+export const produtoList = async(req: Request, res: Response<produtoDocument[]>) => {
   try{
     // buscando no banco
-    const lista: object[] | null= await produtoMongo.find().populate('id_marca','nome').populate('id_categoria','nome').lean();
+    const dadosProd: produtoDocument[] = await listProdu();
 
-    // padronizando as informações.
-    const dados: object[] | null = lista.map((p: any)=>({
+    // // padronizando as informações.
+    const dados: object[] | null = dadosProd.map((p: any)=>({
       _id: p._id,
       nome: p.nome,
       quantidade: p.quantidade,
       preco: p.preco,
       marca: p.id_marca?.nome || null,
-      categoria: p.id_categoria?.nome || null
+      categoria: p.id_categoria?.nome || null,
+      criado_em: p.criado_em,
+      atualizado_em: p.atualizado_em
     }));
     
-    //retorno da resposta.
-    res.status(lista? 200: 404).json({
-      dados: lista? dados: 'Nao existe dados a serem mostrados'
+    // //retorno da resposta.
+    res.status(200).json({
+      dados
     });
   }
   // Server Error

@@ -36,3 +36,8 @@ export const addProdu = async(dados: produtoInput): Promise<produtoDocument> => 
   // retornando produto salvo
   return salvo
 }
+
+export const listProdu = async(): Promise<produtoDocument[]> => {
+  const dados: produtoDocument[] = await produtoMongo.find().populate('id_marca','nome').populate('id_categoria','nome');
+  return dados;
+}
