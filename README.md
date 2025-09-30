@@ -65,12 +65,21 @@ Uma API para gerenciamento de um estoque.
     #or
     yarn install
    ```
-3. Execute o _script_.
+3. Crie um arquivo .env com as seguintes variaveis
+  ``` dotenv
+      PORT=<porta da sua escolha>
+      MONGO_DB_DATABASE=<nome da database>
+      MONGO_BD_URI=<endereço do banco de dados>
+  ```
+
+
+4. Execute o _script_.
    ```bash
      npm run dev
      #or
      yarn start
    ```
+
 
 ## _EndPoints_
 ### _Endpoint_ `/`
