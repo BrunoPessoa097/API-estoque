@@ -2,8 +2,6 @@ import {Request, Response } from 'express';
 // Imports locais.
 import Categoria, { CategoriaDocument } from '../interfaces/categoriaInterfaces';
 import produtoDocument from '../interfaces/produtoInterface';
-import categoriaMongo from '../schemas/mongoose/categoriaSchema';
-import produtoMongo from '../schemas/mongoose/produtoSchema';
 import { addCat, listCat, unicoCat, updtCat, delCat }  from '../services/categoriaServices';
 
 /**
