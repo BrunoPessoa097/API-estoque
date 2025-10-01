@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 // import locais
 import nivelInput,{nivelDocument} from '../interfaces/nivelInterface';
 import nivelMongo from '../schemas/mongoose/nivelSchema';
-import {addNivel, listNivel, unicoNivel, updtNivel} from '../services/nivelServices';
+import {addNivel, listNivel, unicoNivel, updtNivel, delNivel} from '../services/nivelServices';
 
 /**
  * @description Adicionar produto
@@ -115,26 +115,26 @@ export const nivelUpdate = async(req: Request, res: Response) => {
 }
 /** 
  * @descriotion Deletar nivel
+ * @function nivelDelete
  * @author Bruno Pessoa
  */
-export const nivelDelete = async(req: Request, res: Response<{message: nivelDocument | string | null} | {message?: string, error?:any}>) => {
+export const nivelDelete = async(req: Request, res: Response) => {
   try{
     // recebendo id
     const id: string = req.params.id;
 
     // excluindo o nivel.
-    const dados: nivelDocument | null = await nivelMongo.findByIdAndDelete(id);
+    const dados: nivelDocument | null = await delNivel(id);
 
     // resposta da exclusão.
-    res.status(dados? 203: 404).json({
-      message: dados? "Excluido": "Erro ao excluir"
+    res.status(203).json({
+      message:'excluido'
     });
   }
   // server error
-  catch(error) {
-    res.status(500).json({
-      message: 'Server error',
-      error
+  catch(error: any) {
+    res.status(404).json({
+      error: error.message
     });
   }
 }

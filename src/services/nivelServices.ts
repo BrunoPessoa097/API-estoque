@@ -71,6 +71,7 @@ export const unicoNivel = async(id: string): Promise<nivelDocument | null> => {
   // caso existe
   return dado;
 }
+
 /** 
  * @description atualizar nivel
  * @async
@@ -86,4 +87,22 @@ export const updtNivel = async(id: string, dado: nivelInput): Promise<nivelDocum
   if(!dados){ throw new Error('Não ha nivel para atualizar')}
   // atualizado
   return dados;
+}
+
+/** 
+ * @description deletar nivel
+ * @async
+ * @function delNivel
+ * @returns {Promise<nivelDocument | null > } Retorna uma Promise de nivel ou falso
+ * @author Bruno Pessoa
+ */
+export const delNivel = async(id: string): Promise<nivelDocument | null> => {
+  // removendo nivel
+  const dado: nivelDocument | null = await nivelMongo.findByIdAndDelete(id);
+
+  // caso não existe
+  if(!dado){throw new Error('Error ao deletar')}
+
+  // retorno da exclusão
+  return dado;
 }
