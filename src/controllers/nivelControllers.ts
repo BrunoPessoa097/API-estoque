@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 // import locais
 import nivelInput,{nivelDocument} from '../interfaces/nivelInterface';
 import nivelMongo from '../schemas/mongoose/nivelSchema';
-import {addNivel} from '../services/nivelServices';
+import {addNivel, listNivel} from '../services/nivelServices';
 
 /**
  * @description Adicionar produto
@@ -34,23 +34,23 @@ export const nivelAdd = async(req: Request<{},{}, nivelInput>, res: Response) =>
 
 /**
  * @description Listar niveis
+ * @function nivelList
  * @author Bruno Pessoa
  */
-export const nivelList = async(req: Request, res: Response<{dados: nivelDocument[] | string | null}|{message?:string, error?:any}>) =>{
+export const nivelList = async(req: Request, res: Response) =>{
   try{
     // buscando todos os dados de níveis 
-    const dados: nivelDocument[] | null = await nivelMongo.find();
+    const dados: nivelDocument[] = await listNivel();
 
     // saida de niveis
-    res.status(dados? 200: 404).json({
-      dados: dados? dados: 'Não existem informações'
+    res.status(200).json({
+      dados
     });
   }
-  // erro do servidor 
-  catch(error){
+  // error
+  catch(error: any){
     res.status(500).json({
-      message: 'Server error',
-      error
+      error: error.message
     });
   }
 }

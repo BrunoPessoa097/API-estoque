@@ -37,3 +37,9 @@ export const addNivel = async(dado: nivelInput): Promise<nivelDocument> => {
   // returno
   return saida;
 }
+
+export const listNivel = async(): Promise<nivelDocument[]> => {
+  const dados: nivelDocument[] = await nivelMongo.find();
+  if(dados.length < 1) { throw new Error('Sem informações')}
+  return dados;
+}
