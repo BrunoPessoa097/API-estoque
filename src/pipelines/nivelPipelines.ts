@@ -9,10 +9,10 @@ export const nivelPipList = compose(
 
 // adicionar nivel
 export const nivelPipAdd = compose(
-  existNivel
-  // nivelVerificar,
-  // nivelPadronizar,
-  // nivelAdd
+  existNivel,
+  nivelVerificar,
+  nivelPadronizar,
+  nivelAdd
 );
 
 // mostrar único nivel

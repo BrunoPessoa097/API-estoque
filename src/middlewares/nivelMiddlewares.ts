@@ -4,14 +4,14 @@ import {ObjectSchema} from 'joi';
 import nivelInput from '../interfaces/nivelInterface';
 import nivelJoi from '../schemas/joi/nivelJoi';
 import palavraMaiuscula,{palavraUpper} from './_configMiddlewares';
-import existSigla from '../services/nivelServices';
+import {existSigla} from '../services/nivelServices';
 
 /**
  * @description Verifica existência da sigla
  * @function existNivel
  * @author Bruno Pessoa
  */
-export const  = async(req: Request<{}, {}, nivelInput>, res: Response, next: NextFunction) => {
+export const existNivel = async(req: Request<{}, {}, nivelInput>, res: Response, next: NextFunction) => {
   try{
     // pegando a sigla
     let { sigla }: Partial<nivelInput> = req.body;

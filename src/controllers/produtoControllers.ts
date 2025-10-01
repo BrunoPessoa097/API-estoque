@@ -4,7 +4,7 @@ import produtoInput,{produtoDocument} from '../interfaces/produtoInterface';
 import { addProdu, listProdu, unicoProduto, updtProdu, delProdu } from '../services/produtoServices';
 
 /**
- * @description Adicionanr produto
+ * @description Adicionar produto
  * @function produtoAdd
  * @author Bruno Pessoa
  */

@@ -2,44 +2,31 @@ import {Request, Response} from 'express';
 // import locais
 import nivelInput,{nivelDocument} from '../interfaces/nivelInterface';
 import nivelMongo from '../schemas/mongoose/nivelSchema';
+import {addNivel} from '../services/nivelServices';
 
-// adiconar niveis
-export const nivelAdd = async(req: Request<{},{}, nivelInput>, res: Response<{message: nivelDocument | string | null} | {message?:string,error?:any}>) => {
+/**
+ * @description Adicionar produto
+ * @function produtoAdd
+ * @author Bruno Pessoa
+ */
+export const nivelAdd = async(req: Request<{},{}, nivelInput>, res: Response) => {
   try{
-    // desistruturar o body
-    const {sigla, descricao}:nivelInput = req.body;
-
-    // verificação se existe.
-    const exist: nivelDocument | null = await nivelMongo.findOne({sigla});
-
-    // senão existe insira
-    if(!exist){
-      // criando um objeto.
-      const nivelNovo: nivelDocument = new nivelMongo({
-        ...req.body
-      });
-      
-      // adicionando no banco de dados
-      const dados: nivelDocument | null = await nivelNovo.save();
-
-      // saida das informações
-      res.status(dados? 201: 404).json({
-        message: dados? "Adicionando" : "Erro ao adicionar"
-      });
-      
+    // criando objeto com as entradas
+    const dado: nivelInput = {
+      ...req.body
     }
-    // caso ja exista
-    else{
-      // saida caso exista
-      res.status(409).json({
-        message: 'Dados já existe'
-      });
-    }
+
+    // salvando no banco
+    const saida: nivelInput = await addNivel(dado);
+
+    // saida para usuarios
+    res.status(saida? 201: 404).json({
+      message: saida? 'Adicionado nivel' : 'Error'
+    });
   }
   // error no servidor
-  catch(error) {
-    res.status(500).json({
-      message: 'Servidor Erro',
+  catch(error: any) {
+    res.status(404).json({
       error
     });
   }
