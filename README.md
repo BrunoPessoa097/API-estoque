@@ -119,12 +119,15 @@ Uma API para gerenciamento de um estoque.
      POST /categoria
   ```
 * **Saida da requisição**:
+  - Sucesso
   ```json
-     #Sucesso
      {
        "message": "Adicionado categoria"
      }
-     #Error
+  ```
+  
+  - Error
+  ```json
      {
        "message": "Erro ao adicionar"
      }
@@ -137,12 +140,15 @@ Uma API para gerenciamento de um estoque.
      POST /marca
   ```
 * **Saida da requisição**:
+  - Sucesso
   ```json
-     #Sucesso
      {
-       "message": "Adicionado marca"
+       "message": "Adicionado categoria"
      }
-     #Error
+  ```
+  
+  - Error
+  ```json
      {
        "message": "Erro ao adicionar"
      }
@@ -155,12 +161,15 @@ Uma API para gerenciamento de um estoque.
      POST /marca
   ```
 * **Saida da requisição**:
+  - Sucesso
   ```json
-     #Sucesso
      {
-       "message": "Adicionado marca"
+       "message": "Adicionado categoria"
      }
-     #Error
+  ```
+  
+  - Error
+  ```json
      {
        "message": "Erro ao adicionar"
      }
@@ -173,12 +182,15 @@ Uma API para gerenciamento de um estoque.
      POST /produto
   ```
 * **Saida da requisição**:
+  - Sucesso
   ```json
-     #Sucesso
      {
-       "message": "Adicionado produto"
+       "message": "Adicionado categoria"
      }
-     #Error
+  ```
+  
+  - Error
+  ```json
      {
        "message": "Erro ao adicionar"
      }
@@ -189,7 +201,7 @@ Uma API para gerenciamento de um estoque.
 
 ## Criado Por
 * **Nome**: Bruno Pessoa
-* **Área**: Desenvolver NodeJs|Typescript|Javascript
+* **Área**: Desenvolvedor NodeJs|Typescript|Javascript
 * **Formado**: UNIGRANDE - Centro Universitário da Grande Fortaleza.
 * **Curso**: Sistemas para _Internet_.
 * **Git Hub**: [github.com/BrunoPessoa097](https://github.com/BrunoPessoa097/api-agenda.git)
