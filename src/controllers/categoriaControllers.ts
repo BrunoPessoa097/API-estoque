@@ -3,6 +3,7 @@ import {Request, Response } from 'express';
 import Categoria, { CategoriaDocument } from '../interfaces/categoriaInterfaces';
 import produtoDocument from '../interfaces/produtoInterface';
 import { addCat, listCat, unicoCat, updtCat, delCat }  from '../services/categoriaServices';
+import logger from '../config/winston/logger';
 
 /**
  * @description Adicionar ao banco de dados.
@@ -21,9 +22,9 @@ export const categoriaAdd = async (req: Request, res: Response) => {
   }
   // Erro interno.
   catch(error: any){
+    logger.error(error.message);
     res.status(500).json({
-      message: 'Servidor Erro',
-      error
+      error: error.message
     });
   }
 }
@@ -44,8 +45,9 @@ export const categoriaAll = async(req: Request, res: Response) => {
   }
   // Erro do servidor.
   catch(error: any){
+    logger.error(error.message);
     res.status(500).json({
-      error
+      error: error.message
     });
   }
 }
@@ -69,6 +71,7 @@ export const categoriaUnico = async(req: Request, res: Response) => {
     });
   }
   catch(error: any){
+    logger.error(error.message);
     // Erro mensagem
     res.status(404).json({
       error: error.message
@@ -99,6 +102,7 @@ export const categoriaUpdate = async(req: Request,res: Response) => {
   }
   // Erro
   catch(error: any){
+    logger.error(error.message);
     res.status(500).json({
       error: error.message
     });
@@ -124,6 +128,7 @@ export const categoriaDelete = async(req: Request, res: Response) => {
   }
   // Error
   catch(error: any){
+    logger.error(error.message);
     res.status(409).json({
       error: error.message
     });

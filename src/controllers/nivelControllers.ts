@@ -2,6 +2,7 @@ import {Request, Response} from 'express';
 // import locais
 import nivelInput,{nivelDocument} from '../interfaces/nivelInterface';
 import {addNivel, listNivel, unicoNivel, updtNivel, delNivel} from '../services/nivelServices';
+import logger from '../config/winston/logger';
 
 /**
  * @description Adicionar produto
@@ -25,6 +26,7 @@ export const nivelAdd = async(req: Request<{},{}, nivelInput>, res: Response) =>
   }
   // error no servidor
   catch(error: any) {
+    logger.error(error.message);
     res.status(404).json({
       error
     });
@@ -48,6 +50,7 @@ export const nivelList = async(req: Request, res: Response) =>{
   }
   // error
   catch(error: any){
+    logger.error(error.message);
     res.status(500).json({
       error: error.message
     });
@@ -73,10 +76,10 @@ export const nivelId = async(req: Request, res: Response) => {
     });
   }
   // erro do servidor
-  catch(error){
+  catch(error: any){
+    logger.error(error.message);
     res.status(500).json({
-      message: 'Server Error',
-      error
+      error: error.message
     });
   }
 }
@@ -107,6 +110,7 @@ export const nivelUpdate = async(req: Request, res: Response) => {
   }
   // error
   catch(error: any) {
+    logger.error(error.message);
     res.status(404).json({
       error: error.message
     });
@@ -132,6 +136,7 @@ export const nivelDelete = async(req: Request, res: Response) => {
   }
   // server error
   catch(error: any) {
+    logger.error(error.message);
     res.status(404).json({
       error: error.message
     });

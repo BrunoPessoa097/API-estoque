@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 // imports locais
 import produtoInput,{produtoDocument} from '../interfaces/produtoInterface';
 import { addProdu, listProdu, unicoProduto, updtProdu, delProdu } from '../services/produtoServices';
+import logger from '../config/winston/logger';
 
 /**
  * @description Adicionar produto
@@ -24,9 +25,10 @@ export const produtoAdd = async(req: Request<{}, {},produtoInput>, res: Response
     });
   }
   // server error
-  catch(error) {
+  catch(error:any) {
+    logger.error(error.message);
     res.status(500).json({
-      error
+      error: error.message
     });
   }
 }
@@ -60,8 +62,9 @@ export const produtoList = async(req: Request, res: Response) => {
   }
   // Server Error
   catch(error: any){
+    logger.error(error.message);
     res.status(500).json({
-      error
+      error: error.message
     });
   }
 }
@@ -98,6 +101,7 @@ export const produtoId = async(req: Request, res: Response) => {
   }
   // erro do servidor
   catch(error: any){
+    logger.error(error.message);
     res.status(500).json({
       error: error.message
     });
@@ -129,6 +133,7 @@ export const produtoUpdate = async(req: Request, res: Response) => {
   }
   // error
   catch(error: any){
+    logger.error(error.message);
     res.status(500).json({
       error: error.message
     });
@@ -154,6 +159,7 @@ export const produtoDelete = async(req: Request, res: Response) => {
   }
   // server error
   catch(error: any){
+    logger.error(error.message);
     res.status(404).json({
       error: error.message
     });

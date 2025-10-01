@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { produtoDocument } from '../interfaces/produtoInterface';
 import marcaInput,{ marcaDocument } from '../interfaces/marcaInterface';
 import { addProd, listMarca, idMarca, updateMarca, deleteMarca } from '../services/marcaServices';
+import logger from '../config/winston/logger';
 
 /**
  * @description Adicionar marca.
@@ -23,8 +24,8 @@ export const marcaAdd = async(req: Request, res: Response) => {
   }
   // Erro no servidor.
   catch(error: any) {
-    res.status(500).json({
-      message: 'Server Erro',
+    logger.error(error.message);
+    res.status(404).json({
       error: error.message
     });
   }
@@ -47,6 +48,7 @@ export const marcaAll = async(req: Request, res: Response) =>{
   }
   // saida dos erros
   catch(error: any){
+    logger.error(error.message);
     res.status(404).json({
       error: error.message 
     });
@@ -73,6 +75,7 @@ export const marcaId = async(req: Request, res: Response) => {
   }
   // erros
   catch(error:any) {
+    logger.error(error.message);
     res.status(404).json({
       error: error.message
     });
@@ -103,6 +106,7 @@ export const marcaUpdate = async(req: Request, res: Response) => {
   }
   // Erros.
   catch(error: any){
+    logger.error(error.message);
     res.status(500).json({
       error: error.message
     });
@@ -128,6 +132,7 @@ export const marcaDelete = async(req: Request, res: Response) => {
   }
   // Erros.
   catch(error: any){
+    logger.error(error.message);
     res.status(404).json({
       error: error.message
     });
