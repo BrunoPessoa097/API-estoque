@@ -1,11 +1,6 @@
 import { Request, Response } from 'express';
 // imports locais
 import produtoInput,{produtoDocument} from '../interfaces/produtoInterface';
-import marcaDocument from '../interfaces/marcaInterface';
-import CategoriaDocument from '../interfaces/categoriaInterfaces';
-import produtoMongo from '../schemas/mongoose/produtoSchema';
-import marcaMongo from '../schemas/mongoose/marcaSchema';
-import categoriaMongo from '../schemas/mongoose/categoriaSchema';
 import { addProdu, listProdu, unicoProduto, updtProdu, delProdu } from '../services/produtoServices';
 
 /**
