@@ -67,3 +67,28 @@ export const unicoProduto = async(id: string): Promise<any |null> => {
   // saida se existe
   return dado;
 }
+
+/** 
+ * @description atualizar produto
+ * @async
+ * @function updtProdu
+ * @returns {Promise<produtoDocument | null> } Retorna uma Promise de produto ou nulo
+ * @author Bruno Pessoa
+ */
+export const updtProdu = async(id: string, dados: Partial<produtoDocument>): Promise<produtoDocument | null> => {
+  // atualizando
+  const dado: produtoDocument | null = await produtoMongo.findByIdAndUpdate(id,dados);
+
+  // caso de erro
+  if(!dado) { throw new Error('Erro ao atualizar')}
+  // sucesso
+  return dado;
+}
+
+export const delProdu = async(id: string): Promise<produtoDocument | null> => {
+  const dado: produtoDocument | null = await produtoMongo.findByIdAndDelete(id);
+
+  if(!dado) { throw new Error('Erro ao deletar')}
+
+  return dado;
+}

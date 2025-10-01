@@ -22,6 +22,7 @@ export const prodPipId = compose(
 
 // atualizar os campos de produto
 export const prodPipUpdate = compose(
+  produtoExistEntra,
   produtoVerificar,
   produtoPadronizar,
   produtoUpdate

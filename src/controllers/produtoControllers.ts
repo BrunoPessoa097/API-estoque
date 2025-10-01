@@ -6,20 +6,24 @@ import CategoriaDocument from '../interfaces/categoriaInterfaces';
 import produtoMongo from '../schemas/mongoose/produtoSchema';
 import marcaMongo from '../schemas/mongoose/marcaSchema';
 import categoriaMongo from '../schemas/mongoose/categoriaSchema';
-import { addProdu, listProdu, unicoProduto } from '../services/produtoServices';
+import { addProdu, listProdu, unicoProduto, updtProdu, delProdu } from '../services/produtoServices';
 
 /**
  * @description Adicionanr produto
+ * @function produtoAdd
  * @author Bruno Pessoa
  */
 export const produtoAdd = async(req: Request<{}, {},produtoInput>, res: Response) => {
   try{
+    // criando objeto para ser salvo
     const dados: produtoInput = {
       ...req.body
     }
 
+    // salvando 
     const dado: produtoDocument = await addProdu(dados);
 
+    // resposta
     res.status(200).json({
       dado: dado? 'Produto adicionado': 'Erro ao adicionar'
     });
@@ -27,7 +31,6 @@ export const produtoAdd = async(req: Request<{}, {},produtoInput>, res: Response
   // server error
   catch(error) {
     res.status(500).json({
-      message: 'Server error',
       error
     });
   }
@@ -108,65 +111,31 @@ export const produtoId = async(req: Request, res: Response) => {
 
 /**
  * @description Atualizar a quantidade
+ * @function produtoUpdate
  * @author Bruno Pessoa
  */
-export const produtoUpdate = async(req: Request, res: Response<{message?: string, error?:any}>) => {
+export const produtoUpdate = async(req: Request, res: Response) => {
   try{
     // recebendo o id para atualizar o produto.
-    const id : string = req.params.id;
+    const id: string = req.params.id;
 
-    // desustruturando campos que iram ser verificados
-    const { nome, id_marca, id_categoria }: Partial<produtoInput> = req.body;
-
-    // verificando a existência do nome.
-    const nomeExist: any = await produtoMongo.findOne({nome});
-
-    // conflito caso exista.
-    if(nomeExist){
-      res.status(409).json({
-        message: 'Nome do produto já existe'
-      });
+    // objeto com as informações a serem atualizadas
+    const dadosUpdt: Partial<produtoDocument> = {
+      ...req.body
     }
-    // se nome nao existir
-    else{
-      // caso marca for enviado.
-      if(id_marca){
-        // busca se o id e valiso senão mantem o atual.
-        const dadoMarca: any = await marcaMongo.exists({_id: id_marca});
-        const dadoM = dadoMarca? dadoMarca?.id : await produtoMongo.findById(id).select('id_marca');
 
-        // recebendo o id da marca válido 
-        req.body.id_marca = dadoM.id_marca;
-      }
+    // atualizando
+    const dado: produtoDocument | null = await updtProdu(id,dadosUpdt);
 
-      // caso categoria for enviada
-      if(id_categoria){
-        // verificar se a categoria enviada e valida, senao mantém categoria atual
-        const dadoCat: any = await categoriaMongo.exists({_id: id_categoria});
-        const dadoC = dadoCat? dadoCat?.id : await produtoMongo.findById(id).select('id_categoria');
-
-        // recebdo um id de categoria valido
-        req.body.id_categoria = dadoC.id_categoria;
-      }
-
-      // construindo um objeto com os valores recebidos
-      const dado: Partial<produtoInput> = {
-        ...req.body
-      }
-      
-      // atualizando
-      const dados: produtoDocument | null = await produtoMongo.findByIdAndUpdate(id, dado);
-
-      res.status(dados? 200: 404).json({
-        message: dados? 'Atualizado': 'Erro ao atualizar'
-      });
-    }
+    // resposta
+    res.status(200).json({
+      dado: 'Atualizado'
+    });
   }
-  // Server error
+  // error
   catch(error: any){
     res.status(500).json({
-      message: 'Server Erro',
-      error
+      error: error.message
     });
   }
 }
@@ -181,18 +150,17 @@ export const produtoDelete = async(req: Request, res: Response) => {
     const id: string = req.params.id;
 
     // exluido o produto
-    const dados: produtoDocument | null = await produtoMongo.findByIdAndDelete(id);
+    const dados: produtoDocument | null = await delProdu(id);
 
     // saída do usuário 
-    res.status(dados? 203: 440).json({
-      message: dados? 'Excluido' : 'Error ao deletar'
+    res.status(dados? 203:404).json({
+      message:dados? 'Excluido': 'Erro ao excluir produto'
     });
   }
   // server error
-  catch(error){
-    res.status(500).json({
-      message: 'Server error',
-      error
+  catch(error: any){
+    res.status(404).json({
+      error: error.message
     });
   }
 }

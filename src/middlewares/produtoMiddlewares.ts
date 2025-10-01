@@ -24,6 +24,7 @@ export const produtoExistEntra = async(req: Request<{} ,{}, produtoInput>, res: 
       await existCat(id_categoria as string);
     }
 
+    // proximo
     next();
   }
   catch(error: any){
