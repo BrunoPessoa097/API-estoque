@@ -22,7 +22,7 @@ export const existSigla = async(sigla: string): Promise<boolean> => {
  * @description adicionar nivel
  * @async
  * @function addNivel
- * @returns {Promise<nivelDocument> } Retorna uma Promise de nivel documente
+ * @returns {Promise<nivelDocument> } Retorna uma Promise de nivel documento
  * @author Bruno Pessoa
  */
 export const addNivel = async(dado: nivelInput): Promise<nivelDocument> => {
@@ -38,8 +38,19 @@ export const addNivel = async(dado: nivelInput): Promise<nivelDocument> => {
   return saida;
 }
 
+/** 
+ * @description listar nivel
+ * @async
+ * @function listNivel
+ * @returns {Promise<nivelDocument[]> } Retorna uma Promise de lista nivel
+ * @author Bruno Pessoa
+ */
 export const listNivel = async(): Promise<nivelDocument[]> => {
+  // buscar todos 
   const dados: nivelDocument[] = await nivelMongo.find();
+
+  // saida caso não há resultados
   if(dados.length < 1) { throw new Error('Sem informações')}
+  // retorno dos dados
   return dados;
 }
