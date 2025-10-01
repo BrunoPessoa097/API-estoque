@@ -1,7 +1,6 @@
 import {Request, Response} from 'express';
 // import locais
 import nivelInput,{nivelDocument} from '../interfaces/nivelInterface';
-import nivelMongo from '../schemas/mongoose/nivelSchema';
 import {addNivel, listNivel, unicoNivel, updtNivel, delNivel} from '../services/nivelServices';
 
 /**
