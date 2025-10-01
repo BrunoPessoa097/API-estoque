@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import logger from '../winston/logger';
 
 // Configurando o dotenv.
 dotenv.config();
@@ -15,16 +16,16 @@ const mongoConn = async() => {
     // Verificando a existência do endereço.
     if(!url){
       process.exit(1);
+      logger.error('Erro na variavel ambiente');
     }
 
     // conectando com o banco
     await mongoose.connect(url);
-    console.log('Banco conectado');
+    logger.info('Banco conectado');
   }
   // caso de erro de conectar
-  catch(error){
-    console.log('Falha ao conectar ao banco');
-    console.log(error);
+  catch(error: any){
+    logger.error(error);
     process.exit(1);
   }
 }
