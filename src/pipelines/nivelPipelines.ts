@@ -18,10 +18,11 @@ export const nivelPipAdd = compose(
 // mostrar único nivel
 export const nivelPipId = compose(
   nivelId
-)
+);
 
 // atualizar nivel
 export const nivelPipUpdate = compose(
+  existNivel,
   nivelVerificar,
   nivelPadronizar,
   nivelUpdate

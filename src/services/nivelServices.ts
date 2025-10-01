@@ -71,3 +71,19 @@ export const unicoNivel = async(id: string): Promise<nivelDocument | null> => {
   // caso existe
   return dado;
 }
+/** 
+ * @description atualizar nivel
+ * @async
+ * @function updtNivel
+ * @returns {Promise<nivelDocument | null > } Retorna uma Promise de nivel ou falso
+ * @author Bruno Pessoa
+ */
+export const updtNivel = async(id: string, dado: nivelInput): Promise<nivelDocument | null> => {
+  // atualizando as informações repassadas
+  const dados: nivelDocument | null = await nivelMongo.findByIdAndUpdate(id, dado);
+
+  // senão atualizar retorna erro
+  if(!dados){ throw new Error('Não ha nivel para atualizar')}
+  // atualizado
+  return dados;
+}

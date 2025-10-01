@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 // import locais
 import nivelInput,{nivelDocument} from '../interfaces/nivelInterface';
 import nivelMongo from '../schemas/mongoose/nivelSchema';
-import {addNivel, listNivel, unicoNivel} from '../services/nivelServices';
+import {addNivel, listNivel, unicoNivel, updtNivel} from '../services/nivelServices';
 
 /**
  * @description Adicionar produto
@@ -84,43 +84,32 @@ export const nivelId = async(req: Request, res: Response) => {
 
 /**
  * @description Atualizar item
+ * @function nivelUpdate
  * @author Bruno Pessoa
  */
 export const nivelUpdate = async(req: Request, res: Response) => {
   try{
     // recebendo o id.
     const id: string = req.params.id;
-    // desestruturação.
-    const { sigla, descricao }: nivelInput = req.body;
 
-    // verificando se à sigla ja existe.
-    const exist: nivelDocument | null = await nivelMongo.findOne({sigla});
-
-    // se nao existe
-    if(!exist) {
-      // recebendo os valores a ser atualizado.
-      const novaInfo: nivelInput = { sigla, descricao };
-      // atualizando às informações.
-      const dados: nivelDocument | null = await nivelMongo.findByIdAndUpdate(id,novaInfo);
-
-      // saída do usuário.
-      res.status(dados? 203:404).json({
-        message: dados? "Atualizado": "Error ao atualizar"
-      });
-      
+    // fazendo um objeto com dados para atualizar
+    const dado: nivelDocument = {
+      ...req.body
     }
-    // caso exista ja a sigla
-    else{
-      res.status(409).json({
-        message: 'Não podd atualizar pois a sigla já existe'
-      });
-    }
+
+    // atualizando as informações
+    const dados: nivelDocument | null = await updtNivel(id, dado);
+
+    // saidas
+    res.status(201).json({
+      dados: dados? 'Atualizado': 'Não atualizado'
+    });
+    
   }
-  // Server error
-  catch(error) {
-    res.status(500).json({
-      message: 'Server error',
-      error
+  // error
+  catch(error: any) {
+    res.status(404).json({
+      error: error.message
     });
   }
 }
