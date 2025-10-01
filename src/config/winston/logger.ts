@@ -1,12 +1,15 @@
 import { createLogger, format, transports, Logger } from "winston";
 import { TransformableInfo } from "logform";
 
+// desistruturando o formar
 const { combine, timestamp, errors, printf } = format;
 
+// formato da saida
 const logFormat = printf((info: TransformableInfo) => {
   return `[${info.timestamp}] ${info.level.toUpperCase()}: ${info.stack || info.message}`;
 });
 
+// criando o logger
 const logger: Logger = createLogger({
   level: "debug", 
   format: combine(
@@ -19,4 +22,5 @@ const logger: Logger = createLogger({
   ]
 });
 
+// export
 export default logger;
