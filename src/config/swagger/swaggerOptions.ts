@@ -17,7 +17,7 @@ const swaggerOptions: object = {
         \n
         \n #### Criado por
         \n * **Nome**: Bruno Pessoa
-        \n * **Área**: Desenvolver NodeJs|Typescript|Javascript
+        \n * **Área**: Desenvolvedor NodeJs|Typescript|Javascript
         \n * **Formado**: UNIGRANDE - Centro Universitário da Grande Fortaleza.
         \n * **Curso**: Sistemas para _Internet_.
         \n * **Git Hub**: [github.com/BrunoPessoa097](https://github.com/BrunoPessoa097/api-agenda.git)

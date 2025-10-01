@@ -7,6 +7,7 @@ import palavraMaiuscula, { numDecimal } from './_configMiddlewares';
 import { exitNomeProdu } from '../services/produtoServices';
 import { marcaExist } from '../services/marcaServices';
 import { existCat } from '../services/categoriaServices';
+import logger from '../config/winston/logger';
 
 export const produtoExistEntra = async(req: Request<{} ,{}, produtoInput>, res: Response, next: NextFunction) => {
   try{
@@ -28,6 +29,7 @@ export const produtoExistEntra = async(req: Request<{} ,{}, produtoInput>, res: 
     next();
   }
   catch(error: any){
+    logger.error(error.message);
     res.status(409).json({
       error: error.message
     });
@@ -63,17 +65,17 @@ export const produtoVerificar = (req: Request<{}, {}, produtoInput>, res: Respon
     }
     // em caso de erro
     else{
+      logger.error(error.details.map(e=>e.message));
       res.status(404).json({
-        message: "Dados com erros",
         error: error.details.map(e=>e.message)
       });
     }
   }
   // servidor error
-  catch(error){
+  catch(error: any){
+    logger.error(error.mensage);
     res.status(500).json({
-      message: 'Server error',
-      error
+      error: error.mensage
     });
   }
 }
@@ -100,10 +102,10 @@ export const produtoPadronizar = (req: Request<{}, {}, produtoInput>, res: Respo
     next();
   }
   // servidor erro
-  catch(error){
+  catch(error: any){
+    logger.error(error.mensage);
     res.status(500).json({
-      message: 'Sever error',
-      error
+      error: error.mensage
     });
   }
 }

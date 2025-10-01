@@ -5,6 +5,7 @@ import nivelInput from '../interfaces/nivelInterface';
 import nivelJoi from '../schemas/joi/nivelJoi';
 import palavraMaiuscula,{palavraUpper} from './_configMiddlewares';
 import {existSigla} from '../services/nivelServices';
+import logger from '../config/winston/logger';
 
 /**
  * @description Verifica existência da sigla
@@ -27,6 +28,7 @@ export const existNivel = async(req: Request<{}, {}, nivelInput>, res: Response,
   }
   // saida de erros
   catch(error: any){
+    logger.error(error.message);
     res.status(409).json({
       error: error.message
     });
@@ -54,6 +56,7 @@ export const nivelVerificar = (req: Request<{},{}, nivelInput>, res: Response, n
 
     // Em caso de erro
     if(error){
+      logger.error(error.details.map((error)=>error.message));
       res.status(404).json({
         error: error.details.map((error)=>error.message)
       });
@@ -65,9 +68,9 @@ export const nivelVerificar = (req: Request<{},{}, nivelInput>, res: Response, n
     }
   }
   // Erro do servidor
-  catch(error){
+  catch(error: any){
+    logger.error(error);
     res.status(500).json({
-      message: 'Server Error',
       error
     });
   }
@@ -93,10 +96,10 @@ export const nivelPadronizar = (req: Request<{},{},nivelInput>, res:Response, ne
     next();
   }
   // error do servidor.
-  catch(error){
+  catch(error: any){
+    logger.error(error);
     res.status(500).json({
-      message: 'Server Error',
-      error
+      error: error.message
     });
   }
 }

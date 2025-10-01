@@ -5,6 +5,7 @@ import Categoria from '../interfaces/categoriaInterfaces';
 import categoriaJoi from '../schemas/joi/categoriaJoi';
 import palavraMaiuscula from './_configMiddlewares';
 import { nomeCatExist } from '../services/categoriaServices';
+import logger from '../config/winston/logger';
 
 /** 
  * @description Verificar se ja existe Nome
@@ -28,6 +29,7 @@ export const categoriaExist = async(req: Request, res: Response, next: NextFunct
   }
   // saida de erros
   catch(error: any){
+    logger.error(error.message);
     res.status(409).json({
       error: error.message
     })
@@ -56,6 +58,7 @@ export const categoriaValidar = (req: Request, res: Response, next: NextFunction
 
     // Caso de erro.
     if(error) {
+      logger.error(error.details.map((err)=>err.message));
       res.status(400).json({
         message: 'Formato ou arquivo inválido',
         error: error.details.map((err)=>err.message) // Saída dos erros.
@@ -94,10 +97,10 @@ export const categoriaPadronizar = async(req: Request, res: Response, next: Next
     next();
     
   }catch(error: any){
+    logger.error(error);
     // Error de servidor.
     res.status(500).json({
-      message: 'Servidor error',
       error
-    })
+    });
   }
 }

@@ -5,6 +5,7 @@ import marcaInput  from '../interfaces/marcaInterface';
 import marcaJoi from '../schemas/joi/marcaJoi';
 import palavraMaiuscula from './_configMiddlewares';
 import { existNomeCnpj } from '../services/marcaServices';
+import logger from '../config/winston/logger';
 
 /**
  * @description Verificando se nome e e/ou cnpj já existem.
@@ -29,6 +30,7 @@ export const marcaAproRepro = async(req: Request, res: Response, next: NextFunct
     
   }
   catch(error: any){
+    logger.error(error.message);
     res.status(409).json({
       error: error.message
     });
@@ -57,6 +59,7 @@ export const marcaVerificar = (req: Request, res: Response, next: NextFunction) 
 
     // em caso de erro, saida do(s) erro(s).
     if(error){
+      logger.error(error.details.map((err)=>err.message));
       res.status(404).json({
         message:'Error',
         error: error.details.map((err)=>err.message)
@@ -89,17 +92,14 @@ export const marcaPadronizar = (req: Request, res: Response, next: NextFunction)
       ...(nome && {nome: palavraMaiuscula(nome)}),
       ...(nomeSocial && {nomeSocial: palavraMaiuscula(nomeSocial)}),
       ...(cnpj && {cnpj})
-      // nome: palavraMaiuscula(nome),
-      // nomeSocial: palavraMaiuscula(nomeSocial),
-      // cnpj
     }
 
     next();
   }
-  catch(error){
+  catch(error: any){
+    logger.error(error);
     res.status(500).json({
-      message: 'Server Erro',
-      error
+      error: error.message
     });
   }
 }
