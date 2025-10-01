@@ -54,3 +54,20 @@ export const listNivel = async(): Promise<nivelDocument[]> => {
   // retorno dos dados
   return dados;
 }
+
+/** 
+ * @description unico nivel
+ * @async
+ * @function unicoNivel
+ * @returns {Promise<nivelDocument | null > } Retorna uma Promise de nivel ou falso
+ * @author Bruno Pessoa
+ */
+export const unicoNivel = async(id: string): Promise<nivelDocument | null> => {
+  // buscando o nivel
+  const dado: nivelDocument | null = await nivelMongo.findById(id);
+
+  // caso não existe
+  if(!dado){ throw new Error('Não existe nivel informado')}
+  // caso existe
+  return dado;
+}

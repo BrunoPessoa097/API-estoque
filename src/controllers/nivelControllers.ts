@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 // import locais
 import nivelInput,{nivelDocument} from '../interfaces/nivelInterface';
 import nivelMongo from '../schemas/mongoose/nivelSchema';
-import {addNivel, listNivel} from '../services/nivelServices';
+import {addNivel, listNivel, unicoNivel} from '../services/nivelServices';
 
 /**
  * @description Adicionar produto
@@ -57,15 +57,16 @@ export const nivelList = async(req: Request, res: Response) =>{
 
 /**
  * @description buscar nivel por Id
+ * @function nivelId
  * @author Bruno Pessoa
  */
-export const nivelId = async(req: Request, res: Response<{dados?:nivelDocument|null|string}|{message?:string, error?:any}>) => {
+export const nivelId = async(req: Request, res: Response) => {
   try{
     // recenbendo id 
     const id: string = req.params.id;
 
     // buscando dados requisitados
-    const dados: nivelDocument | null = await nivelMongo.findById(id);
+    const dados: nivelDocument | null = await unicoNivel(id);
 
     // retorno dos dados.
     res.status(dados? 200:404).json({
@@ -85,7 +86,7 @@ export const nivelId = async(req: Request, res: Response<{dados?:nivelDocument|n
  * @description Atualizar item
  * @author Bruno Pessoa
  */
-export const nivelUpdate = async(req: Request, res: Response<{dados?:nivelDocument | string | null} | {message?:string, error?:any}>) => {
+export const nivelUpdate = async(req: Request, res: Response) => {
   try{
     // recebendo o id.
     const id: string = req.params.id;
