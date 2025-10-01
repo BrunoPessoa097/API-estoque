@@ -1,6 +1,6 @@
 import { compose }from './_compose';
-import {nivelVerificar, nivelPadronizar } from '../middlewares/nivelMiddlewares';
-import {nivelList, nivelAdd, nivelUpdate,nivelId,nivelDelete} from '../controllers/nivelControllers';
+import {existNivel, nivelVerificar, nivelPadronizar } from '../middlewares/nivelMiddlewares';
+import {nivelList, nivelAdd, nivelUpdate, nivelId, nivelDelete} from '../controllers/nivelControllers';
 
 // listar os níveis 
 export const nivelPipList = compose(
@@ -9,9 +9,10 @@ export const nivelPipList = compose(
 
 // adicionar nivel
 export const nivelPipAdd = compose(
-  nivelVerificar,
-  nivelPadronizar,
-  nivelAdd
+  existNivel
+  // nivelVerificar,
+  // nivelPadronizar,
+  // nivelAdd
 );
 
 // mostrar único nivel

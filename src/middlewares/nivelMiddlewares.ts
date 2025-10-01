@@ -4,12 +4,41 @@ import {ObjectSchema} from 'joi';
 import nivelInput from '../interfaces/nivelInterface';
 import nivelJoi from '../schemas/joi/nivelJoi';
 import palavraMaiuscula,{palavraUpper} from './_configMiddlewares';
+import existSigla from '../services/nivelServices';
+
+/**
+ * @description Verifica existência da sigla
+ * @function existNivel
+ * @author Bruno Pessoa
+ */
+export const  = async(req: Request<{}, {}, nivelInput>, res: Response, next: NextFunction) => {
+  try{
+    // pegando a sigla
+    let { sigla }: Partial<nivelInput> = req.body;
+
+    // se sigla existe fazer a verificação se exist
+    if(sigla){
+      sigla = palavraUpper(sigla.trim());
+      await existSigla(sigla);
+    }
+
+    //proximo
+    next();
+  }
+  // saida de erros
+  catch(error: any){
+    res.status(409).json({
+      error: error.message
+    });
+  }
+}
 
 /**
  * @description Verifica as entradas.
+ * @function nivelVerificar
  * @author Bruno Pessoa
  */
-export const nivelVerificar = (req: Request<{},{}, nivelInput>, res: Response<{dados: nivelInput}|{message?: string,error?: any}>, next: NextFunction) => {
+export const nivelVerificar = (req: Request<{},{}, nivelInput>, res: Response, next: NextFunction) => {
   try{
     // Desistruturação das entradas. 
     const {sigla, descricao}: nivelInput = req.body;
@@ -46,9 +75,10 @@ export const nivelVerificar = (req: Request<{},{}, nivelInput>, res: Response<{d
 
 /**
  * @description Padronizar as entradas de nivel
+ * @function nivelPadronizar
  * @author Bruno Pessoa
  */
-export const nivelPadronizar = (req: Request<{},{},nivelInput>, res:Response<{dados: nivelInput}|{message?: string, error?:any}>, next: NextFunction) => {
+export const nivelPadronizar = (req: Request<{},{},nivelInput>, res:Response, next: NextFunction) => {
   try{
     // Desistruturar.
     const {sigla, descricao} = req.body;
