@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import pessoaDocument from '../../interfaces/pessoaInterface';
 
 // pessoa schema
-const pessoaSchemas: Schemas = new Schema<pessoaDocument>({
+const pessoaSchemas: Schema = new Schema<pessoaDocument>({
   nome: {type: String, required: true},
   email: {type: String, required: true, unique: true},
   senha: {type: String, required: true},
@@ -17,7 +17,7 @@ const pessoaSchemas: Schemas = new Schema<pessoaDocument>({
 });
 
 // criando o model
-const pessoaMongo = model<produtoDocument>('Pessoa', pessoaSchema);
+const pessoaMongo = model<pessoaDocument>('Pessoa', pessoaSchemas);
 
 // export 
 export default pessoaMongo;
