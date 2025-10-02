@@ -1,3 +1,5 @@
+import { Document, Types } from 'mongoose';
+
 // pessoa entrada do usuário
 interface pessoaInput {
   nome: string;
@@ -5,7 +7,13 @@ interface pessoaInput {
   senha: string;
   endereco: string;
   dt_nasc: Data;
-  nivel: string;
+  nivel: string | Types.objectId;
+}
+
+// document do mongoose
+export interface pessoaDocument extends pessoaInput, Document {
+  criado_em: Date;
+  atualizado_em: Date;
 }
 
 // export
