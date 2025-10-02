@@ -5,6 +5,8 @@ import pessoaInput from '../interfaces/pessoaInterface';
 import pessoaJoi from '../schemas/joi/pessoaJoi';
 import palavraMaiuscula from './_configMiddlewares';
 
+
+
 /**
  * @description Validar entradas de pessoas
  * @author Bruno Pessoa
@@ -12,15 +14,16 @@ import palavraMaiuscula from './_configMiddlewares';
 export const pessoaValidar = (req: Request<{},{},pessoaInput>, res: Response, next: NextFunction) => {
   try{
     // desistruturando 
-    const { nome, endereco, dt_nasc, nivel, senha }: pessoaInput = req.body;
+    const { nome, email, senha, endereco, dt_nasc, nivel }: pessoaInput = req.body;
 
     // recriando so com os pametros enviados
     req.body = {
       ...(nome && {nome: nome.trim()}),
+      ...(email && {email: email.trim()}),
+      ...(senha && {senha: senha.trim()})
       ...(endereco && {endereco: endereco.trim()}),
       ...(dt_nasc && {dt_nasc}),
-      ...(nivel && {nivel: nivel.trim()}),
-      ...(senha && {senha: senha.trim()})
+      ...(nivel && {nivel: nivel.trim()})
     }
 
     // validando as entradas
