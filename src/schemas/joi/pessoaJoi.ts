@@ -9,10 +9,9 @@ const pessoaJoi: ObjectSchema<pessoaInput> = Joi.object({
     "string.min": "O nome tem que ter no mínimo {#limit} caracteres",
     "string.max": "O nome tem que ter no máximo {#limit} caracteres"
   }),
-  email: Joi.string().min(5).max(40).messages({
-    "string.empty": "E-mail não pode estar vazia",
-    "string.min": "O e-mail tem que ter no minimo {#limit} caracteres",
-    "string.max": "O e-mail tem que ter {#limit} caracteres"
+  email: Joi.string().email().messages({
+    "string.base": "O email deve ser um texto",
+    "string.email": "O email deve ser válido"
   }),
   senha: Joi.string().min(3).max(40).messages({
     "string.empty": "Senha não pode estar vazia",
