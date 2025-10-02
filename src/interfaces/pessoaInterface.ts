@@ -12,8 +12,8 @@ interface pessoaInput {
 
 // document do mongoose
 export interface pessoaDocument extends pessoaInput, Document {
-  criado_em: Date;
-  atualizado_em: Date;
+  criado_em?: Date;
+  atualizado_em?: Date;
 }
 
 // export
