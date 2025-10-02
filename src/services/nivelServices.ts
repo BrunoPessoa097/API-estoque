@@ -19,6 +19,23 @@ export const existSigla = async(sigla: string): Promise<boolean> => {
 }
 
 /** 
+ * @description Verificar se existe o nivel
+ * @async
+ * @function existIdSigla
+ * @returns {Promise<boolean> } Retorna uma Promise de verdadeiro ou falso.
+ * @author Bruno Pessoa
+ */
+export const existIdSigla = async(id: string): Promise<boolean> => {
+  // verificar se existe
+  const exist: boolean = !!(await nivelMongo.exists({_id:id}));
+
+  // se existe
+  if(!exist){ throw new Error('Nível não existe')}
+  // caso não existe
+  return true;
+}
+
+/** 
  * @description adicionar nivel
  * @async
  * @function addNivel
