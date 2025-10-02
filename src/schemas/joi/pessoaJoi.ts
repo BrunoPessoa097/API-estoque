@@ -9,8 +9,18 @@ const pessoaJoi: ObjectSchema<pessoaInput> = Joi.object({
     "string.min": "O nome tem que ter no mínimo {#limit} caracteres",
     "string.max": "O nome tem que ter no máximo {#limit} caracteres"
   }),
+  email: Joi.string().min(5).max(40).messages({
+    "string.empty": "E-mail não pode estar vazia",
+    "string.min": "O e-mail tem que ter no minimo {#limit} caracteres",
+    "string.max": "O e-mail tem que ter {#limit} caracteres"
+  }),
+  senha: Joi.string().min(3).max(40).messages({
+    "string.empty": "Senha não pode estar vazia",
+    "string.min": "A senha tem que ter no minimo {#limit} caracteres",
+    "string.max": "A senha tem que ter {#limit} caracteres"
+  }),
   endereco: Joi.string().min(5).max(50).messages({
-    "string.empty": "endereço não pode estar vazio",
+    "string.empty": "Endereço não pode estar vazio",
     "string.min": "O endereço tem que ter no mínimo {#limit} caracteres",
     "string.max": "O endereço tem que ter no máximo {#limit} caracteres"
   }),
@@ -23,11 +33,6 @@ const pessoaJoi: ObjectSchema<pessoaInput> = Joi.object({
     "string.base": "Nível tem que ser um texto",
     "string.empty": "O nível não pode estar vazio",
     "string.length": "O ID tem que ter {#limit} caracteres"
-  }),
-  senha: Joi.string().min(3).max(40).messages({
-    "string.empty": "Senha não pode estar vazia",
-    "string.min": "A senha tem que ter no minimo {#limit} caracteres",
-    "string.max": "A senha tem que ter {#limit} caracteres"
   })
 });
 
