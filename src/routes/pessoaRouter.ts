@@ -1,6 +1,6 @@
 import { Router } from "express";
 // imports locais
-import pessoaPipAdd from "../pipelines/pessoaPipeline";
+import { pessoaPipAdd, pessoaPipList } from "../pipelines/pessoaPipeline";
 
 // construir rota
 const pessoaRouter: Router = Router();
@@ -46,10 +46,23 @@ const pessoaRouter: Router = Router();
  *       description: nome e/ou email ja existe
  *      500:
  *       description: error variados
+ * 
+ *  get:
+ *   summary: Listar todos as pessoas
+ *   tags: [Pessoas]
+ *   responses:
+ *    200:
+ *     description: Listar todos as pessoas
+ * 
+ *    404:
+ *     description: Não existem informações 
+ *    500:
+ *     description: Server Error
  */
 
 pessoaRouter.route("/pessoa")
-  .post(pessoaPipAdd);
+  .post(pessoaPipAdd)
+  .get(pessoaPipList);
 
 // export
 export default pessoaRouter;

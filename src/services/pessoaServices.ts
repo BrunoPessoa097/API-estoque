@@ -58,3 +58,20 @@ export const pessoaServiceAdd = async(dados: pessoaInput): Promise<pessoaDocumen
   // returno salvo
   return pessoa;
 }
+
+/** 
+ * @description listando pessoas
+ * @async
+ * @function pessoaServiceList
+ * @returns {Promise<pessoaDocument[]> } Retorna uma Promise de lista de pessoa
+ * @author Bruno Pessoa
+ */
+export const pessoaServiceList = async(): Promise<pessoaDocument[]> => {
+  // buscando todas as pessoas
+  const dados: pessoaDocument[] = await pessoaMongo.find();
+
+  // caso não exista dados
+  if(!dados){throw new Error('Sem dados para mostrar')}
+  // caso haja dados
+  return dados;
+}

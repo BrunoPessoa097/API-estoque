@@ -1,14 +1,16 @@
 import { compose } from './_compose';
 import { pessoaExistencia, pessoaValidar, pessoaPadronizar } from '../middlewares/pessoaMiddleware';
-import pessoaAdd from  '../controllers/pessoaControllers';
+import { pessoaAdd, pessoaList } from  '../controllers/pessoaControllers';
 
 // adicionar pessoa
-const pessoaPipAdd = compose(
+export const pessoaPipAdd = compose(
   pessoaExistencia,
   pessoaValidar,
   pessoaPadronizar,
   pessoaAdd
 );
 
-// exportar
-export default pessoaPipAdd;
+// listar pessoas
+export const pessoaPipList = compose(
+  pessoaList
+);

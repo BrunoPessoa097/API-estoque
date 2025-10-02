@@ -1,16 +1,16 @@
 import { Request, Response } from 'express';
 // imports locais
-import { pessoaServiceAdd } from '../services/pessoaServices';
-import pessoaInput from '../interfaces/pessoaInterface';
+import { pessoaServiceAdd, pessoaServiceList } from '../services/pessoaServices';
+import pessoaInput, { pessoaDocument } from '../interfaces/pessoaInterface';
 import logger from '../config/winston/logger';
 
 /** 
- * @description adicionar Pessia
+ * @description adicionar Pessoa
  * @async
  * @function pessoa add
  * @author Bruno Pessoa
  */
-const pessoaAdd = async(req: Request<{}, {}, pessoaInput>, res:Response) => {
+export const pessoaAdd = async(req: Request<{}, {}, pessoaInput>, res:Response) => {
   try{
     // desistruturando dados para serem salvo
     const pessoa: pessoaInput = {
@@ -30,8 +30,31 @@ const pessoaAdd = async(req: Request<{}, {}, pessoaInput>, res:Response) => {
     logger.error(error.message);
     res.status(500).json({
       error: error.message
-    })
+    });
   }
 }
 
-export default pessoaAdd;
+/** 
+ * @description lista pessoa
+ * @async
+ * @function pessoa add
+ * @author Bruno Pessoa
+ */
+export const pessoaList = async(req: Request, res: Response) => {
+  try{
+    // buscando todas as pessoa
+    const pessoas: pessoaDocument[] = await pessoaServiceList();
+
+    // saida de pessoas
+    res.status(200).json({
+      inf: pessoas
+    })
+  }
+  catch(error: any){
+    // error
+    logger.error(error.message);
+    res.status(404).json({
+      error: error.message
+    });
+  }
+}
