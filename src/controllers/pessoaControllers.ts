@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 // imports locais
-import { pessoaServiceAdd, pessoaServiceList, pessoaServiceId } from '../services/pessoaServices';
+import { pessoaServiceAdd, pessoaServiceList, pessoaServiceId, pessoaServiceUpdate } from '../services/pessoaServices';
 import pessoaInput, { pessoaDocument } from '../interfaces/pessoaInterface';
 import logger from '../config/winston/logger';
 
@@ -64,7 +64,6 @@ export const pessoaList = async(req: Request, res: Response) => {
  * @description buscando pessoa
  * @async
  * @function pessoaId
- * @returns {Promise<pessoaDocument | null> } Retorna uma Promise de pessoa ou nulo
  * @author Bruno Pessoa
  */
 export const pessoaId = async(req: Request, res: Response) => {
@@ -82,6 +81,38 @@ export const pessoaId = async(req: Request, res: Response) => {
   }
   catch(error: any){
     // retorno dos resultados
+    logger.error(error.message);
+    res.status(404).json({
+      error: error.message
+    });
+  }
+}
+
+/** 
+ * @description buscando pessoa
+ * @async
+ * @function pessoaUpdate
+ * @author Bruno Pessoa
+ */
+export const pessoaUpdate = async(req: Request, res: Response) => {
+  try{
+    // recebendo o id para atualizar
+    const id: string = req.params.id;
+    // criando as informações para atualizar
+    const dados: Partial<pessoaDocument> = {
+      ...req.body
+    };
+
+    // dados informaçoes
+    const dado = await pessoaServiceUpdate(id, dados);
+
+    // retorno em caso de sucesso
+    res.status(dado? 201: 404).json({
+      dado: dado? 'Atualizado': 'Error'
+    });
+  }
+  catch(error: any){
+    // error
     logger.error(error.message);
     res.status(404).json({
       error: error.message

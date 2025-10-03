@@ -92,3 +92,20 @@ export const pessoaServiceId = async(id: string): Promise<pessoaDocument | null>
   // retorno caso exista
   return dado;
 }
+
+/** 
+ * @description atualizando pessoa
+ * @async
+ * @function pessoaServiceUpdate
+ * @returns {Promise<pessoaDocument | null> } Retorna uma Promise de pessoa atualizado ou nulo
+ * @author Bruno Pessoa
+ */
+export const pessoaServiceUpdate = async(id: string, dados: Partial<pessoaDocument>): Promise<pessoaDocument | null> => {
+  // atualizando informações de pessoa
+  const saida: pessoaDocument | null = await pessoaMongo.findByIdAndUpdate(id,dados);
+
+  // caso de erro ao atualizar
+  if(!saida){throw new Error('Error ao atualizar')}
+  // retorno saida
+  return saida;
+}

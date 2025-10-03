@@ -1,6 +1,6 @@
 import { Router } from "express";
 // imports locais
-import { pessoaPipAdd, pessoaPipList, pessoaPipId } from "../pipelines/pessoaPipeline";
+import { pessoaPipAdd, pessoaPipList, pessoaPipId, pessoaPipUpdate } from "../pipelines/pessoaPipeline";
 
 // construir rota
 const pessoaRouter: Router = Router();
@@ -83,9 +83,49 @@ pessoaRouter.route("/pessoa")
  *     description: Pessoa não existe
  *    500:
  *     description: Server error
+ *
+ *  patch:
+ *   summary: Atualizar um ou mais campos de pessoa
+ *   tags: [Pessoas]
+ *   parameters:
+ *    - name: id
+ *      in: path
+ *      required: true
+ *      schema:
+ *       type: string
+ *      description: ID à ser selecionado
+ *   requestBody:
+ *    required: true
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       properties:
+ *        nome:
+ *         type: string
+ *        email:
+ *         type: string
+ *        senha:
+ *         type: string
+ *        endereco:
+ *         type: string
+ *        dt_nasc:
+ *         type: string
+ *        nivel:
+ *         type: string
+ *   responses:
+ *    201:
+ *     description: Atualizado
+ *    404:
+ *     description: Erro ao atualizar
+ *    409:
+ *     description: pessoa já existe
+ *    500:
+ *     description: Server error
  */
 pessoaRouter.route('/pessoa/:id')
-  .get(pessoaPipId);
+  .get(pessoaPipId)
+  .patch(pessoaPipUpdate);
 
 // export
 export default pessoaRouter;
