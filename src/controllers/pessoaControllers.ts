@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 // imports locais
-import { pessoaServiceAdd, pessoaServiceList } from '../services/pessoaServices';
+import { pessoaServiceAdd, pessoaServiceList, pessoaServiceId } from '../services/pessoaServices';
 import pessoaInput, { pessoaDocument } from '../interfaces/pessoaInterface';
 import logger from '../config/winston/logger';
 
@@ -60,11 +60,31 @@ export const pessoaList = async(req: Request, res: Response) => {
   }
 }
 
+/** 
+ * @description buscando pessoa
+ * @async
+ * @function pessoaId
+ * @returns {Promise<pessoaDocument | null> } Retorna uma Promise de pessoa ou nulo
+ * @author Bruno Pessoa
+ */
 export const pessoaId = async(req: Request, res: Response) => {
   try{
-    
+    // buscando pessoa pelo id
+    const id: string = req.params.id;
+
+    // recebendo dado de pessoa
+    const dado: pessoaDocument | null = await pessoaServiceId(id);
+
+    // retorno dos resultados
+    res.status(200).json({
+      dado
+    });
   }
   catch(error: any){
-    
+    // retorno dos resultados
+    logger.error(error.message);
+    res.status(404).json({
+      error: error.message
+    });
   }
 }

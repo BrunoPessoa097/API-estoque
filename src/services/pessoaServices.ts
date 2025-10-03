@@ -75,3 +75,20 @@ export const pessoaServiceList = async(): Promise<pessoaDocument[]> => {
   // caso haja dados
   return dados;
 }
+
+/** 
+ * @description buscando unica pessoa
+ * @async
+ * @function pessoaServiceList
+ * @returns {Promise<pessoaDocument | null> } Retorna uma Promise de pessoa ou nulo
+ * @author Bruno Pessoa
+ */
+export const pessoaServiceId = async(id: string): Promise<pessoaDocument | null> => {
+  // buscando pessoa
+  const dado: pessoaDocument | null = await pessoaMongo.findById(id);
+
+  // caso não exista pessoa
+  if(!dado) { throw new Error('Não existe informação buscada')}
+  // retorno caso exista
+  return dado;
+}

@@ -1,6 +1,6 @@
 import { Router } from "express";
 // imports locais
-import { pessoaPipAdd, pessoaPipList } from "../pipelines/pessoaPipeline";
+import { pessoaPipAdd, pessoaPipList, pessoaPipId } from "../pipelines/pessoaPipeline";
 
 // construir rota
 const pessoaRouter: Router = Router();
@@ -59,10 +59,33 @@ const pessoaRouter: Router = Router();
  *    500:
  *     description: Server Error
  */
-
 pessoaRouter.route("/pessoa")
   .post(pessoaPipAdd)
   .get(pessoaPipList);
+
+/**
+ * @swagger
+ * /pessoa/{id}:
+ *  get:
+ *   summary: Buscar única pessoa
+ *   tags: [Pessoas]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: ID à ser buscado
+ *   responses:
+ *    200:
+ *     description: Listar o pessoa
+ *    404:
+ *     description: Pessoa não existe
+ *    500:
+ *     description: Server error
+ */
+pessoaRouter.route('/pessoa/:id')
+  .get(pessoaPipId);
 
 // export
 export default pessoaRouter;
