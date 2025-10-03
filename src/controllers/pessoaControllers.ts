@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 // imports locais
-import { pessoaServiceAdd, pessoaServiceList, pessoaServiceId, pessoaServiceUpdate } from '../services/pessoaServices';
+import { pessoaServiceAdd, pessoaServiceList, pessoaServiceId, pessoaServiceUpdate, pessoaServiceDelete } from '../services/pessoaServices';
 import pessoaInput, { pessoaDocument } from '../interfaces/pessoaInterface';
 import logger from '../config/winston/logger';
 
@@ -114,6 +114,34 @@ export const pessoaUpdate = async(req: Request, res: Response) => {
   catch(error: any){
     // error
     logger.error(error.message);
+    res.status(404).json({
+      error: error.message
+    });
+  }
+}
+
+/** 
+ * @description buscando pessoa
+ * @async
+ * @function pessoaUpdate
+ * @author Bruno Pessoa
+ */
+export const pessoaDelete = async(req: Request, res: Response) => {
+  try{
+    // recebendo id a ser excluido
+    const id: string = req.params.id;
+
+    // excluido 
+    const dado: pessoaDocument | null = await pessoaServiceDelete(id);
+
+    // saida
+    res.status(203).json({
+      inf: 'Excluido' 
+    });
+  }
+  catch(error: any){
+    // erros
+    logger.error(error.menssage);
     res.status(404).json({
       error: error.message
     });

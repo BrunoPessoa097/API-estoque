@@ -109,3 +109,20 @@ export const pessoaServiceUpdate = async(id: string, dados: Partial<pessoaDocume
   // retorno saida
   return saida;
 }
+
+/** 
+ * @description deletando pessoa
+ * @async
+ * @function pessoaServiceDelete
+ * @returns {Promise<pessoaDocument | null> } Retorna uma Promise de pessoa atualizado ou nulo
+ * @author Bruno Pessoa
+ */
+export const pessoaServiceDelete = async(id: string): Promise<pessoaDocument | null> => {
+  // deletando pessoa
+  const dado: pessoaDocument | null = await pessoaMongo.findByIdAndDelete(id);
+
+  // caso de erro ao deletar
+  if(!dado){throw new Error('Erro ao excluir')}
+  // retorno em sucesso
+  return dado;
+}

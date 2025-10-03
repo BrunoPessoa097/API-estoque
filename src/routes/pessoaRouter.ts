@@ -1,6 +1,6 @@
 import { Router } from "express";
 // imports locais
-import { pessoaPipAdd, pessoaPipList, pessoaPipId, pessoaPipUpdate } from "../pipelines/pessoaPipeline";
+import { pessoaPipAdd, pessoaPipList, pessoaPipId, pessoaPipUpdate, pessoaPipDelete } from "../pipelines/pessoaPipeline";
 
 // construir rota
 const pessoaRouter: Router = Router();
@@ -122,10 +122,29 @@ pessoaRouter.route("/pessoa")
  *     description: pessoa já existe
  *    500:
  *     description: Server error
+ *
+ *  delete:
+ *   summary: Deletar pessoa
+ *   tags: [Pessoas]
+ *   parameters:
+ *     - name: id
+ *       in: path
+ *       required: true
+ *       schema:
+ *        type: string
+ *       description: Informe um ID válido.
+ *   responses:
+ *    203:
+ *     description: Deletado
+ *    404:
+ *     description: Não encontrado.
+ *    500:
+ *     description: Server Error
  */
 pessoaRouter.route('/pessoa/:id')
   .get(pessoaPipId)
-  .patch(pessoaPipUpdate);
+  .patch(pessoaPipUpdate)
+  .delete(pessoaPipDelete);
 
 // export
 export default pessoaRouter;

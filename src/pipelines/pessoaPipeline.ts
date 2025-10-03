@@ -1,6 +1,6 @@
 import { compose } from './_compose';
 import { pessoaExistencia, pessoaValidar, pessoaPadronizar } from '../middlewares/pessoaMiddleware';
-import { pessoaAdd, pessoaList, pessoaId, pessoaUpdate } from  '../controllers/pessoaControllers';
+import { pessoaAdd, pessoaList, pessoaId, pessoaUpdate, pessoaDelete } from  '../controllers/pessoaControllers';
 
 // adicionar pessoa
 export const pessoaPipAdd = compose(
@@ -26,4 +26,9 @@ export const pessoaPipUpdate = compose(
   pessoaValidar,
   pessoaPadronizar,
   pessoaUpdate
+);
+
+// excluir pessoa
+export const pessoaPipDelete = compose(
+  pessoaDelete
 );
