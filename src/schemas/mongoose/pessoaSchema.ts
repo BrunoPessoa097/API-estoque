@@ -8,7 +8,8 @@ const pessoaSchemas: Schema = new Schema<pessoaDocument>({
   senha: {type: String, required: true},
   endereco: {type: String, required: true},
   dt_nasc: {type: Date, required: true},
-  nivel: {type: Schema.Types.ObjectId, ref: 'Nivel'}
+  nivel: {type: Schema.Types.ObjectId, ref: 'Nivel'},
+  bloqueado: {type: Boolean, required: true}
 },{
   timestamps: {
     createdAt: 'criado_em',

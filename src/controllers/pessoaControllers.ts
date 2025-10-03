@@ -13,6 +13,7 @@ import logger from '../config/winston/logger';
 export const pessoaAdd = async(req: Request<{}, {}, pessoaInput>, res:Response) => {
   try{
     // desistruturando dados para serem salvo
+    req.body.bloqueado = false;
     const pessoa: pessoaInput = {
       ...req.body
     } 
@@ -56,5 +57,14 @@ export const pessoaList = async(req: Request, res: Response) => {
     res.status(404).json({
       error: error.message
     });
+  }
+}
+
+export const pessoaId = async(req: Request, res: Response) => {
+  try{
+    
+  }
+  catch(error: any){
+    
   }
 }

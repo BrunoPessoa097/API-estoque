@@ -8,6 +8,7 @@ interface pessoaInput {
   endereco: string;
   dt_nasc: Data;
   nivel: string | Types.objectId;
+  bloqueado?: boolean;
 }
 
 // document do mongoose
