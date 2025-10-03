@@ -22,13 +22,14 @@ Uma API para gerenciamento de um estoque.
 - `GET /categoria`- Rota categoria.
 - `GET /marca`- Rota marca.
 - `GET /nivel`- Rota nivel.
-- `GET /produto`- Rota produto.
+- `GET /pessoa`- Rota pessoa.
 - `api-docs` - Rota para documentação da _API_.
 - `404` - Rota não encontrada.
 
 ## Códigos _HTTP_ da _API_
 - `200` - Sucesso.
 - `201` - Sucesso e inserido.
+- `203` - Sucesso sem retorno.
 - `204` - Atualizado ou deletado.
 - `404` - Não encontrado.
 - `409` - Existente e/ou conflito.
@@ -189,6 +190,28 @@ Uma API para gerenciamento de um estoque.
      }
   ```
   
+  - Error
+  ```json
+     {
+       "message": "Erro ao adicionar"
+     }
+  ```
+
+### _Endpoint_ `/pessoa`
+* **Descrição**: Adicionar pessoa
+* **Método**: POST
+* **Exemplo da requisição**
+  ```shell
+     POST /produto
+  ```
+* **Saida da requisição**:
+  - Sucesso
+  ```json
+     {
+       "message": "Adicionado pessoa"
+     }
+  ```
+
   - Error
   ```json
      {
