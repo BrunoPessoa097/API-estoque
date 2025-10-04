@@ -9,6 +9,7 @@ interface pessoaInput {
   dt_nasc: Data;
   nivel: string | Types.objectId;
   bloqueado?: boolean;
+  login?: Date;
 }
 
 // document do mongoose
