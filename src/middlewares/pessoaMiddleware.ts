@@ -3,10 +3,11 @@ import { ObjectSchema } from 'joi';
 // imports locais
 import pessoaInput from '../interfaces/pessoaInterface';
 import pessoaJoi from '../schemas/joi/pessoaJoi';
-import palavraMaiuscula from './_configMiddlewares';
+import palavraMaiuscula, { hashSenha } from './_configMiddlewares';
 import { pessoaServiceExistNome, pessoaServiceExistEmail } from '../services/pessoaServices';
 import { existIdSigla } from '../services/nivelServices';
 import logger from '../config/winston/logger';
+
 
 /**
  * @description Validar entradas de pessoas existem ou não
@@ -16,7 +17,7 @@ import logger from '../config/winston/logger';
 export const pessoaExistencia = async(req: Request<{}, {}, pessoaInput>, res: Response, next: NextFunction) => {
   try{
     // desistruturando entradas a serem validadas
-    let { nome, email, nivel }: Partial<pessoaInput> = req.body;
+    let { nome, email, nivel, senha }: Partial<pessoaInput> = req.body;
 
     // trecho que verifica a existencia e valida
     if(nome){
@@ -94,17 +95,17 @@ export const pessoaValidar = (req: Request<{},{},pessoaInput>, res: Response, ne
  * @function pessoaPadronizar
  * @author Bruno Pessoa
  */
-export const pessoaPadronizar = (req: Request<{}, {}, pessoaInput>, res: Response, next: NextFunction) => {
+export const pessoaPadronizar = async(req: Request<{}, {}, pessoaInput>, res: Response, next: NextFunction) => {
   try{
     // desistruturando 
     const { nome, email, senha, endereco, dt_nasc, nivel }: Partial<pessoaInput> = req.body;
-
+    
     // recriando so com os pametros enviados
     req.body = {
-      ...(nome && {nome: palavraMaiuscula(nome)}),
+      ...(nome && {nome: await palavraMaiuscula(nome)}),
       ...(email && {email: email}),
-      ...(senha && {senha: senha}),
-      ...(endereco && {endereco: palavraMaiuscula(endereco)}),
+      ...(senha && {senha: await hashSenha(senha)}),
+      ...(endereco && {endereco: await palavraMaiuscula(endereco)}),
       ...(dt_nasc && {dt_nasc}),
       ...(nivel && {nivel: nivel})
     }

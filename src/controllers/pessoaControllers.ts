@@ -14,6 +14,7 @@ export const pessoaAdd = async(req: Request<{}, {}, pessoaInput>, res:Response) 
   try{
     // desistruturando dados para serem salvo
     req.body.bloqueado = false;
+    req.body.login = new Date();
     const pessoa: pessoaInput = {
       ...req.body
     } 
@@ -100,7 +101,8 @@ export const pessoaUpdate = async(req: Request, res: Response) => {
     const id: string = req.params.id;
     // criando as informações para atualizar
     const dados: Partial<pessoaDocument> = {
-      ...req.body
+      ...req.body,
+      login: new Date()
     };
 
     // dados informaçoes
