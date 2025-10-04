@@ -68,7 +68,7 @@ export const pessoaServiceAdd = async(dados: pessoaInput): Promise<pessoaDocumen
  */
 export const pessoaServiceList = async(): Promise<pessoaDocument[]> => {
   // buscando todas as pessoas
-  const dados: pessoaDocument[] = await pessoaMongo.find();
+  const dados: pessoaDocument[] = await pessoaMongo.find().select('-senha -nivel -bloqueado -login');
 
   // caso não exista dados
   if(!dados){throw new Error('Sem dados para mostrar')}
