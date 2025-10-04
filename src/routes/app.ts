@@ -9,6 +9,7 @@ import marcaRouter from './marcaRouter';
 import nivelRouter from './nivelRouter';
 import produtoRouter from './produtoRouter';
 import pessoaRouter from './pessoaRouter';
+import authorRouter from './authorRouter';
 
 // iniciando o express 
 const app: Application = express();
@@ -27,6 +28,7 @@ app.use(marcaRouter);
 app.use(nivelRouter);
 app.use(produtoRouter);
 app.use(pessoaRouter);
+app.use(authorRouter);
 
 /**
  * @swagger
