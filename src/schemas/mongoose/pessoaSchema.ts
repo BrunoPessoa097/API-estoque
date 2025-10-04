@@ -9,7 +9,8 @@ const pessoaSchemas: Schema = new Schema<pessoaDocument>({
   endereco: {type: String, required: true},
   dt_nasc: {type: Date, required: true},
   nivel: {type: Schema.Types.ObjectId, ref: 'Nivel'},
-  bloqueado: {type: Boolean, required: true}
+  bloqueado: {type: Boolean, required: true},
+  login: {type: Date}
 },{
   timestamps: {
     createdAt: 'criado_em',
