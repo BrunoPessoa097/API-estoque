@@ -126,3 +126,23 @@ export const pessoaServiceDelete = async(id: string): Promise<pessoaDocument | n
   // retorno em sucesso
   return dado;
 }
+
+
+/** 
+ * @description validando se existe
+ * @function pessoaServiceLogin
+ * @returns {Promise<pessoaDocument | null> } Retorna uma Promise de pessoa atualizado ou nulo
+ * @author Bruno Pessoa
+ */
+export const pessoaServiceLogin = async(email?: string): Promise<boolean> => {
+  // verificando o email se o estado
+  const conta: Partial<pessoaDocument> = await pessoaMongo.findOne({email}).select('email bloqueado');
+
+  // caso conta não existe
+  if(!conta){throw new Error('Conta não existe')}
+  // caso conta for bloqueada
+  if(conta.bloqueado){throw new Error('Conta bloqueada')}
+
+  // caso tudo conta exista e não estaja bloqueado
+  return false;
+}

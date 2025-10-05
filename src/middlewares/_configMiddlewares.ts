@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import pessoaMongo from '../schemas/mongoose/pessoaSchema';
 
 /**
  * @description Funçao para deixar em maiúscula à primeira letra da palavra.
@@ -45,6 +46,26 @@ export const hashSenha = async(senha: string): Promise<string> => {
   // encriptando
   const hash: string = await bcrypt.hash(senha, vz);
   // retorno criptografado
+  return hash;
+}
+
+/**
+ * @descriprion fazer um hash para comparar
+ * @function hashSenha
+ * @param {string} - senha - senha para ser verificado
+ * @param {string} - email - email para ver a senha
+ * @return string
+ * @author Bruno Pessoa
+ */
+export const hashCompareSenha = async(email: string, senha: string) => {
+  // pegando a senha
+  const senhaVerificar = await pessoaMongo.findOne({email}).select('senha');
+
+  // cao a senha não for valido
+  if(!senhaVerificar){throw new Error('Não existe email válido')}
+  // comparando senha
+  const hash = bcrypt.compare(senha, senhaVerificar.senha);
+  //retorno da validação
   return hash;
 }
 
