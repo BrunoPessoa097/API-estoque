@@ -1,10 +1,12 @@
 import { compose } from './_compose';
-import authorLogin from '../middlewares/authorMiddleware';
+import { authorLogin, loginAuthorValido } from '../middlewares/authorMiddleware';
 
-// login 
-const loginPip = compose(
+// login criar credencial
+export const loginPip = compose(
   authorLogin
 );
 
-// exports
-export default loginPip;
+// login com credencial
+export const logadoPip = compose(
+  loginAuthorValido
+);
