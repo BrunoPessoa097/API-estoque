@@ -136,7 +136,7 @@ export const pessoaServiceDelete = async(id: string): Promise<pessoaDocument | n
  */
 export const pessoaServiceLogin = async(email?: string)  => {
   // verificando o email se o estado
-  const conta: Partial<pessoaDocument> = await pessoaMongo.findOne({email}).select('id email bloqueado');
+  const conta: Partial<pessoaDocument> = await pessoaMongo.findOne({email}).select('id email bloqueado nivel').populate('nivel', 'sigla').select('sigla');
 
   // caso conta não existe
   if(!conta){throw new Error('Conta não existe')}

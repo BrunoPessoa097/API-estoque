@@ -31,9 +31,16 @@ export const authorLogin = async(req: Request, res: Response, next: NextFunction
     if(!exist){throw new Error('Senha incorreta')}
     if(!!pessoa.bloqueado) throw new Error('Conta está bloqueada');
 
+    // criando payload
+    const payload = {
+      id: pessoa?._id, 
+      email: pessoa?.email,
+      role: (pessoa?.nivel as any)?.sigla
+    }
+
     // criando o token
     const token = jwt.sign(
-        { id: pessoa?._id, email: pessoa?.email },
+        payload,
         chave,
         { expiresIn: "1h" }
       );
