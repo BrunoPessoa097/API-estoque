@@ -6,7 +6,7 @@ interface pessoaInput {
   email: string;
   senha: string;
   endereco: string;
-  dt_nasc: Data;
+  dt_nasc: Date;
   nivel: string | Types.objectId;
   bloqueado?: boolean;
   login?: Date;
