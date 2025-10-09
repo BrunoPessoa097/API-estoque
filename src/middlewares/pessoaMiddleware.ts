@@ -31,7 +31,7 @@ export const pessoaExistencia = async(req: Request<{}, {}, pessoaInput>, res: Re
     }
     if(nivel){
       // verificando nivel
-      await existIdSigla(nivel);
+      await existIdSigla(nivel.toString());
     }
     // fim do trecho
 
@@ -63,7 +63,7 @@ export const pessoaValidar = (req: Request<{},{},pessoaInput>, res: Response, ne
       ...(senha && {senha: senha.trim()}),
       ...(endereco && {endereco: endereco.trim()}),
       ...(dt_nasc && {dt_nasc}),
-      ...(nivel && {nivel: nivel.trim()})
+      ...(typeof nivel == 'string' && {nivel: nivel.trim()})
     }
 
     // validando as entradas

@@ -58,8 +58,9 @@ export const hashSenha = async(senha: string): Promise<string> => {
  * @author Bruno Pessoa
  */
 export const hashCompareSenha = async(email: string, senha: string) => {
+  if(!email || !senha ) throw new Error('Informações não repassadas');
   // pegando a senha
-  const senhaVerificar = await pessoaMongo.findOne({email}).select('senha');
+  const senhaVerificar = await pessoaMongo.findOne<{senha: string}>({email}).select('senha');
 
   // cao a senha não for valido
   if(!senhaVerificar){throw new Error('Não existe email válido')}

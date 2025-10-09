@@ -2,12 +2,12 @@ import { Document, Types } from 'mongoose';
 
 // pessoa entrada do usuário
 interface pessoaInput {
-  nome: string;
-  email: string;
-  senha: string;
-  endereco: string;
-  dt_nasc: Date;
-  nivel: string | Types.ObjectId;
+  nome?: string;
+  email?: string;
+  senha?: string;
+  endereco?: string;
+  dt_nasc?: Date;
+  nivel?: string | Types.ObjectId;
   bloqueado?: boolean;
   login?: Date;
 }
