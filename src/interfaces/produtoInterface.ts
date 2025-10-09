@@ -3,8 +3,8 @@ import { Document, Types } from 'mongoose';
 // produto entrada do usuários
 interface produtoInput {
   nome: string;
-  quantidade: integer;
-  preco: float;
+  quantidade: number;
+  preco: number;
   id_marca: string | Types.ObjectId;
   id_categoria: string | Types.ObjectId;
 }

@@ -7,7 +7,7 @@ interface pessoaInput {
   senha: string;
   endereco: string;
   dt_nasc: Date;
-  nivel: string | Types.objectId;
+  nivel: string | Types.ObjectId;
   bloqueado?: boolean;
   login?: Date;
 }
