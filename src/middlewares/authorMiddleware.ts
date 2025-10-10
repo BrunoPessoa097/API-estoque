@@ -17,7 +17,7 @@ export const authorLogin = async(req: Request, res: Response, next: NextFunction
     // dessustruturando
     const { email, senha }: Partial<pessoaInput> = req.body;
     let chave: string = `${process.env.CHAVE}`;
-
+    console.log(req.route)
     // caso e-mail e senha não forem enviados
     if(!email || !senha){throw new Error('Nome e senha são obrigatorios')}
     
@@ -57,15 +57,6 @@ export const authorLogin = async(req: Request, res: Response, next: NextFunction
   }
 }
 
-// typando globalmente
-declare global {
-  namespace Express {
-    interface Request {
-      user?: any;
-    }
-  }
-}
-
 /** 
  * @description Validar os tokens
  * @async
@@ -102,3 +93,32 @@ export const loginAuthorValido = async(req: Request, res: Response, next: NextFu
     });
   }
 } 
+
+/** 
+ * @description Permissao das rotas
+ * @async
+ * @function permissaoRota
+ * @params 
+ * @return o acesso
+ * @author Bruno Pessoa
+ */
+export const permissaoRota = (...niveisPermitidos: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    try{
+      // recebendo o nivel do usuario
+      const { role } = req.user;
+
+      // verificando se e permitido a entrada
+      if(niveisPermitidos.includes(role)) next();
+      // acesso negado  
+      else throw new Error('Acesso negado');
+    }catch(error: any) {
+      // erros
+      logger.error(error.message);
+      res.status(401).json({
+        error: error.message
+      });
+    }
+  }
+}
+  
