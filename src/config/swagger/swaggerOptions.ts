@@ -9,10 +9,10 @@ const swaggerOptions: object = {
     openapi: '3.0.0',
     info: {
       title: 'API Estoque',
-      version: '0.4.0',
+      version: '1.0.0',
       description:`_API_ de desenvolvimento 
         \n ### Sobre o projeto
-        \n * **Versão:** 0.4.0
+        \n * **Versão:** 1.0.0
         \n * **Licença:** MIT
         \n
         \n #### Criado por
