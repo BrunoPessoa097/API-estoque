@@ -125,6 +125,13 @@ Uma API para gerenciamento de um estoque.
   ```shell
      POST /categoria
   ```
+* **Exemplo de entrada**
+  ```json
+      {
+        "nome": "string",
+        "descricao": "string"
+      }
+  ```  
 * **Saida da requisição**:
   - Sucesso
   ```json
@@ -146,6 +153,14 @@ Uma API para gerenciamento de um estoque.
   ```shell
      POST /marca
   ```
+* **Exemplo de entrada**
+  ```json
+      {
+        "nome": "string",
+        "nomeSocial": "string",
+        "cnpj": "string"
+      }
+  ```  
 * **Saida da requisição**:
   - Sucesso
   ```json
@@ -167,11 +182,18 @@ Uma API para gerenciamento de um estoque.
   ```shell
      POST /marca
   ```
+* **Exemplo de entrada**
+  ```json
+      {
+        "sigla": "string",
+        "descricao": "string"
+      }
+  ```  
 * **Saida da requisição**:
   - Sucesso
   ```json
      {
-       "message": "Adicionado categoria"
+       "message": "Adicionado nível"
      }
   ```
   
@@ -181,18 +203,28 @@ Uma API para gerenciamento de um estoque.
        "message": "Erro ao adicionar"
      }
   ```
-### _Endpoint_ `/produto`
+### _Endpoint_ `/produtos`
 * **Descrição**: Adicionar produto
 * **Método**: POST
 * **Exemplo da requisição**
   ```shell
      POST /produto
   ```
+* **Exemplo de entrada**
+  ```json
+      {
+        "nome": "string",
+        "quantidade": 0,
+        "preco": 0,
+        "id_marca": "string",
+        "id_categoria": "string"
+      }
+  ``` 
 * **Saida da requisição**:
   - Sucesso
   ```json
      {
-       "message": "Adicionado categoria"
+       "message": "Adicionado"
      }
   ```
   
@@ -210,6 +242,17 @@ Uma API para gerenciamento de um estoque.
   ```shell
      POST /produto
   ```
+* **Exemplo de entrada**
+  ```json
+      {
+        "nome": "string",
+        "email": "string",
+        "senha": "string",
+        "endereco": "string",
+        "dt_nasc": "string",
+        "nivel": "string"
+      }
+  ``` 
 * **Saida da requisição**:
   - Sucesso
   ```json
@@ -231,6 +274,13 @@ Uma API para gerenciamento de um estoque.
   ```shell
      POST /produto
   ```
+* **Exemplo de entrada**
+  ```json
+      {
+        "email": "string",
+        "senha": "string"
+      }
+  ``` 
 * **Saida da requisição**:
   - Sucesso
   ```json
