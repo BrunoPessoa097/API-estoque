@@ -17,6 +17,8 @@ const marcaRouter: Router = Router();
  *    summary:  Rota para adicionar marca
  *    description: Criar marca
  *    tags: [Marca]
+ *    security:
+ *       - bearerAuth: []
  *    requestBody:
  *     required: true
  *     content:
@@ -40,6 +42,8 @@ const marcaRouter: Router = Router();
  *  get:
  *   summary: Listar todas as marcas
  *   tags: [Marca]
+ *   security:
+ *       - bearerAuth: []
  *   responses:
  *    200:
  *     description: Listar todas as mascas.
@@ -56,6 +60,8 @@ marcaRouter.route('/marca')
  *  get:
  *   summary: Buscar única categoria
  *   tags: [Marca]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path
@@ -73,6 +79,8 @@ marcaRouter.route('/marca')
  *   summary: Atualizar marca
  *   description: Atualizar um ou mais campos de marca
  *   tags: [Marca]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *    - name: id
  *      in: path
@@ -106,6 +114,8 @@ marcaRouter.route('/marca')
  *  delete:
  *   summary: Deletar categoria.
  *   tags: [Marca]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path

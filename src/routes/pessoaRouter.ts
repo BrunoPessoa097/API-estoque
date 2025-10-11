@@ -50,6 +50,8 @@ const pessoaRouter: Router = Router();
  *  get:
  *   summary: Listar todos as pessoas
  *   tags: [Pessoas]
+ *   security:
+ *       - bearerAuth: []
  *   responses:
  *    200:
  *     description: Listar todos as pessoas
@@ -69,6 +71,8 @@ pessoaRouter.route("/pessoa")
  *  get:
  *   summary: Buscar única pessoa
  *   tags: [Pessoas]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path
@@ -87,6 +91,8 @@ pessoaRouter.route("/pessoa")
  *  patch:
  *   summary: Atualizar um ou mais campos de pessoa
  *   tags: [Pessoas]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *    - name: id
  *      in: path
@@ -126,6 +132,8 @@ pessoaRouter.route("/pessoa")
  *  delete:
  *   summary: Deletar pessoa
  *   tags: [Pessoas]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path

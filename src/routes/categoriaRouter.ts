@@ -17,6 +17,8 @@ const categoriaRouter: Router = Router();
 *    summary: Adicionar nova categoria
 *    description: Cria uma nova categoria.
 *    tags: [Categoria]
+*    security:
+*       - bearerAuth: []
 *    requestBody:
 *      required: true
 *      content:
@@ -38,6 +40,8 @@ const categoriaRouter: Router = Router();
 *  get:
 *   summary: Listar todas as categorias.
 *   tags: [Categoria]
+*   security:
+*     - bearerAuth: []
 *   responses:
 *    200:
 *     description: Todas as categorias.
@@ -54,6 +58,8 @@ categoriaRouter.route('/categoria')
  *  get:
  *   summary: Buscar univa categoria
  *   tags: [Categoria]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path
@@ -72,6 +78,8 @@ categoriaRouter.route('/categoria')
  *   summary: Atualizar Categoria
  *   description: Atualizar um ou mais campos de categoria
  *   tags: [Categoria]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *    - name: id
  *      in: path
@@ -103,6 +111,8 @@ categoriaRouter.route('/categoria')
  *  delete:
  *   summary: Deletar categoria.
  *   tags: [Categoria]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path

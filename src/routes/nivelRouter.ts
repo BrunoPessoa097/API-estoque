@@ -16,6 +16,8 @@ const nivelRouter: Router = Router();
  *    summary:  Rota para adicionar nivel
  *    description: Criar nivel
  *    tags: [Nivel]
+ *    security:
+ *       - bearerAuth: []
  *    requestBody:
  *     required: true
  *     content:
@@ -40,6 +42,8 @@ const nivelRouter: Router = Router();
  *  get:
  *   summary: Listar todos os níveis 
  *   tags: [Nivel]
+ *   security:
+ *       - bearerAuth: []
  *   responses:
  *    200:
  *     description: Listar todos os nivels
@@ -58,6 +62,8 @@ nivelRouter.route('/nivel')
  *  get:
  *   summary: Buscar único nivel
  *   tags: [Nivel]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path
@@ -72,9 +78,12 @@ nivelRouter.route('/nivel')
  *     description: Informação não encontrada
  *    500:
  *     description: Servidor Error
+ * 
  *  put:
  *   summary: Atualizar nivel
  *   tags: [Nivel]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *    - name: id
  *      in: path
@@ -106,6 +115,8 @@ nivelRouter.route('/nivel')
  *  delete:
  *   summary: Deletar nível 
  *   tags: [Nivel]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path

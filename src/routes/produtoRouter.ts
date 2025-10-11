@@ -16,6 +16,8 @@ const produtoRouter: Router = Router();
  *    summary:  Rota para adicionar produto
  *    description: Criar Produto
  *    tags: [Produtos]
+ *    security:
+ *       - bearerAuth: []
  *    requestBody:
  *     required: true
  *     content:
@@ -45,6 +47,8 @@ const produtoRouter: Router = Router();
  *  get:
  *   summary: Listar todos os produtos
  *   tags: [Produtos]
+ *   security:
+ *       - bearerAuth: []
  *   responses:
  *    200:
  *     description: Listar todos os produtos
@@ -64,6 +68,8 @@ produtoRouter.route('/produtos')
  *  get:
  *   summary: Buscar único produto 
  *   tags: [Produtos]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path
@@ -82,6 +88,8 @@ produtoRouter.route('/produtos')
  *  patch:
  *   summary: Atualizar um ou mais campos de produto 
  *   tags: [Produtos]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *    - name: id
  *      in: path
@@ -119,6 +127,8 @@ produtoRouter.route('/produtos')
  *  delete:
  *   summary: Deletar produto
  *   tags: [Produtos]
+ *   security:
+ *       - bearerAuth: []
  *   parameters:
  *     - name: id
  *       in: path

@@ -23,12 +23,22 @@ const swaggerOptions: object = {
         \n * **Git Hub**: [github.com/BrunoPessoa097](https://github.com/BrunoPessoa097/api-agenda.git)
         \n * **LinkedIn**: [www.linkedin.com/in/bruno-pesoa-097](https://www.linkedin.com/in/bruno-pessoa-097/)`
     },
-     /* servers: [
+    // adicionando seguranca as rotas
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    // seguranca
+    security: [
       {
-        url: `0.0.0.0:${process.env.PORT}`,
-        description: 'Servidor local'
-      }
-    ],*/
+        bearerAuth: [],
+      },
+    ],
   },
   apis: ['./src/routes/*.ts']
 }
