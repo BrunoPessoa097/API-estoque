@@ -8,9 +8,11 @@ Uma API para gerenciamento de um estoque.
 4. [Tecnologias Usadas](#tecnologias-usadas)
 5. [Dependências](#dependencias)
 6. [Como Iniciar o Projeto](#como-iniciar-o-projeto)
-7. [_Endpoints_](#endpoints)
-8. [Criado por](#criado-por)
-9. [Licença](#licenca)
+7. [Testando a API com Insomnia](#Testando-a-api-com-insomnia)
+8. [_Endpoints_](#endpoints)
+9. [Em caso de duvidas](#em-caso-de-duvidas)
+10. [Criado por](#criado-por)
+11. [Licença](#licenca)
 
 ## Informações Sobre o Projeto 
 - **Versão:** 1.0.0
@@ -87,6 +89,15 @@ Uma API para gerenciamento de um estoque.
      yarn start
    ```
 
+## Testando a API com Insomnia
+1. Baixe o arquivo `estoque_insomnia_2025-10-11.json`
+2. No Insomnia, vá em **Application → Import → From File**
+4. Escolha o arquivo e teste as rotas!
+
+## Testando a API com Swagger
+1. Inicie o servidor
+2. Acesse a rota `<url>/api-docs`
+3. Escolha a(s) rota(s) que deseja testar.
 
 ## _EndPoints_
 ### _Endpoint_ `/`
@@ -297,6 +308,9 @@ Uma API para gerenciamento de um estoque.
 
 ### _Endpoint_ `api-docs`
 * **Descrição:** Documentação de todas as rotas contidas na _API_.
+
+## Em caso de duvidas
+Em caso de dúvidas e/ou erros no qual não conseguir solucionar, poderá entrar em contato que o mais breve possível responderei com prazer
 
 ## Criado Por
 * **Nome**: Bruno Pessoa
