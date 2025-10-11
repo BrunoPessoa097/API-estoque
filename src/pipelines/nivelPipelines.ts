@@ -13,6 +13,8 @@ export const nivelPipList = compose(
 
 // adicionar nivel
 export const nivelPipAdd = compose(
+  loginAuthorValido,
+  permissaoRota(...nivel1),
   existNivel,
   nivelVerificar,
   nivelPadronizar,
@@ -21,11 +23,15 @@ export const nivelPipAdd = compose(
 
 // mostrar único nivel
 export const nivelPipId = compose(
+  loginAuthorValido,
+  permissaoRota(...nivel1),
   nivelId
 );
 
 // atualizar nivel
 export const nivelPipUpdate = compose(
+  loginAuthorValido,
+  permissaoRota(...nivel1),
   existNivel,
   nivelVerificar,
   nivelPadronizar,
@@ -34,5 +40,7 @@ export const nivelPipUpdate = compose(
 
 // deletar nível 
 export const nivelPipDelete = compose(
+  loginAuthorValido,
+  permissaoRota(...nivel1),
   nivelDelete
 );

@@ -16,8 +16,8 @@ export const authorLogin = async(req: Request, res: Response, next: NextFunction
   try{
     // dessustruturando
     const { email, senha }: Partial<pessoaInput> = req.body;
+    // recebendo chave secreta
     let chave: string = `${process.env.CHAVE}`;
-    console.log(req.route)
     // caso e-mail e senha não forem enviados
     if(!email || !senha){throw new Error('Nome e senha são obrigatorios')}
     
