@@ -19,6 +19,7 @@ Uma API para gerenciamento de um estoque.
 
 ## Funcionabilidade
 - `GET /` - Rota principal.
+- `GET /login`- Rota login.
 - `GET /categoria`- Rota categoria.
 - `GET /marca`- Rota marca.
 - `GET /nivel`- Rota nivel.
@@ -54,6 +55,9 @@ Uma API para gerenciamento de um estoque.
 - `ts-node` - (versão: ^10.9.2) - Interpretador Typescript.
 - `joi` - (versão: ^18.0.1) - Biblioteca para validação de entradas.
 - `mongoose` - (versão: ^8.18.1) - Falicitador para interação com o MongoDB.
+- `winston` - (versão: ^3.18.3) - Logger para registro de saida.
+- `bcrypt` - (versão: ^6.0.0) - Biblioteca para hash de senha.
+- `jsonwebtoken` - (versão: ^9.0.2) - Criar um token para login e senha
 
 ## Como Iniciar o Projeto 
 1. Clone o projeto.
@@ -71,6 +75,7 @@ Uma API para gerenciamento de um estoque.
       PORT=<porta da sua escolha>
       MONGO_DB_DATABASE=<nome da database>
       MONGO_BD_URI=<endereço do banco de dados>
+      HASH=<numero de hash recomendado minimo 10>
   ```
 
 
@@ -218,6 +223,26 @@ Uma API para gerenciamento de um estoque.
        "message": "Erro ao adicionar"
      }
   ```
+### _Endpoint_ `/login`
+* **Descrição**: Login
+* **Método**: POST
+* **Exemplo da requisição**
+  ```shell
+     POST /produto
+  ```
+* **Saida da requisição**:
+  - Sucesso
+  ```json
+     {
+       "token": "saida do token criado"
+     }
+  ```
+
+  - Error
+  ```json
+     {
+       "message": "Usuário não encontrado"
+     }
 
 ### _Endpoint_ `api-docs`
 * **Descrição:** Documentação de todas as rotas contidas na _API_.

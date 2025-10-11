@@ -29,7 +29,7 @@ const authorRouter: Router = Router();
 *              senha:
 *                type: string
 *    responses:
-*      201:
+*      200:
 *        description: Login
 *      409:
 *        description: Não existe informações repassadas
