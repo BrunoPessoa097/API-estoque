@@ -43,6 +43,7 @@ Uma API para gerenciamento de um estoque.
 - [Swagger](https://swagger.io/) - Ferramenta para documentar _API_.
 - [MongoDB](https://www.mongodb.com/) - Banco de dados NoSql.
 - [MongooseJs](https://mongoosejs.com/) - Falicitador de interação com o banco de dados mongodb.
+- [Json Web Token](https://www.jwt.io/) - Criador de token.
 
 ## Dependências
 - `cors` - (versão: ^2.8.5) - Mecanismo de segurança para acessar requisição de origem.
