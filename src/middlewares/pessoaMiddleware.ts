@@ -6,6 +6,7 @@ import pessoaJoi from '../schemas/joi/pessoaJoi';
 import palavraMaiuscula, { hashSenha } from './_configMiddlewares';
 import { pessoaServiceExistNome, pessoaServiceExistEmail } from '../services/pessoaServices';
 import { existIdSigla } from '../services/nivelServices';
+import { nivel2 } from '../enum/niveis';
 import logger from '../config/winston/logger';
 
 
@@ -117,6 +118,34 @@ export const pessoaPadronizar = async(req: Request<{}, {}, pessoaInput>, res: Re
     res.status(500).json({
       message: 'Server error',
       error
+    });
+  }
+}
+
+/**
+ * @description verificar nivel ou pessoa pode ter acessoa a determinada informação
+ * @function pessoaPublic
+ * @author Bruno Pessoa
+ */
+export const pessoaPublic = async(req: Request, res: Response, next: NextFunction) => {
+  try{
+    // id requisitado
+    const id: string = req.params.id;
+    // o nivel de acesso do usuario
+    const role: string = req.user.role;
+    // pegando id do usuário logado
+    const idUser: string = req.user.id;
+
+    // se nivel ou id for igual aprovado
+    if(nivel2.includes(role)|| idUser === id) next();
+    // error 
+    else throw new Error('Acesso Negado');
+    
+  }catch(error: any){
+    // erro
+    logger.error(error.message);
+    res.status(401).json({
+      error: error.message
     });
   }
 }

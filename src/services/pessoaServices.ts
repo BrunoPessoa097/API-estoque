@@ -85,7 +85,7 @@ export const pessoaServiceList = async(): Promise<pessoaDocument[]> => {
  */
 export const pessoaServiceId = async(id: string): Promise<pessoaDocument | null> => {
   // buscando pessoa
-  const dado: pessoaDocument | null = await pessoaMongo.findById(id);
+  const dado: pessoaDocument | null = await pessoaMongo.findById(id).select('-senha');
 
   // caso não exista pessoa
   if(!dado) { throw new Error('Não existe informação buscada')}
